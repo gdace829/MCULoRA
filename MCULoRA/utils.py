@@ -5,7 +5,7 @@ from dataloader_iemocap import IEMOCAPDataset
 from dataloader_cmumosi import CMUMOSIDataset
 from torch.utils.data import DataLoader
 from torch.utils.data.sampler import SubsetRandomSampler
-from model_expert_softmoe import MoMKE
+from MCULoRAencoder import MCULoRA
 sys.path.append('./')
 import config
 
@@ -107,7 +107,7 @@ def get_loaders(audio_root, text_root, video_root, num_folder, dataset, batch_si
 
 def build_model(args, adim, tdim, vdim):
     D_e = args.hidden
-    model = MoMKE(args,
+    model = MCULoRA(args,
                   adim, tdim, vdim, D_e,
                   n_classes=args.n_classes,
                   depth=args.depth, num_heads=args.num_heads, mlp_ratio=1, drop_rate=args.drop_rate,
@@ -131,17 +131,20 @@ def build_model(args, adim, tdim, vdim):
 #
 #     matrix = [audio_mask, text_mask, visual_mask]
 #     return matrix
-def generate_mask(seqlen, batch, test_condition, first_stage):
+def generate_mask(seqlen, batch, test_condition, first_stage,train,probabilities):
     """Randomly generate incomplete data information, simulate partial view data with complete view data
     """
-    if first_stage:
-        audio_mask = np.array([1])
-        text_mask = np.array([1])
-        visual_mask = np.array([1])
+    if first_stage or train:
+        audio_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[0], probabilities[0]])
+        text_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[1], probabilities[1]])
+        visual_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[2], probabilities[2]])
     else:
         audio_mask = np.array([1 if 'a' in test_condition else 0])
         text_mask = np.array([1 if 't' in test_condition else 0])
         visual_mask = np.array([1 if 'v' in test_condition else 0])
+        # audio_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[0], probabilities[0]])
+        # text_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[1], probabilities[1]])
+        # visual_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[2], probabilities[2]])
     audio_mask = audio_mask.repeat(seqlen * batch)
     text_mask = text_mask.repeat(seqlen * batch)
     visual_mask = visual_mask.repeat(seqlen * batch)

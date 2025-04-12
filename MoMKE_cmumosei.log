@@ -1,0 +1,646 @@
+nohup: 忽略输入
+Namespace(audio_feature='wav2vec-large-c-UTT', text_feature='deberta-large-4-UTT', video_feature='manet_UTT', dataset='CMUMOSEI', time_attn=False, depth=4, num_heads=2, drop_rate=0.5, attn_drop_rate=0.0, hidden=256, n_classes=1, n_speakers=1, no_cuda=False, gpu=0, lr=0.0001, l2=1e-05, batch_size=32, epochs=200, num_folder=1, seed=66, test_condition='atv', stage_epoch=50.0, device=device(type='cuda', index=0))
+====== Reading Data =======
+/home/wyy/data/sjs/CMUMOSEI/features/wav2vec-large-c-UTT
+/home/wyy/data/sjs/CMUMOSEI/features/deberta-large-4-UTT
+/home/wyy/data/sjs/CMUMOSEI/features/manet_UTT
+Input feature wav2vec-large-c-UTT ===> dim is 512; No. sample is 22856
+Input feature deberta-large-4-UTT ===> dim is 1024; No. sample is 22856
+Input feature manet_UTT ===> dim is 1024; No. sample is 22856
+audio dimension: 512; text dimension: 1024; video dimension: 1024
+====== Training and Testing =======
+>>>>> Cross-validation: training on the 1 folder >>>>>
+--------------------------------------------------------------------------------
+Step1: build model (each folder has its own model)
+Model have 6284842 paramerters in total
+--------------------------------------------------------------------------------
+Step2: training (multiple epoches)
+Model have 6284842 paramerters in total
+------- Starting the first stage! -------
+epoch:0; train_mae_atv:1.750; train_corr_atv:0.124; train_fscore_atv:57.57%; train_acc_atv:56.87%; train_loss_atv:0.0
+epoch:0; test_mae_atv:0.831; test_corr_atv:0.545; test_fscore_atv:74.633%; test_acc_atv:74.573%; test_loss_atv:0.0
+----------
+epoch:1; train_mae_atv:1.063; train_corr_atv:0.373; train_fscore_atv:66.86%; train_acc_atv:66.41%; train_loss_atv:0.0
+epoch:1; test_mae_atv:0.763; test_corr_atv:0.656; test_fscore_atv:79.418%; test_acc_atv:79.967%; test_loss_atv:0.0
+----------
+epoch:2; train_mae_atv:0.936; train_corr_atv:0.477; train_fscore_atv:70.66%; train_acc_atv:70.31%; train_loss_atv:0.0
+epoch:2; test_mae_atv:0.777; test_corr_atv:0.702; test_fscore_atv:79.452%; test_acc_atv:80.572%; test_loss_atv:0.0
+----------
+epoch:3; train_mae_atv:0.878; train_corr_atv:0.542; train_fscore_atv:73.25%; train_acc_atv:72.92%; train_loss_atv:0.0
+epoch:3; test_mae_atv:0.673; test_corr_atv:0.742; test_fscore_atv:83.362%; test_acc_atv:83.517%; test_loss_atv:0.0
+----------
+epoch:4; train_mae_atv:0.822; train_corr_atv:0.596; train_fscore_atv:76.52%; train_acc_atv:76.27%; train_loss_atv:0.0
+epoch:4; test_mae_atv:0.656; test_corr_atv:0.754; test_fscore_atv:84.691%; test_acc_atv:84.700%; test_loss_atv:0.0
+----------
+epoch:5; train_mae_atv:0.779; train_corr_atv:0.644; train_fscore_atv:77.95%; train_acc_atv:77.72%; train_loss_atv:0.0
+epoch:5; test_mae_atv:0.637; test_corr_atv:0.769; test_fscore_atv:85.231%; test_acc_atv:85.140%; test_loss_atv:0.0
+----------
+epoch:6; train_mae_atv:0.758; train_corr_atv:0.664; train_fscore_atv:79.47%; train_acc_atv:79.26%; train_loss_atv:0.0
+epoch:6; test_mae_atv:0.646; test_corr_atv:0.773; test_fscore_atv:85.105%; test_acc_atv:85.360%; test_loss_atv:0.0
+----------
+epoch:7; train_mae_atv:0.748; train_corr_atv:0.669; train_fscore_atv:78.72%; train_acc_atv:78.53%; train_loss_atv:0.0
+epoch:7; test_mae_atv:0.619; test_corr_atv:0.778; test_fscore_atv:85.214%; test_acc_atv:85.085%; test_loss_atv:0.0
+----------
+epoch:8; train_mae_atv:0.716; train_corr_atv:0.698; train_fscore_atv:80.59%; train_acc_atv:80.43%; train_loss_atv:0.0
+epoch:8; test_mae_atv:0.612; test_corr_atv:0.788; test_fscore_atv:86.224%; test_acc_atv:86.296%; test_loss_atv:0.0
+----------
+epoch:9; train_mae_atv:0.692; train_corr_atv:0.724; train_fscore_atv:81.52%; train_acc_atv:81.39%; train_loss_atv:0.0
+epoch:9; test_mae_atv:0.632; test_corr_atv:0.792; test_fscore_atv:85.621%; test_acc_atv:85.966%; test_loss_atv:0.0
+----------
+epoch:10; train_mae_atv:0.704; train_corr_atv:0.708; train_fscore_atv:81.12%; train_acc_atv:81.00%; train_loss_atv:0.0
+epoch:10; test_mae_atv:0.598; test_corr_atv:0.795; test_fscore_atv:86.458%; test_acc_atv:86.489%; test_loss_atv:0.0
+----------
+epoch:11; train_mae_atv:0.680; train_corr_atv:0.732; train_fscore_atv:82.25%; train_acc_atv:82.12%; train_loss_atv:0.0
+epoch:11; test_mae_atv:0.662; test_corr_atv:0.798; test_fscore_atv:83.635%; test_acc_atv:84.397%; test_loss_atv:0.0
+----------
+epoch:12; train_mae_atv:0.670; train_corr_atv:0.739; train_fscore_atv:82.57%; train_acc_atv:82.50%; train_loss_atv:0.0
+epoch:12; test_mae_atv:0.595; test_corr_atv:0.801; test_fscore_atv:86.319%; test_acc_atv:86.489%; test_loss_atv:0.0
+----------
+epoch:13; train_mae_atv:0.655; train_corr_atv:0.753; train_fscore_atv:82.96%; train_acc_atv:82.89%; train_loss_atv:0.0
+epoch:13; test_mae_atv:0.585; test_corr_atv:0.803; test_fscore_atv:86.487%; test_acc_atv:86.571%; test_loss_atv:0.0
+----------
+epoch:14; train_mae_atv:0.653; train_corr_atv:0.755; train_fscore_atv:83.12%; train_acc_atv:83.07%; train_loss_atv:0.0
+epoch:14; test_mae_atv:0.580; test_corr_atv:0.805; test_fscore_atv:86.440%; test_acc_atv:86.461%; test_loss_atv:0.0
+----------
+epoch:15; train_mae_atv:0.637; train_corr_atv:0.769; train_fscore_atv:84.23%; train_acc_atv:84.16%; train_loss_atv:0.0
+epoch:15; test_mae_atv:0.585; test_corr_atv:0.803; test_fscore_atv:86.201%; test_acc_atv:86.159%; test_loss_atv:0.0
+----------
+epoch:16; train_mae_atv:0.652; train_corr_atv:0.754; train_fscore_atv:82.81%; train_acc_atv:82.77%; train_loss_atv:0.0
+epoch:16; test_mae_atv:0.577; test_corr_atv:0.808; test_fscore_atv:86.608%; test_acc_atv:86.654%; test_loss_atv:0.0
+----------
+epoch:17; train_mae_atv:0.624; train_corr_atv:0.778; train_fscore_atv:84.51%; train_acc_atv:84.46%; train_loss_atv:0.0
+epoch:17; test_mae_atv:0.576; test_corr_atv:0.810; test_fscore_atv:86.313%; test_acc_atv:86.269%; test_loss_atv:0.0
+----------
+epoch:18; train_mae_atv:0.622; train_corr_atv:0.780; train_fscore_atv:84.55%; train_acc_atv:84.52%; train_loss_atv:0.0
+epoch:18; test_mae_atv:0.576; test_corr_atv:0.808; test_fscore_atv:86.453%; test_acc_atv:86.461%; test_loss_atv:0.0
+----------
+epoch:19; train_mae_atv:0.606; train_corr_atv:0.794; train_fscore_atv:85.46%; train_acc_atv:85.41%; train_loss_atv:0.0
+epoch:19; test_mae_atv:0.566; test_corr_atv:0.813; test_fscore_atv:86.899%; test_acc_atv:86.901%; test_loss_atv:0.0
+----------
+epoch:20; train_mae_atv:0.620; train_corr_atv:0.778; train_fscore_atv:83.91%; train_acc_atv:83.89%; train_loss_atv:0.0
+epoch:20; test_mae_atv:0.574; test_corr_atv:0.811; test_fscore_atv:86.718%; test_acc_atv:86.654%; test_loss_atv:0.0
+----------
+epoch:21; train_mae_atv:0.625; train_corr_atv:0.775; train_fscore_atv:83.83%; train_acc_atv:83.75%; train_loss_atv:0.0
+epoch:21; test_mae_atv:0.579; test_corr_atv:0.812; test_fscore_atv:85.815%; test_acc_atv:86.103%; test_loss_atv:0.0
+----------
+epoch:22; train_mae_atv:0.601; train_corr_atv:0.793; train_fscore_atv:85.30%; train_acc_atv:85.30%; train_loss_atv:0.0
+epoch:22; test_mae_atv:0.569; test_corr_atv:0.814; test_fscore_atv:86.656%; test_acc_atv:86.819%; test_loss_atv:0.0
+----------
+epoch:23; train_mae_atv:0.606; train_corr_atv:0.790; train_fscore_atv:85.05%; train_acc_atv:85.01%; train_loss_atv:0.0
+epoch:23; test_mae_atv:0.569; test_corr_atv:0.812; test_fscore_atv:86.363%; test_acc_atv:86.406%; test_loss_atv:0.0
+----------
+epoch:24; train_mae_atv:0.605; train_corr_atv:0.786; train_fscore_atv:84.79%; train_acc_atv:84.80%; train_loss_atv:0.0
+epoch:24; test_mae_atv:0.599; test_corr_atv:0.812; test_fscore_atv:84.275%; test_acc_atv:84.040%; test_loss_atv:0.0
+----------
+epoch:25; train_mae_atv:0.635; train_corr_atv:0.764; train_fscore_atv:83.18%; train_acc_atv:83.11%; train_loss_atv:0.0
+epoch:25; test_mae_atv:0.579; test_corr_atv:0.814; test_fscore_atv:86.552%; test_acc_atv:86.791%; test_loss_atv:0.0
+----------
+epoch:26; train_mae_atv:0.596; train_corr_atv:0.798; train_fscore_atv:85.38%; train_acc_atv:85.34%; train_loss_atv:0.0
+epoch:26; test_mae_atv:0.572; test_corr_atv:0.815; test_fscore_atv:87.028%; test_acc_atv:87.067%; test_loss_atv:0.0
+----------
+epoch:27; train_mae_atv:0.602; train_corr_atv:0.795; train_fscore_atv:84.84%; train_acc_atv:84.81%; train_loss_atv:0.0
+epoch:27; test_mae_atv:0.562; test_corr_atv:0.816; test_fscore_atv:87.129%; test_acc_atv:87.204%; test_loss_atv:0.0
+----------
+epoch:28; train_mae_atv:0.610; train_corr_atv:0.782; train_fscore_atv:84.53%; train_acc_atv:84.51%; train_loss_atv:0.0
+epoch:28; test_mae_atv:0.577; test_corr_atv:0.816; test_fscore_atv:85.854%; test_acc_atv:85.718%; test_loss_atv:0.0
+----------
+epoch:29; train_mae_atv:0.596; train_corr_atv:0.795; train_fscore_atv:85.15%; train_acc_atv:85.15%; train_loss_atv:0.0
+epoch:29; test_mae_atv:0.566; test_corr_atv:0.816; test_fscore_atv:86.401%; test_acc_atv:86.324%; test_loss_atv:0.0
+----------
+epoch:30; train_mae_atv:0.580; train_corr_atv:0.810; train_fscore_atv:85.99%; train_acc_atv:85.97%; train_loss_atv:0.0
+epoch:30; test_mae_atv:0.580; test_corr_atv:0.816; test_fscore_atv:85.735%; test_acc_atv:85.581%; test_loss_atv:0.0
+----------
+epoch:31; train_mae_atv:0.570; train_corr_atv:0.817; train_fscore_atv:86.81%; train_acc_atv:86.79%; train_loss_atv:0.0
+epoch:31; test_mae_atv:0.558; test_corr_atv:0.819; test_fscore_atv:87.298%; test_acc_atv:87.314%; test_loss_atv:0.0
+----------
+epoch:32; train_mae_atv:0.600; train_corr_atv:0.790; train_fscore_atv:84.63%; train_acc_atv:84.62%; train_loss_atv:0.0
+epoch:32; test_mae_atv:0.557; test_corr_atv:0.819; test_fscore_atv:87.052%; test_acc_atv:87.122%; test_loss_atv:0.0
+----------
+epoch:33; train_mae_atv:0.611; train_corr_atv:0.784; train_fscore_atv:84.02%; train_acc_atv:84.01%; train_loss_atv:0.0
+epoch:33; test_mae_atv:0.567; test_corr_atv:0.820; test_fscore_atv:86.401%; test_acc_atv:86.296%; test_loss_atv:0.0
+----------
+epoch:34; train_mae_atv:0.577; train_corr_atv:0.811; train_fscore_atv:86.26%; train_acc_atv:86.27%; train_loss_atv:0.0
+epoch:34; test_mae_atv:0.568; test_corr_atv:0.820; test_fscore_atv:86.409%; test_acc_atv:86.681%; test_loss_atv:0.0
+----------
+epoch:35; train_mae_atv:0.569; train_corr_atv:0.816; train_fscore_atv:86.02%; train_acc_atv:86.00%; train_loss_atv:0.0
+epoch:35; test_mae_atv:0.563; test_corr_atv:0.819; test_fscore_atv:86.508%; test_acc_atv:86.406%; test_loss_atv:0.0
+----------
+epoch:36; train_mae_atv:0.605; train_corr_atv:0.785; train_fscore_atv:84.32%; train_acc_atv:84.31%; train_loss_atv:0.0
+epoch:36; test_mae_atv:0.562; test_corr_atv:0.822; test_fscore_atv:86.696%; test_acc_atv:86.901%; test_loss_atv:0.0
+----------
+epoch:37; train_mae_atv:0.566; train_corr_atv:0.816; train_fscore_atv:86.39%; train_acc_atv:86.41%; train_loss_atv:0.0
+epoch:37; test_mae_atv:0.566; test_corr_atv:0.819; test_fscore_atv:86.320%; test_acc_atv:86.516%; test_loss_atv:0.0
+----------
+epoch:38; train_mae_atv:0.584; train_corr_atv:0.802; train_fscore_atv:85.35%; train_acc_atv:85.39%; train_loss_atv:0.0
+epoch:38; test_mae_atv:0.556; test_corr_atv:0.820; test_fscore_atv:87.246%; test_acc_atv:87.287%; test_loss_atv:0.0
+----------
+epoch:39; train_mae_atv:0.559; train_corr_atv:0.825; train_fscore_atv:86.89%; train_acc_atv:86.85%; train_loss_atv:0.0
+epoch:39; test_mae_atv:0.569; test_corr_atv:0.821; test_fscore_atv:86.514%; test_acc_atv:86.709%; test_loss_atv:0.0
+----------
+epoch:40; train_mae_atv:0.589; train_corr_atv:0.799; train_fscore_atv:85.58%; train_acc_atv:85.57%; train_loss_atv:0.0
+epoch:40; test_mae_atv:0.562; test_corr_atv:0.818; test_fscore_atv:86.979%; test_acc_atv:87.122%; test_loss_atv:0.0
+----------
+epoch:41; train_mae_atv:0.555; train_corr_atv:0.827; train_fscore_atv:86.63%; train_acc_atv:86.61%; train_loss_atv:0.0
+epoch:41; test_mae_atv:0.556; test_corr_atv:0.823; test_fscore_atv:86.939%; test_acc_atv:86.874%; test_loss_atv:0.0
+----------
+epoch:42; train_mae_atv:0.574; train_corr_atv:0.812; train_fscore_atv:85.94%; train_acc_atv:85.94%; train_loss_atv:0.0
+epoch:42; test_mae_atv:0.551; test_corr_atv:0.823; test_fscore_atv:86.924%; test_acc_atv:86.929%; test_loss_atv:0.0
+----------
+epoch:43; train_mae_atv:0.555; train_corr_atv:0.826; train_fscore_atv:86.88%; train_acc_atv:86.85%; train_loss_atv:0.0
+epoch:43; test_mae_atv:0.558; test_corr_atv:0.820; test_fscore_atv:86.531%; test_acc_atv:86.654%; test_loss_atv:0.0
+----------
+epoch:44; train_mae_atv:0.554; train_corr_atv:0.828; train_fscore_atv:86.67%; train_acc_atv:86.64%; train_loss_atv:0.0
+epoch:44; test_mae_atv:0.554; test_corr_atv:0.824; test_fscore_atv:87.075%; test_acc_atv:87.094%; test_loss_atv:0.0
+----------
+epoch:45; train_mae_atv:0.554; train_corr_atv:0.825; train_fscore_atv:86.69%; train_acc_atv:86.70%; train_loss_atv:0.0
+epoch:45; test_mae_atv:0.555; test_corr_atv:0.821; test_fscore_atv:86.917%; test_acc_atv:86.984%; test_loss_atv:0.0
+----------
+epoch:46; train_mae_atv:0.562; train_corr_atv:0.820; train_fscore_atv:86.36%; train_acc_atv:86.34%; train_loss_atv:0.0
+epoch:46; test_mae_atv:0.563; test_corr_atv:0.823; test_fscore_atv:86.124%; test_acc_atv:85.993%; test_loss_atv:0.0
+----------
+epoch:47; train_mae_atv:0.549; train_corr_atv:0.832; train_fscore_atv:87.02%; train_acc_atv:87.01%; train_loss_atv:0.0
+epoch:47; test_mae_atv:0.566; test_corr_atv:0.825; test_fscore_atv:85.738%; test_acc_atv:85.581%; test_loss_atv:0.0
+----------
+epoch:48; train_mae_atv:0.550; train_corr_atv:0.827; train_fscore_atv:87.01%; train_acc_atv:86.99%; train_loss_atv:0.0
+epoch:48; test_mae_atv:0.566; test_corr_atv:0.821; test_fscore_atv:85.416%; test_acc_atv:85.250%; test_loss_atv:0.0
+----------
+epoch:49; train_mae_atv:0.563; train_corr_atv:0.817; train_fscore_atv:85.60%; train_acc_atv:85.56%; train_loss_atv:0.0
+epoch:49; test_mae_atv:0.576; test_corr_atv:0.822; test_fscore_atv:86.483%; test_acc_atv:86.791%; test_loss_atv:0.0
+----------
+epoch:50; train_mae_atv:0.547; train_corr_atv:0.829; train_fscore_atv:86.92%; train_acc_atv:86.93%; train_loss_atv:0.0
+epoch:50; test_mae_atv:0.600; test_corr_atv:0.819; test_fscore_atv:84.106%; test_acc_atv:83.875%; test_loss_atv:0.0
+----------
+epoch:51; train_mae_atv:0.557; train_corr_atv:0.822; train_fscore_atv:86.57%; train_acc_atv:86.55%; train_loss_atv:0.0
+epoch:51; test_mae_atv:0.578; test_corr_atv:0.817; test_fscore_atv:85.356%; test_acc_atv:85.195%; test_loss_atv:0.0
+----------
+epoch:52; train_mae_atv:0.566; train_corr_atv:0.815; train_fscore_atv:85.78%; train_acc_atv:85.73%; train_loss_atv:0.0
+epoch:52; test_mae_atv:0.559; test_corr_atv:0.823; test_fscore_atv:86.407%; test_acc_atv:86.434%; test_loss_atv:0.0
+----------
+epoch:53; train_mae_atv:0.536; train_corr_atv:0.839; train_fscore_atv:87.47%; train_acc_atv:87.49%; train_loss_atv:0.0
+epoch:53; test_mae_atv:0.547; test_corr_atv:0.825; test_fscore_atv:87.091%; test_acc_atv:87.177%; test_loss_atv:0.0
+----------
+epoch:54; train_mae_atv:0.545; train_corr_atv:0.830; train_fscore_atv:86.85%; train_acc_atv:86.87%; train_loss_atv:0.0
+epoch:54; test_mae_atv:0.556; test_corr_atv:0.824; test_fscore_atv:86.479%; test_acc_atv:86.571%; test_loss_atv:0.0
+----------
+epoch:55; train_mae_atv:0.533; train_corr_atv:0.841; train_fscore_atv:87.73%; train_acc_atv:87.71%; train_loss_atv:0.0
+epoch:55; test_mae_atv:0.552; test_corr_atv:0.824; test_fscore_atv:86.829%; test_acc_atv:86.791%; test_loss_atv:0.0
+----------
+epoch:56; train_mae_atv:0.553; train_corr_atv:0.825; train_fscore_atv:86.63%; train_acc_atv:86.62%; train_loss_atv:0.0
+epoch:56; test_mae_atv:0.553; test_corr_atv:0.825; test_fscore_atv:87.116%; test_acc_atv:87.094%; test_loss_atv:0.0
+----------
+epoch:57; train_mae_atv:0.516; train_corr_atv:0.853; train_fscore_atv:88.28%; train_acc_atv:88.26%; train_loss_atv:0.0
+epoch:57; test_mae_atv:0.553; test_corr_atv:0.826; test_fscore_atv:86.435%; test_acc_atv:86.379%; test_loss_atv:0.0
+----------
+epoch:58; train_mae_atv:0.565; train_corr_atv:0.817; train_fscore_atv:86.19%; train_acc_atv:86.19%; train_loss_atv:0.0
+epoch:58; test_mae_atv:0.546; test_corr_atv:0.827; test_fscore_atv:87.151%; test_acc_atv:87.232%; test_loss_atv:0.0
+----------
+epoch:59; train_mae_atv:0.539; train_corr_atv:0.835; train_fscore_atv:87.41%; train_acc_atv:87.40%; train_loss_atv:0.0
+epoch:59; test_mae_atv:0.545; test_corr_atv:0.827; test_fscore_atv:86.813%; test_acc_atv:86.874%; test_loss_atv:0.0
+----------
+epoch:60; train_mae_atv:0.534; train_corr_atv:0.840; train_fscore_atv:87.86%; train_acc_atv:87.86%; train_loss_atv:0.0
+epoch:60; test_mae_atv:0.561; test_corr_atv:0.825; test_fscore_atv:87.169%; test_acc_atv:87.122%; test_loss_atv:0.0
+----------
+epoch:61; train_mae_atv:0.507; train_corr_atv:0.859; train_fscore_atv:88.54%; train_acc_atv:88.53%; train_loss_atv:0.0
+epoch:61; test_mae_atv:0.543; test_corr_atv:0.827; test_fscore_atv:86.829%; test_acc_atv:86.929%; test_loss_atv:0.0
+----------
+epoch:62; train_mae_atv:0.546; train_corr_atv:0.831; train_fscore_atv:86.55%; train_acc_atv:86.52%; train_loss_atv:0.0
+epoch:62; test_mae_atv:0.556; test_corr_atv:0.824; test_fscore_atv:87.226%; test_acc_atv:87.232%; test_loss_atv:0.0
+----------
+epoch:63; train_mae_atv:0.518; train_corr_atv:0.849; train_fscore_atv:88.27%; train_acc_atv:88.29%; train_loss_atv:0.0
+epoch:63; test_mae_atv:0.551; test_corr_atv:0.824; test_fscore_atv:86.794%; test_acc_atv:86.846%; test_loss_atv:0.0
+----------
+epoch:64; train_mae_atv:0.583; train_corr_atv:0.796; train_fscore_atv:84.21%; train_acc_atv:84.19%; train_loss_atv:0.0
+epoch:64; test_mae_atv:0.556; test_corr_atv:0.820; test_fscore_atv:86.339%; test_acc_atv:86.351%; test_loss_atv:0.0
+----------
+epoch:65; train_mae_atv:0.555; train_corr_atv:0.822; train_fscore_atv:86.06%; train_acc_atv:86.02%; train_loss_atv:0.0
+epoch:65; test_mae_atv:0.560; test_corr_atv:0.827; test_fscore_atv:86.703%; test_acc_atv:86.874%; test_loss_atv:0.0
+----------
+epoch:66; train_mae_atv:0.526; train_corr_atv:0.846; train_fscore_atv:87.99%; train_acc_atv:88.00%; train_loss_atv:0.0
+epoch:66; test_mae_atv:0.554; test_corr_atv:0.826; test_fscore_atv:86.820%; test_acc_atv:86.957%; test_loss_atv:0.0
+----------
+epoch:67; train_mae_atv:0.523; train_corr_atv:0.848; train_fscore_atv:87.59%; train_acc_atv:87.59%; train_loss_atv:0.0
+epoch:67; test_mae_atv:0.554; test_corr_atv:0.827; test_fscore_atv:86.917%; test_acc_atv:87.039%; test_loss_atv:0.0
+----------
+epoch:68; train_mae_atv:0.542; train_corr_atv:0.830; train_fscore_atv:86.74%; train_acc_atv:86.76%; train_loss_atv:0.0
+epoch:68; test_mae_atv:0.548; test_corr_atv:0.828; test_fscore_atv:86.845%; test_acc_atv:86.791%; test_loss_atv:0.0
+----------
+epoch:69; train_mae_atv:0.511; train_corr_atv:0.855; train_fscore_atv:88.00%; train_acc_atv:88.01%; train_loss_atv:0.0
+epoch:69; test_mae_atv:0.545; test_corr_atv:0.827; test_fscore_atv:86.661%; test_acc_atv:86.681%; test_loss_atv:0.0
+----------
+epoch:70; train_mae_atv:0.508; train_corr_atv:0.857; train_fscore_atv:88.41%; train_acc_atv:88.41%; train_loss_atv:0.0
+epoch:70; test_mae_atv:0.555; test_corr_atv:0.828; test_fscore_atv:86.953%; test_acc_atv:87.012%; test_loss_atv:0.0
+----------
+epoch:71; train_mae_atv:0.503; train_corr_atv:0.860; train_fscore_atv:88.42%; train_acc_atv:88.44%; train_loss_atv:0.0
+epoch:71; test_mae_atv:0.550; test_corr_atv:0.826; test_fscore_atv:86.538%; test_acc_atv:86.489%; test_loss_atv:0.0
+----------
+epoch:72; train_mae_atv:0.527; train_corr_atv:0.841; train_fscore_atv:87.73%; train_acc_atv:87.70%; train_loss_atv:0.0
+epoch:72; test_mae_atv:0.545; test_corr_atv:0.830; test_fscore_atv:86.804%; test_acc_atv:86.819%; test_loss_atv:0.0
+----------
+epoch:73; train_mae_atv:0.508; train_corr_atv:0.855; train_fscore_atv:88.40%; train_acc_atv:88.39%; train_loss_atv:0.0
+epoch:73; test_mae_atv:0.545; test_corr_atv:0.828; test_fscore_atv:86.986%; test_acc_atv:87.039%; test_loss_atv:0.0
+----------
+epoch:74; train_mae_atv:0.525; train_corr_atv:0.843; train_fscore_atv:87.56%; train_acc_atv:87.55%; train_loss_atv:0.0
+epoch:74; test_mae_atv:0.538; test_corr_atv:0.831; test_fscore_atv:86.814%; test_acc_atv:86.819%; test_loss_atv:0.0
+----------
+epoch:75; train_mae_atv:0.513; train_corr_atv:0.851; train_fscore_atv:88.15%; train_acc_atv:88.16%; train_loss_atv:0.0
+epoch:75; test_mae_atv:0.541; test_corr_atv:0.831; test_fscore_atv:87.031%; test_acc_atv:87.012%; test_loss_atv:0.0
+----------
+epoch:76; train_mae_atv:0.512; train_corr_atv:0.852; train_fscore_atv:87.88%; train_acc_atv:87.90%; train_loss_atv:0.0
+epoch:76; test_mae_atv:0.551; test_corr_atv:0.828; test_fscore_atv:86.021%; test_acc_atv:85.911%; test_loss_atv:0.0
+----------
+epoch:77; train_mae_atv:0.505; train_corr_atv:0.858; train_fscore_atv:88.51%; train_acc_atv:88.50%; train_loss_atv:0.0
+epoch:77; test_mae_atv:0.559; test_corr_atv:0.826; test_fscore_atv:86.462%; test_acc_atv:86.571%; test_loss_atv:0.0
+----------
+epoch:78; train_mae_atv:0.496; train_corr_atv:0.864; train_fscore_atv:88.87%; train_acc_atv:88.88%; train_loss_atv:0.0
+epoch:78; test_mae_atv:0.548; test_corr_atv:0.827; test_fscore_atv:86.944%; test_acc_atv:87.067%; test_loss_atv:0.0
+----------
+epoch:79; train_mae_atv:0.489; train_corr_atv:0.867; train_fscore_atv:89.23%; train_acc_atv:89.25%; train_loss_atv:0.0
+epoch:79; test_mae_atv:0.550; test_corr_atv:0.830; test_fscore_atv:86.506%; test_acc_atv:86.489%; test_loss_atv:0.0
+----------
+epoch:80; train_mae_atv:0.533; train_corr_atv:0.834; train_fscore_atv:86.87%; train_acc_atv:86.86%; train_loss_atv:0.0
+epoch:80; test_mae_atv:0.556; test_corr_atv:0.829; test_fscore_atv:86.378%; test_acc_atv:86.269%; test_loss_atv:0.0
+----------
+epoch:81; train_mae_atv:0.534; train_corr_atv:0.832; train_fscore_atv:87.17%; train_acc_atv:87.17%; train_loss_atv:0.0
+epoch:81; test_mae_atv:0.556; test_corr_atv:0.825; test_fscore_atv:86.458%; test_acc_atv:86.406%; test_loss_atv:0.0
+----------
+epoch:82; train_mae_atv:0.501; train_corr_atv:0.858; train_fscore_atv:88.22%; train_acc_atv:88.23%; train_loss_atv:0.0
+epoch:82; test_mae_atv:0.545; test_corr_atv:0.830; test_fscore_atv:86.670%; test_acc_atv:86.626%; test_loss_atv:0.0
+----------
+epoch:83; train_mae_atv:0.484; train_corr_atv:0.871; train_fscore_atv:89.31%; train_acc_atv:89.30%; train_loss_atv:0.0
+epoch:83; test_mae_atv:0.547; test_corr_atv:0.831; test_fscore_atv:86.442%; test_acc_atv:86.461%; test_loss_atv:0.0
+----------
+epoch:84; train_mae_atv:0.515; train_corr_atv:0.848; train_fscore_atv:87.87%; train_acc_atv:87.87%; train_loss_atv:0.0
+epoch:84; test_mae_atv:0.549; test_corr_atv:0.823; test_fscore_atv:86.504%; test_acc_atv:86.681%; test_loss_atv:0.0
+----------
+epoch:85; train_mae_atv:0.513; train_corr_atv:0.853; train_fscore_atv:87.81%; train_acc_atv:87.80%; train_loss_atv:0.0
+epoch:85; test_mae_atv:0.552; test_corr_atv:0.827; test_fscore_atv:86.399%; test_acc_atv:86.599%; test_loss_atv:0.0
+----------
+epoch:86; train_mae_atv:0.485; train_corr_atv:0.871; train_fscore_atv:89.56%; train_acc_atv:89.57%; train_loss_atv:0.0
+epoch:86; test_mae_atv:0.548; test_corr_atv:0.830; test_fscore_atv:86.851%; test_acc_atv:86.819%; test_loss_atv:0.0
+----------
+epoch:87; train_mae_atv:0.478; train_corr_atv:0.874; train_fscore_atv:89.71%; train_acc_atv:89.70%; train_loss_atv:0.0
+epoch:87; test_mae_atv:0.556; test_corr_atv:0.832; test_fscore_atv:86.215%; test_acc_atv:86.103%; test_loss_atv:0.0
+----------
+epoch:88; train_mae_atv:0.484; train_corr_atv:0.870; train_fscore_atv:88.87%; train_acc_atv:88.87%; train_loss_atv:0.0
+epoch:88; test_mae_atv:0.543; test_corr_atv:0.832; test_fscore_atv:86.600%; test_acc_atv:86.599%; test_loss_atv:0.0
+----------
+epoch:89; train_mae_atv:0.499; train_corr_atv:0.859; train_fscore_atv:88.31%; train_acc_atv:88.32%; train_loss_atv:0.0
+epoch:89; test_mae_atv:0.552; test_corr_atv:0.828; test_fscore_atv:86.695%; test_acc_atv:86.654%; test_loss_atv:0.0
+----------
+epoch:90; train_mae_atv:0.502; train_corr_atv:0.855; train_fscore_atv:88.41%; train_acc_atv:88.40%; train_loss_atv:0.0
+epoch:90; test_mae_atv:0.545; test_corr_atv:0.830; test_fscore_atv:86.428%; test_acc_atv:86.544%; test_loss_atv:0.0
+----------
+epoch:91; train_mae_atv:0.502; train_corr_atv:0.853; train_fscore_atv:88.32%; train_acc_atv:88.35%; train_loss_atv:0.0
+epoch:91; test_mae_atv:0.557; test_corr_atv:0.830; test_fscore_atv:86.528%; test_acc_atv:86.516%; test_loss_atv:0.0
+----------
+epoch:92; train_mae_atv:0.473; train_corr_atv:0.876; train_fscore_atv:89.40%; train_acc_atv:89.40%; train_loss_atv:0.0
+epoch:92; test_mae_atv:0.551; test_corr_atv:0.829; test_fscore_atv:86.298%; test_acc_atv:86.269%; test_loss_atv:0.0
+----------
+epoch:93; train_mae_atv:0.500; train_corr_atv:0.860; train_fscore_atv:89.10%; train_acc_atv:89.09%; train_loss_atv:0.0
+epoch:93; test_mae_atv:0.558; test_corr_atv:0.829; test_fscore_atv:86.714%; test_acc_atv:86.681%; test_loss_atv:0.0
+----------
+epoch:94; train_mae_atv:0.504; train_corr_atv:0.853; train_fscore_atv:88.00%; train_acc_atv:88.00%; train_loss_atv:0.0
+epoch:94; test_mae_atv:0.600; test_corr_atv:0.820; test_fscore_atv:83.824%; test_acc_atv:84.480%; test_loss_atv:0.0
+----------
+epoch:95; train_mae_atv:0.487; train_corr_atv:0.869; train_fscore_atv:89.04%; train_acc_atv:89.04%; train_loss_atv:0.0
+epoch:95; test_mae_atv:0.541; test_corr_atv:0.831; test_fscore_atv:87.061%; test_acc_atv:87.122%; test_loss_atv:0.0
+----------
+epoch:96; train_mae_atv:0.505; train_corr_atv:0.854; train_fscore_atv:87.92%; train_acc_atv:87.95%; train_loss_atv:0.0
+epoch:96; test_mae_atv:0.553; test_corr_atv:0.829; test_fscore_atv:86.604%; test_acc_atv:86.654%; test_loss_atv:0.0
+----------
+epoch:97; train_mae_atv:0.478; train_corr_atv:0.872; train_fscore_atv:89.61%; train_acc_atv:89.61%; train_loss_atv:0.0
+epoch:97; test_mae_atv:0.551; test_corr_atv:0.829; test_fscore_atv:86.804%; test_acc_atv:86.819%; test_loss_atv:0.0
+----------
+epoch:98; train_mae_atv:0.483; train_corr_atv:0.867; train_fscore_atv:88.82%; train_acc_atv:88.85%; train_loss_atv:0.0
+epoch:98; test_mae_atv:0.543; test_corr_atv:0.829; test_fscore_atv:86.313%; test_acc_atv:86.406%; test_loss_atv:0.0
+----------
+epoch:99; train_mae_atv:0.477; train_corr_atv:0.871; train_fscore_atv:89.35%; train_acc_atv:89.34%; train_loss_atv:0.0
+epoch:99; test_mae_atv:0.553; test_corr_atv:0.824; test_fscore_atv:86.195%; test_acc_atv:86.351%; test_loss_atv:0.0
+----------
+epoch:100; train_mae_atv:0.464; train_corr_atv:0.881; train_fscore_atv:89.79%; train_acc_atv:89.82%; train_loss_atv:0.0
+epoch:100; test_mae_atv:0.543; test_corr_atv:0.828; test_fscore_atv:86.700%; test_acc_atv:86.709%; test_loss_atv:0.0
+----------
+epoch:101; train_mae_atv:0.465; train_corr_atv:0.879; train_fscore_atv:89.58%; train_acc_atv:89.60%; train_loss_atv:0.0
+epoch:101; test_mae_atv:0.545; test_corr_atv:0.827; test_fscore_atv:86.070%; test_acc_atv:86.269%; test_loss_atv:0.0
+----------
+epoch:102; train_mae_atv:0.471; train_corr_atv:0.877; train_fscore_atv:89.46%; train_acc_atv:89.47%; train_loss_atv:0.0
+epoch:102; test_mae_atv:0.549; test_corr_atv:0.829; test_fscore_atv:86.106%; test_acc_atv:85.993%; test_loss_atv:0.0
+----------
+epoch:103; train_mae_atv:0.471; train_corr_atv:0.873; train_fscore_atv:89.26%; train_acc_atv:89.30%; train_loss_atv:0.0
+epoch:103; test_mae_atv:0.553; test_corr_atv:0.827; test_fscore_atv:86.589%; test_acc_atv:86.544%; test_loss_atv:0.0
+----------
+epoch:104; train_mae_atv:0.479; train_corr_atv:0.870; train_fscore_atv:89.17%; train_acc_atv:89.14%; train_loss_atv:0.0
+epoch:104; test_mae_atv:0.546; test_corr_atv:0.828; test_fscore_atv:86.588%; test_acc_atv:86.654%; test_loss_atv:0.0
+----------
+epoch:105; train_mae_atv:0.486; train_corr_atv:0.863; train_fscore_atv:88.63%; train_acc_atv:88.62%; train_loss_atv:0.0
+epoch:105; test_mae_atv:0.544; test_corr_atv:0.829; test_fscore_atv:86.677%; test_acc_atv:86.681%; test_loss_atv:0.0
+----------
+epoch:106; train_mae_atv:0.452; train_corr_atv:0.889; train_fscore_atv:90.17%; train_acc_atv:90.17%; train_loss_atv:0.0
+epoch:106; test_mae_atv:0.544; test_corr_atv:0.831; test_fscore_atv:86.034%; test_acc_atv:86.048%; test_loss_atv:0.0
+----------
+epoch:107; train_mae_atv:0.453; train_corr_atv:0.886; train_fscore_atv:90.16%; train_acc_atv:90.16%; train_loss_atv:0.0
+epoch:107; test_mae_atv:0.548; test_corr_atv:0.830; test_fscore_atv:86.525%; test_acc_atv:86.599%; test_loss_atv:0.0
+----------
+epoch:108; train_mae_atv:0.451; train_corr_atv:0.889; train_fscore_atv:90.29%; train_acc_atv:90.29%; train_loss_atv:0.0
+epoch:108; test_mae_atv:0.560; test_corr_atv:0.828; test_fscore_atv:85.691%; test_acc_atv:85.581%; test_loss_atv:0.0
+----------
+epoch:109; train_mae_atv:0.458; train_corr_atv:0.882; train_fscore_atv:89.98%; train_acc_atv:89.97%; train_loss_atv:0.0
+epoch:109; test_mae_atv:0.558; test_corr_atv:0.830; test_fscore_atv:86.563%; test_acc_atv:86.626%; test_loss_atv:0.0
+----------
+epoch:110; train_mae_atv:0.435; train_corr_atv:0.899; train_fscore_atv:91.00%; train_acc_atv:91.00%; train_loss_atv:0.0
+epoch:110; test_mae_atv:0.544; test_corr_atv:0.831; test_fscore_atv:86.741%; test_acc_atv:86.874%; test_loss_atv:0.0
+----------
+epoch:111; train_mae_atv:0.487; train_corr_atv:0.865; train_fscore_atv:88.59%; train_acc_atv:88.59%; train_loss_atv:0.0
+epoch:111; test_mae_atv:0.588; test_corr_atv:0.820; test_fscore_atv:85.220%; test_acc_atv:85.058%; test_loss_atv:0.0
+----------
+epoch:112; train_mae_atv:0.476; train_corr_atv:0.873; train_fscore_atv:89.29%; train_acc_atv:89.28%; train_loss_atv:0.0
+epoch:112; test_mae_atv:0.551; test_corr_atv:0.827; test_fscore_atv:86.262%; test_acc_atv:86.214%; test_loss_atv:0.0
+----------
+epoch:113; train_mae_atv:0.433; train_corr_atv:0.900; train_fscore_atv:91.30%; train_acc_atv:91.30%; train_loss_atv:0.0
+epoch:113; test_mae_atv:0.554; test_corr_atv:0.829; test_fscore_atv:86.689%; test_acc_atv:86.791%; test_loss_atv:0.0
+----------
+epoch:114; train_mae_atv:0.452; train_corr_atv:0.884; train_fscore_atv:90.21%; train_acc_atv:90.22%; train_loss_atv:0.0
+epoch:114; test_mae_atv:0.561; test_corr_atv:0.823; test_fscore_atv:85.275%; test_acc_atv:85.195%; test_loss_atv:0.0
+----------
+epoch:115; train_mae_atv:0.434; train_corr_atv:0.898; train_fscore_atv:90.93%; train_acc_atv:90.92%; train_loss_atv:0.0
+epoch:115; test_mae_atv:0.555; test_corr_atv:0.826; test_fscore_atv:85.850%; test_acc_atv:85.773%; test_loss_atv:0.0
+----------
+epoch:116; train_mae_atv:0.430; train_corr_atv:0.901; train_fscore_atv:91.04%; train_acc_atv:91.05%; train_loss_atv:0.0
+epoch:116; test_mae_atv:0.552; test_corr_atv:0.827; test_fscore_atv:85.891%; test_acc_atv:85.883%; test_loss_atv:0.0
+----------
+epoch:117; train_mae_atv:0.453; train_corr_atv:0.885; train_fscore_atv:90.22%; train_acc_atv:90.22%; train_loss_atv:0.0
+epoch:117; test_mae_atv:0.559; test_corr_atv:0.830; test_fscore_atv:86.361%; test_acc_atv:86.351%; test_loss_atv:0.0
+----------
+epoch:118; train_mae_atv:0.491; train_corr_atv:0.855; train_fscore_atv:88.34%; train_acc_atv:88.37%; train_loss_atv:0.0
+epoch:118; test_mae_atv:0.563; test_corr_atv:0.826; test_fscore_atv:85.648%; test_acc_atv:85.498%; test_loss_atv:0.0
+----------
+epoch:119; train_mae_atv:0.464; train_corr_atv:0.873; train_fscore_atv:89.38%; train_acc_atv:89.36%; train_loss_atv:0.0
+epoch:119; test_mae_atv:0.565; test_corr_atv:0.820; test_fscore_atv:86.510%; test_acc_atv:86.571%; test_loss_atv:0.0
+----------
+epoch:120; train_mae_atv:0.450; train_corr_atv:0.889; train_fscore_atv:90.32%; train_acc_atv:90.31%; train_loss_atv:0.0
+epoch:120; test_mae_atv:0.550; test_corr_atv:0.830; test_fscore_atv:86.829%; test_acc_atv:86.929%; test_loss_atv:0.0
+----------
+epoch:121; train_mae_atv:0.435; train_corr_atv:0.894; train_fscore_atv:90.88%; train_acc_atv:90.88%; train_loss_atv:0.0
+epoch:121; test_mae_atv:0.549; test_corr_atv:0.827; test_fscore_atv:86.799%; test_acc_atv:86.791%; test_loss_atv:0.0
+----------
+epoch:122; train_mae_atv:0.457; train_corr_atv:0.880; train_fscore_atv:89.78%; train_acc_atv:89.79%; train_loss_atv:0.0
+epoch:122; test_mae_atv:0.557; test_corr_atv:0.824; test_fscore_atv:85.902%; test_acc_atv:85.966%; test_loss_atv:0.0
+----------
+epoch:123; train_mae_atv:0.509; train_corr_atv:0.848; train_fscore_atv:87.75%; train_acc_atv:87.74%; train_loss_atv:0.0
+epoch:123; test_mae_atv:0.544; test_corr_atv:0.829; test_fscore_atv:86.675%; test_acc_atv:86.819%; test_loss_atv:0.0
+----------
+epoch:124; train_mae_atv:0.449; train_corr_atv:0.886; train_fscore_atv:90.35%; train_acc_atv:90.36%; train_loss_atv:0.0
+epoch:124; test_mae_atv:0.556; test_corr_atv:0.828; test_fscore_atv:86.509%; test_acc_atv:86.461%; test_loss_atv:0.0
+----------
+epoch:125; train_mae_atv:0.413; train_corr_atv:0.908; train_fscore_atv:91.50%; train_acc_atv:91.50%; train_loss_atv:0.0
+epoch:125; test_mae_atv:0.547; test_corr_atv:0.827; test_fscore_atv:87.181%; test_acc_atv:87.287%; test_loss_atv:0.0
+----------
+epoch:126; train_mae_atv:0.441; train_corr_atv:0.889; train_fscore_atv:89.86%; train_acc_atv:89.84%; train_loss_atv:0.0
+epoch:126; test_mae_atv:0.552; test_corr_atv:0.829; test_fscore_atv:86.536%; test_acc_atv:86.516%; test_loss_atv:0.0
+----------
+epoch:127; train_mae_atv:0.432; train_corr_atv:0.896; train_fscore_atv:91.11%; train_acc_atv:91.11%; train_loss_atv:0.0
+epoch:127; test_mae_atv:0.550; test_corr_atv:0.829; test_fscore_atv:86.821%; test_acc_atv:86.901%; test_loss_atv:0.0
+----------
+epoch:128; train_mae_atv:0.443; train_corr_atv:0.887; train_fscore_atv:90.25%; train_acc_atv:90.26%; train_loss_atv:0.0
+epoch:128; test_mae_atv:0.547; test_corr_atv:0.827; test_fscore_atv:86.718%; test_acc_atv:86.791%; test_loss_atv:0.0
+----------
+epoch:129; train_mae_atv:0.419; train_corr_atv:0.905; train_fscore_atv:91.25%; train_acc_atv:91.24%; train_loss_atv:0.0
+epoch:129; test_mae_atv:0.554; test_corr_atv:0.825; test_fscore_atv:85.922%; test_acc_atv:86.159%; test_loss_atv:0.0
+----------
+epoch:130; train_mae_atv:0.449; train_corr_atv:0.881; train_fscore_atv:89.66%; train_acc_atv:89.69%; train_loss_atv:0.0
+epoch:130; test_mae_atv:0.546; test_corr_atv:0.828; test_fscore_atv:86.247%; test_acc_atv:86.241%; test_loss_atv:0.0
+----------
+epoch:131; train_mae_atv:0.402; train_corr_atv:0.914; train_fscore_atv:92.37%; train_acc_atv:92.38%; train_loss_atv:0.0
+epoch:131; test_mae_atv:0.555; test_corr_atv:0.829; test_fscore_atv:86.566%; test_acc_atv:86.626%; test_loss_atv:0.0
+----------
+epoch:132; train_mae_atv:0.450; train_corr_atv:0.879; train_fscore_atv:90.08%; train_acc_atv:90.11%; train_loss_atv:0.0
+epoch:132; test_mae_atv:0.554; test_corr_atv:0.831; test_fscore_atv:86.978%; test_acc_atv:86.929%; test_loss_atv:0.0
+----------
+epoch:133; train_mae_atv:0.451; train_corr_atv:0.884; train_fscore_atv:89.84%; train_acc_atv:89.82%; train_loss_atv:0.0
+epoch:133; test_mae_atv:0.567; test_corr_atv:0.825; test_fscore_atv:86.761%; test_acc_atv:86.846%; test_loss_atv:0.0
+----------
+epoch:134; train_mae_atv:0.437; train_corr_atv:0.890; train_fscore_atv:90.37%; train_acc_atv:90.36%; train_loss_atv:0.0
+epoch:134; test_mae_atv:0.553; test_corr_atv:0.828; test_fscore_atv:86.722%; test_acc_atv:86.901%; test_loss_atv:0.0
+----------
+epoch:135; train_mae_atv:0.414; train_corr_atv:0.904; train_fscore_atv:91.80%; train_acc_atv:91.82%; train_loss_atv:0.0
+epoch:135; test_mae_atv:0.551; test_corr_atv:0.828; test_fscore_atv:86.163%; test_acc_atv:86.103%; test_loss_atv:0.0
+----------
+epoch:136; train_mae_atv:0.397; train_corr_atv:0.917; train_fscore_atv:92.09%; train_acc_atv:92.09%; train_loss_atv:0.0
+epoch:136; test_mae_atv:0.551; test_corr_atv:0.828; test_fscore_atv:86.621%; test_acc_atv:86.654%; test_loss_atv:0.0
+----------
+epoch:137; train_mae_atv:0.403; train_corr_atv:0.911; train_fscore_atv:91.95%; train_acc_atv:91.95%; train_loss_atv:0.0
+epoch:137; test_mae_atv:0.558; test_corr_atv:0.826; test_fscore_atv:87.069%; test_acc_atv:87.094%; test_loss_atv:0.0
+----------
+epoch:138; train_mae_atv:0.435; train_corr_atv:0.889; train_fscore_atv:90.49%; train_acc_atv:90.49%; train_loss_atv:0.0
+epoch:138; test_mae_atv:0.550; test_corr_atv:0.826; test_fscore_atv:86.134%; test_acc_atv:86.159%; test_loss_atv:0.0
+----------
+epoch:139; train_mae_atv:0.382; train_corr_atv:0.925; train_fscore_atv:92.70%; train_acc_atv:92.70%; train_loss_atv:0.0
+epoch:139; test_mae_atv:0.554; test_corr_atv:0.827; test_fscore_atv:86.791%; test_acc_atv:86.846%; test_loss_atv:0.0
+----------
+epoch:140; train_mae_atv:0.431; train_corr_atv:0.889; train_fscore_atv:90.32%; train_acc_atv:90.33%; train_loss_atv:0.0
+epoch:140; test_mae_atv:0.547; test_corr_atv:0.827; test_fscore_atv:86.416%; test_acc_atv:86.434%; test_loss_atv:0.0
+----------
+epoch:141; train_mae_atv:0.437; train_corr_atv:0.888; train_fscore_atv:90.43%; train_acc_atv:90.42%; train_loss_atv:0.0
+epoch:141; test_mae_atv:0.551; test_corr_atv:0.824; test_fscore_atv:86.715%; test_acc_atv:86.819%; test_loss_atv:0.0
+----------
+epoch:142; train_mae_atv:0.426; train_corr_atv:0.895; train_fscore_atv:91.17%; train_acc_atv:91.16%; train_loss_atv:0.0
+epoch:142; test_mae_atv:0.546; test_corr_atv:0.828; test_fscore_atv:86.968%; test_acc_atv:86.957%; test_loss_atv:0.0
+----------
+epoch:143; train_mae_atv:0.427; train_corr_atv:0.895; train_fscore_atv:90.71%; train_acc_atv:90.70%; train_loss_atv:0.0
+epoch:143; test_mae_atv:0.579; test_corr_atv:0.824; test_fscore_atv:86.030%; test_acc_atv:86.324%; test_loss_atv:0.0
+----------
+epoch:144; train_mae_atv:0.419; train_corr_atv:0.901; train_fscore_atv:91.01%; train_acc_atv:91.02%; train_loss_atv:0.0
+epoch:144; test_mae_atv:0.562; test_corr_atv:0.826; test_fscore_atv:86.142%; test_acc_atv:86.076%; test_loss_atv:0.0
+----------
+epoch:145; train_mae_atv:0.417; train_corr_atv:0.900; train_fscore_atv:91.23%; train_acc_atv:91.21%; train_loss_atv:0.0
+epoch:145; test_mae_atv:0.551; test_corr_atv:0.827; test_fscore_atv:86.500%; test_acc_atv:86.489%; test_loss_atv:0.0
+----------
+epoch:146; train_mae_atv:0.408; train_corr_atv:0.906; train_fscore_atv:91.38%; train_acc_atv:91.37%; train_loss_atv:0.0
+epoch:146; test_mae_atv:0.567; test_corr_atv:0.826; test_fscore_atv:85.917%; test_acc_atv:85.801%; test_loss_atv:0.0
+----------
+epoch:147; train_mae_atv:0.422; train_corr_atv:0.896; train_fscore_atv:91.03%; train_acc_atv:91.04%; train_loss_atv:0.0
+epoch:147; test_mae_atv:0.549; test_corr_atv:0.825; test_fscore_atv:86.073%; test_acc_atv:86.131%; test_loss_atv:0.0
+----------
+epoch:148; train_mae_atv:0.428; train_corr_atv:0.890; train_fscore_atv:90.43%; train_acc_atv:90.45%; train_loss_atv:0.0
+epoch:148; test_mae_atv:0.552; test_corr_atv:0.826; test_fscore_atv:86.530%; test_acc_atv:86.544%; test_loss_atv:0.0
+----------
+epoch:149; train_mae_atv:0.375; train_corr_atv:0.925; train_fscore_atv:92.66%; train_acc_atv:92.66%; train_loss_atv:0.0
+epoch:149; test_mae_atv:0.547; test_corr_atv:0.827; test_fscore_atv:86.636%; test_acc_atv:86.736%; test_loss_atv:0.0
+----------
+epoch:150; train_mae_atv:0.390; train_corr_atv:0.916; train_fscore_atv:92.29%; train_acc_atv:92.30%; train_loss_atv:0.0
+epoch:150; test_mae_atv:0.552; test_corr_atv:0.824; test_fscore_atv:86.463%; test_acc_atv:86.544%; test_loss_atv:0.0
+----------
+epoch:151; train_mae_atv:0.431; train_corr_atv:0.889; train_fscore_atv:90.69%; train_acc_atv:90.69%; train_loss_atv:0.0
+epoch:151; test_mae_atv:0.567; test_corr_atv:0.826; test_fscore_atv:86.167%; test_acc_atv:86.103%; test_loss_atv:0.0
+----------
+epoch:152; train_mae_atv:0.399; train_corr_atv:0.911; train_fscore_atv:92.22%; train_acc_atv:92.22%; train_loss_atv:0.0
+epoch:152; test_mae_atv:0.558; test_corr_atv:0.824; test_fscore_atv:86.521%; test_acc_atv:86.489%; test_loss_atv:0.0
+----------
+epoch:153; train_mae_atv:0.401; train_corr_atv:0.909; train_fscore_atv:91.58%; train_acc_atv:91.58%; train_loss_atv:0.0
+epoch:153; test_mae_atv:0.555; test_corr_atv:0.821; test_fscore_atv:86.142%; test_acc_atv:86.241%; test_loss_atv:0.0
+----------
+epoch:154; train_mae_atv:0.385; train_corr_atv:0.918; train_fscore_atv:92.84%; train_acc_atv:92.84%; train_loss_atv:0.0
+epoch:154; test_mae_atv:0.553; test_corr_atv:0.824; test_fscore_atv:86.237%; test_acc_atv:86.351%; test_loss_atv:0.0
+----------
+epoch:155; train_mae_atv:0.409; train_corr_atv:0.902; train_fscore_atv:91.62%; train_acc_atv:91.60%; train_loss_atv:0.0
+epoch:155; test_mae_atv:0.555; test_corr_atv:0.827; test_fscore_atv:85.961%; test_acc_atv:85.883%; test_loss_atv:0.0
+----------
+epoch:156; train_mae_atv:0.380; train_corr_atv:0.923; train_fscore_atv:92.92%; train_acc_atv:92.93%; train_loss_atv:0.0
+epoch:156; test_mae_atv:0.554; test_corr_atv:0.826; test_fscore_atv:86.738%; test_acc_atv:86.791%; test_loss_atv:0.0
+----------
+epoch:157; train_mae_atv:0.389; train_corr_atv:0.913; train_fscore_atv:92.44%; train_acc_atv:92.45%; train_loss_atv:0.0
+epoch:157; test_mae_atv:0.550; test_corr_atv:0.825; test_fscore_atv:86.575%; test_acc_atv:86.626%; test_loss_atv:0.0
+----------
+epoch:158; train_mae_atv:0.365; train_corr_atv:0.929; train_fscore_atv:93.60%; train_acc_atv:93.59%; train_loss_atv:0.0
+epoch:158; test_mae_atv:0.561; test_corr_atv:0.827; test_fscore_atv:86.539%; test_acc_atv:86.461%; test_loss_atv:0.0
+----------
+epoch:159; train_mae_atv:0.383; train_corr_atv:0.918; train_fscore_atv:91.94%; train_acc_atv:91.94%; train_loss_atv:0.0
+epoch:159; test_mae_atv:0.553; test_corr_atv:0.826; test_fscore_atv:86.720%; test_acc_atv:86.736%; test_loss_atv:0.0
+----------
+epoch:160; train_mae_atv:0.407; train_corr_atv:0.901; train_fscore_atv:91.22%; train_acc_atv:91.22%; train_loss_atv:0.0
+epoch:160; test_mae_atv:0.561; test_corr_atv:0.826; test_fscore_atv:86.308%; test_acc_atv:86.241%; test_loss_atv:0.0
+----------
+epoch:161; train_mae_atv:0.396; train_corr_atv:0.910; train_fscore_atv:92.30%; train_acc_atv:92.30%; train_loss_atv:0.0
+epoch:161; test_mae_atv:0.552; test_corr_atv:0.827; test_fscore_atv:86.630%; test_acc_atv:86.654%; test_loss_atv:0.0
+----------
+epoch:162; train_mae_atv:0.377; train_corr_atv:0.921; train_fscore_atv:92.53%; train_acc_atv:92.53%; train_loss_atv:0.0
+epoch:162; test_mae_atv:0.555; test_corr_atv:0.827; test_fscore_atv:86.333%; test_acc_atv:86.269%; test_loss_atv:0.0
+----------
+epoch:163; train_mae_atv:0.404; train_corr_atv:0.905; train_fscore_atv:91.51%; train_acc_atv:91.50%; train_loss_atv:0.0
+epoch:163; test_mae_atv:0.551; test_corr_atv:0.826; test_fscore_atv:86.301%; test_acc_atv:86.406%; test_loss_atv:0.0
+----------
+epoch:164; train_mae_atv:0.371; train_corr_atv:0.926; train_fscore_atv:93.11%; train_acc_atv:93.12%; train_loss_atv:0.0
+epoch:164; test_mae_atv:0.568; test_corr_atv:0.826; test_fscore_atv:85.550%; test_acc_atv:85.856%; test_loss_atv:0.0
+----------
+epoch:165; train_mae_atv:0.389; train_corr_atv:0.914; train_fscore_atv:92.24%; train_acc_atv:92.23%; train_loss_atv:0.0
+epoch:165; test_mae_atv:0.562; test_corr_atv:0.822; test_fscore_atv:86.097%; test_acc_atv:86.241%; test_loss_atv:0.0
+----------
+epoch:166; train_mae_atv:0.372; train_corr_atv:0.926; train_fscore_atv:93.15%; train_acc_atv:93.16%; train_loss_atv:0.0
+epoch:166; test_mae_atv:0.559; test_corr_atv:0.823; test_fscore_atv:85.876%; test_acc_atv:86.048%; test_loss_atv:0.0
+----------
+epoch:167; train_mae_atv:0.387; train_corr_atv:0.913; train_fscore_atv:92.25%; train_acc_atv:92.25%; train_loss_atv:0.0
+epoch:167; test_mae_atv:0.555; test_corr_atv:0.824; test_fscore_atv:86.371%; test_acc_atv:86.461%; test_loss_atv:0.0
+----------
+epoch:168; train_mae_atv:0.400; train_corr_atv:0.906; train_fscore_atv:91.30%; train_acc_atv:91.30%; train_loss_atv:0.0
+epoch:168; test_mae_atv:0.616; test_corr_atv:0.813; test_fscore_atv:82.977%; test_acc_atv:82.691%; test_loss_atv:0.0
+----------
+epoch:169; train_mae_atv:0.382; train_corr_atv:0.920; train_fscore_atv:92.40%; train_acc_atv:92.39%; train_loss_atv:0.0
+epoch:169; test_mae_atv:0.556; test_corr_atv:0.825; test_fscore_atv:87.406%; test_acc_atv:87.452%; test_loss_atv:0.0
+----------
+epoch:170; train_mae_atv:0.394; train_corr_atv:0.908; train_fscore_atv:91.94%; train_acc_atv:91.95%; train_loss_atv:0.0
+epoch:170; test_mae_atv:0.565; test_corr_atv:0.823; test_fscore_atv:87.183%; test_acc_atv:87.232%; test_loss_atv:0.0
+----------
+epoch:171; train_mae_atv:0.354; train_corr_atv:0.933; train_fscore_atv:93.41%; train_acc_atv:93.41%; train_loss_atv:0.0
+epoch:171; test_mae_atv:0.560; test_corr_atv:0.825; test_fscore_atv:87.022%; test_acc_atv:86.984%; test_loss_atv:0.0
+----------
+epoch:172; train_mae_atv:0.357; train_corr_atv:0.930; train_fscore_atv:93.20%; train_acc_atv:93.19%; train_loss_atv:0.0
+epoch:172; test_mae_atv:0.551; test_corr_atv:0.824; test_fscore_atv:86.787%; test_acc_atv:86.819%; test_loss_atv:0.0
+----------
+epoch:173; train_mae_atv:0.379; train_corr_atv:0.915; train_fscore_atv:92.44%; train_acc_atv:92.44%; train_loss_atv:0.0
+epoch:173; test_mae_atv:0.552; test_corr_atv:0.824; test_fscore_atv:86.370%; test_acc_atv:86.516%; test_loss_atv:0.0
+----------
+epoch:174; train_mae_atv:0.383; train_corr_atv:0.916; train_fscore_atv:92.11%; train_acc_atv:92.12%; train_loss_atv:0.0
+epoch:174; test_mae_atv:0.568; test_corr_atv:0.822; test_fscore_atv:86.147%; test_acc_atv:86.131%; test_loss_atv:0.0
+----------
+epoch:175; train_mae_atv:0.374; train_corr_atv:0.921; train_fscore_atv:92.34%; train_acc_atv:92.32%; train_loss_atv:0.0
+epoch:175; test_mae_atv:0.561; test_corr_atv:0.825; test_fscore_atv:86.513%; test_acc_atv:86.571%; test_loss_atv:0.0
+----------
+epoch:176; train_mae_atv:0.368; train_corr_atv:0.924; train_fscore_atv:93.01%; train_acc_atv:93.01%; train_loss_atv:0.0
+epoch:176; test_mae_atv:0.556; test_corr_atv:0.823; test_fscore_atv:86.330%; test_acc_atv:86.406%; test_loss_atv:0.0
+----------
+epoch:177; train_mae_atv:0.375; train_corr_atv:0.919; train_fscore_atv:92.14%; train_acc_atv:92.12%; train_loss_atv:0.0
+epoch:177; test_mae_atv:0.567; test_corr_atv:0.823; test_fscore_atv:86.400%; test_acc_atv:86.351%; test_loss_atv:0.0
+----------
+epoch:178; train_mae_atv:0.374; train_corr_atv:0.921; train_fscore_atv:92.57%; train_acc_atv:92.58%; train_loss_atv:0.0
+epoch:178; test_mae_atv:0.555; test_corr_atv:0.822; test_fscore_atv:86.065%; test_acc_atv:86.076%; test_loss_atv:0.0
+----------
+epoch:179; train_mae_atv:0.369; train_corr_atv:0.922; train_fscore_atv:93.09%; train_acc_atv:93.10%; train_loss_atv:0.0
+epoch:179; test_mae_atv:0.554; test_corr_atv:0.826; test_fscore_atv:86.064%; test_acc_atv:86.048%; test_loss_atv:0.0
+----------
+epoch:180; train_mae_atv:0.374; train_corr_atv:0.919; train_fscore_atv:92.18%; train_acc_atv:92.18%; train_loss_atv:0.0
+epoch:180; test_mae_atv:0.561; test_corr_atv:0.821; test_fscore_atv:86.382%; test_acc_atv:86.324%; test_loss_atv:0.0
+----------
+epoch:181; train_mae_atv:0.382; train_corr_atv:0.914; train_fscore_atv:92.28%; train_acc_atv:92.27%; train_loss_atv:0.0
+epoch:181; test_mae_atv:0.563; test_corr_atv:0.822; test_fscore_atv:86.570%; test_acc_atv:86.599%; test_loss_atv:0.0
+----------
+epoch:182; train_mae_atv:0.339; train_corr_atv:0.938; train_fscore_atv:94.10%; train_acc_atv:94.10%; train_loss_atv:0.0
+epoch:182; test_mae_atv:0.563; test_corr_atv:0.825; test_fscore_atv:86.325%; test_acc_atv:86.241%; test_loss_atv:0.0
+----------
+epoch:183; train_mae_atv:0.362; train_corr_atv:0.924; train_fscore_atv:92.87%; train_acc_atv:92.87%; train_loss_atv:0.0
+epoch:183; test_mae_atv:0.563; test_corr_atv:0.824; test_fscore_atv:86.071%; test_acc_atv:85.966%; test_loss_atv:0.0
+----------
+epoch:184; train_mae_atv:0.378; train_corr_atv:0.913; train_fscore_atv:92.66%; train_acc_atv:92.65%; train_loss_atv:0.0
+epoch:184; test_mae_atv:0.559; test_corr_atv:0.823; test_fscore_atv:86.256%; test_acc_atv:86.324%; test_loss_atv:0.0
+----------
+epoch:185; train_mae_atv:0.347; train_corr_atv:0.934; train_fscore_atv:93.79%; train_acc_atv:93.79%; train_loss_atv:0.0
+epoch:185; test_mae_atv:0.556; test_corr_atv:0.823; test_fscore_atv:86.204%; test_acc_atv:86.186%; test_loss_atv:0.0
+----------
+epoch:186; train_mae_atv:0.358; train_corr_atv:0.928; train_fscore_atv:93.35%; train_acc_atv:93.36%; train_loss_atv:0.0
+epoch:186; test_mae_atv:0.561; test_corr_atv:0.821; test_fscore_atv:85.783%; test_acc_atv:85.718%; test_loss_atv:0.0
+----------
+epoch:187; train_mae_atv:0.352; train_corr_atv:0.932; train_fscore_atv:93.80%; train_acc_atv:93.79%; train_loss_atv:0.0
+epoch:187; test_mae_atv:0.559; test_corr_atv:0.823; test_fscore_atv:86.577%; test_acc_atv:86.571%; test_loss_atv:0.0
+----------
+epoch:188; train_mae_atv:0.341; train_corr_atv:0.937; train_fscore_atv:93.74%; train_acc_atv:93.74%; train_loss_atv:0.0
+epoch:188; test_mae_atv:0.557; test_corr_atv:0.825; test_fscore_atv:86.564%; test_acc_atv:86.654%; test_loss_atv:0.0
+----------
+epoch:189; train_mae_atv:0.364; train_corr_atv:0.921; train_fscore_atv:92.76%; train_acc_atv:92.74%; train_loss_atv:0.0
+epoch:189; test_mae_atv:0.563; test_corr_atv:0.818; test_fscore_atv:86.008%; test_acc_atv:85.966%; test_loss_atv:0.0
+----------
+epoch:190; train_mae_atv:0.374; train_corr_atv:0.915; train_fscore_atv:92.06%; train_acc_atv:92.07%; train_loss_atv:0.0
+epoch:190; test_mae_atv:0.555; test_corr_atv:0.822; test_fscore_atv:85.988%; test_acc_atv:86.186%; test_loss_atv:0.0
+----------
+epoch:191; train_mae_atv:0.393; train_corr_atv:0.905; train_fscore_atv:91.80%; train_acc_atv:91.80%; train_loss_atv:0.0
+epoch:191; test_mae_atv:0.558; test_corr_atv:0.821; test_fscore_atv:86.789%; test_acc_atv:86.819%; test_loss_atv:0.0
+----------
+epoch:192; train_mae_atv:0.346; train_corr_atv:0.934; train_fscore_atv:93.48%; train_acc_atv:93.47%; train_loss_atv:0.0
+epoch:192; test_mae_atv:0.553; test_corr_atv:0.823; test_fscore_atv:86.495%; test_acc_atv:86.544%; test_loss_atv:0.0
+----------
+epoch:193; train_mae_atv:0.397; train_corr_atv:0.903; train_fscore_atv:91.14%; train_acc_atv:91.14%; train_loss_atv:0.0
+epoch:193; test_mae_atv:0.569; test_corr_atv:0.817; test_fscore_atv:86.069%; test_acc_atv:85.993%; test_loss_atv:0.0
+----------
+epoch:194; train_mae_atv:0.353; train_corr_atv:0.931; train_fscore_atv:93.28%; train_acc_atv:93.28%; train_loss_atv:0.0
+epoch:194; test_mae_atv:0.563; test_corr_atv:0.822; test_fscore_atv:86.593%; test_acc_atv:86.626%; test_loss_atv:0.0
+----------
+epoch:195; train_mae_atv:0.330; train_corr_atv:0.942; train_fscore_atv:93.94%; train_acc_atv:93.94%; train_loss_atv:0.0
+epoch:195; test_mae_atv:0.553; test_corr_atv:0.823; test_fscore_atv:86.021%; test_acc_atv:86.159%; test_loss_atv:0.0
+----------
+epoch:196; train_mae_atv:0.331; train_corr_atv:0.942; train_fscore_atv:94.34%; train_acc_atv:94.35%; train_loss_atv:0.0
+epoch:196; test_mae_atv:0.554; test_corr_atv:0.827; test_fscore_atv:87.224%; test_acc_atv:87.259%; test_loss_atv:0.0
+----------
+epoch:197; train_mae_atv:0.340; train_corr_atv:0.936; train_fscore_atv:93.73%; train_acc_atv:93.73%; train_loss_atv:0.0
+epoch:197; test_mae_atv:0.561; test_corr_atv:0.823; test_fscore_atv:86.262%; test_acc_atv:86.296%; test_loss_atv:0.0
+----------
+epoch:198; train_mae_atv:0.376; train_corr_atv:0.912; train_fscore_atv:92.31%; train_acc_atv:92.34%; train_loss_atv:0.0
+epoch:198; test_mae_atv:0.563; test_corr_atv:0.819; test_fscore_atv:86.052%; test_acc_atv:86.048%; test_loss_atv:0.0
+----------
+epoch:199; train_mae_atv:0.360; train_corr_atv:0.926; train_fscore_atv:92.98%; train_acc_atv:92.98%; train_loss_atv:0.0
+epoch:199; test_mae_atv:0.565; test_corr_atv:0.822; test_fscore_atv:86.091%; test_acc_atv:86.021%; test_loss_atv:0.0
+----------
+--------------------------------------------------------------------------------
+Time of training: 2804.0032720565796s
+--------------------------------------------------------------------------------
+Step3: saving and testing on the 1 folder
+The best(acc) epoch of test_condition (atv): 118 --test_mae 0.5563408136367798 --test_corr 0.8250758094185329 --test_fscores 0.8740564972517189 --test_acc 0.8745184369840396.
+>>>>> Finish: training on the 1 folder, duration: 2805.115622997284 >>>>>
+--------------------------------------------------------------------------------
+Folder avg: test_condition (atv) --test_mae 0.5563408136367798 --test_corr 0.8250758094185329 --test_fscores 0.8740564972517189 --test_acc0.8745184369840396
+====== Saving =======
+/home/wyy/data/sjs/saved/model/main_result/CMUMOSEI/2025-04-11_18_07_05_CMUMOSEI_hidden-256_bs-32_features-wav2vec-large-c-UTT;deberta-large-4-UTT;manet_UTT_mae-0.556_corr-0.825_f1-0.8741_acc-0.8745_test-condition-atv.pth
+Model loaded from /home/wyy/data/sjs/saved/model/main_result/CMUMOSEI/2025-04-11_18_07_05_CMUMOSEI_hidden-256_bs-32_features-wav2vec-large-c-UTT;deberta-large-4-UTT;manet_UTT_mae-0.556_corr-0.825_f1-0.8741_acc-0.8745_test-condition-atv.pth
+The best(acc) epoch of test_condition (a):  --test_mae 0.9749252796173096 --test_corr 0.38077366173074956 --test_fscores 0.6704970331894231 --test_acc 0.6929003852504128.
+The best(acc) epoch of test_condition (t):  --test_mae 0.5725821256637573 --test_corr 0.808903960096153 --test_fscores 0.8607992864361103 --test_acc 0.8613098514034122.
+The best(acc) epoch of test_condition (v):  --test_mae 0.9799103140830994 --test_corr 0.3721569047745098 --test_fscores 0.6623860815652624 --test_acc 0.6741882223445239.
+The best(acc) epoch of test_condition (at):  --test_mae 0.5607282519340515 --test_corr 0.8188622616124421 --test_fscores 0.8629804144815226 --test_acc 0.8640616400660429.
+The best(acc) epoch of test_condition (av):  --test_mae 0.9192994832992554 --test_corr 0.4356567894319742 --test_fscores 0.6899879301682817 --test_acc 0.6992294991744634.
+The best(acc) epoch of test_condition (tv):  --test_mae 0.5600502490997314 --test_corr 0.8181105578803558 --test_fscores 0.8589625934331158 --test_acc 0.8599339570720969.
+The best(acc) epoch of test_condition (atv):  --test_mae 0.550805926322937 --test_corr 0.82405500859595 --test_fscores 0.86715326558487 --test_acc 0.868189323059989.
+Folder avg: test_condition (atv) --test_mae 0.8704609870910645 --test_corr 0.6369313063031621 --test_fscores 0.7818238006940836 --test_acc 0.7885446969101343
+Average a test_acc0: 0.0, test_fscore0: 0.0, test_corr0: 0.0
+Average t test_acc1: 0.0, test_fscore1: 0.0, test_corr1: 0.0
+Average v test_acc2: 0.0, test_fscore2: 0.0, test_corr2: 0.0
+Average at test_acc3: 0.0, test_fscore3: 0.0, test_corr3: 0.0
+Average av test_acc4: 0.0, test_fscore4: 0.0, test_corr4: 0.0
+Average tv  test_acc5: 0.0, test_fscore5: 0.0, test_corr5: 0.0
+Average atv test_acc6: 0.0, test_fscore6: 0.0, test_corr6: 0.0
+Overall average test_acc: 0.0, Overall average test_fscore: 0.0, Overall average test_corr: 0.0

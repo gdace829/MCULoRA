@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 import torch.nn.functional as F
-
+from .Lora import MCULoRALinear
 
 class Mlp(nn.Module):
     def __init__(
@@ -15,21 +15,64 @@ class Mlp(nn.Module):
         super().__init__()
         out_features = out_features or in_features
         hidden_features = hidden_features or in_features
-        self.fc1 = nn.Linear(in_features, hidden_features)
+
+         # in_features = self.adim
+        # out_features = D_e
+        # r = {'0': 5, '1':5, '2': 5, '3': 5, '4':5, '5': 5, '6': 5, '7': 5}
+        r = {'0': 8, '1':8, '2': 8, '3': 8, '4':8, '5': 8, '6': 8, '7': 8}
+        # r = {'0': 4, '1': 4, '2': 4, '3': 4, '4': 4, '5': 4, '6': 4, '7': 4}
+        lora_shared_scale = 1.0
+        lora_task_scale={'0': 1.0, '1': 1.0, '2': 1.0, '3': 1.0 ,'4': 1.0, '5': 1.0, '6': 1.0, '7': 1.0}
+        lora_dropout = 0.1
+        tasks = ['0','1','2','3','4','5','6','7']
+        trainable_scale_shared = False
+        trainable_scale_per_task = False
+        shared_mode = 'matrix'
+
+    # 创建 MTLoRALinear 实例
+        self.fc1 = MCULoRALinear(
+        in_features=in_features,
+        out_features=hidden_features,
+        r=r,
+        lora_shared_scale=lora_shared_scale,
+        lora_task_scale=lora_task_scale,
+        lora_dropout=lora_dropout,
+        tasks=tasks,
+        trainable_scale_shared=trainable_scale_shared,
+        trainable_scale_per_task=trainable_scale_per_task,
+        shared_mode=shared_mode
+        )
+
+        self.fc2 = MCULoRALinear(
+        in_features=hidden_features,
+        out_features=out_features,
+        r=r,
+        lora_shared_scale=lora_shared_scale,
+        lora_task_scale=lora_task_scale,
+        lora_dropout=lora_dropout,
+        tasks=tasks,
+        trainable_scale_shared=trainable_scale_shared,
+        trainable_scale_per_task=trainable_scale_per_task,
+        shared_mode=shared_mode
+        )
+
+
+
+        # self.fc1 = nn.Linear(in_features, hidden_features)
         self.act = act_layer()
-        self.fc2 = nn.Linear(hidden_features, out_features)
+        # self.fc2 = nn.Linear(hidden_features, out_features)
         self.drop = nn.Dropout(drop)
 
-    def forward(self, x):
-        x = self.fc1(x)
+    def forward(self, x,xs=None):
+        x,xs = self.fc1(x,xs)
         x = self.act(x)
         x = self.drop(x)
-        x = self.fc2(x)
+        x,xs = self.fc2(x,xs)
         x = self.drop(x)
-        return x
+        return x,xs
 
 
-class Block_softmoe(nn.Module):
+class Attention_group(nn.Module):
     def __init__(
             self,
             dim,
@@ -62,18 +105,18 @@ class Block_softmoe(nn.Module):
             mlp_ratio=mlp_ratio,
         )
 
-    def forward(self, x, cross_modality='atv', mask_modality=None, mask=None):
+    def forward(self, x, cross_modality='atv', mask_modality=None,xs=None, mask=None):
         # x: [B, s, C]
         B, s, C = x.shape
         if cross_modality == 'a':
-            x_a_mlp = self.Transformer_a(x, mask_modality, mask)
-            return x_a_mlp
+            x_a_mlp,xs = self.Transformer_a(x, mask_modality,xs, mask)
+            return x_a_mlp,xs
         if cross_modality == 't':
-            x_t_mlp = self.Transformer_t(x, mask_modality, mask)
-            return x_t_mlp
+            x_t_mlp,xs = self.Transformer_t(x, mask_modality,xs, mask)
+            return x_t_mlp,xs
         if cross_modality == 'v':
-            x_v_mlp = self.Transformer_v(x, mask_modality, mask)
-            return x_v_mlp
+            x_v_mlp,xs = self.Transformer_v(x, mask_modality,xs, mask)
+            return x_v_mlp,xs
 
 
 
@@ -100,7 +143,7 @@ class Attention(nn.Module):
         )
 
 
-    def forward(self, x, mask_modality, mask=None):
+    def forward(self, x, mask_modality,xs=None, mask=None):
         B, seq_len, C = x.shape
 
         q = self.q(x).reshape(B, seq_len, self.num_heads, -1).permute(0, 2, 1, 3)
@@ -118,9 +161,10 @@ class Attention(nn.Module):
             attn = torch.where(torch.isnan(attn), torch.full_like(attn, 0), attn)
 
         x_out = (attn @ v).transpose(1, 2).reshape(B, seq_len, C)
-        x_out = x_out + self.mlp(x_out)
-
-        return x_out
+        x_lora,xs=self.mlp(x_out,xs)
+        x_out = x_out + x_lora
+        
+        return x_out,xs
 
 
 class Block(nn.Module):
@@ -138,7 +182,7 @@ class Block(nn.Module):
 
         self.blocks = nn.ModuleList(
             [
-                Block_softmoe(dim,
+                Attention_group(dim,
                               num_heads=num_heads,
                               attn_drop=attn_drop,
                               proj_drop=drop,
@@ -147,15 +191,8 @@ class Block(nn.Module):
             ]
         )
 
-    def forward(self, x, first_stage, mask=None, modality=None):
-        if first_stage:
+    def forward(self, x, first_stage, mask=None, modality=None,xs=None):
             for layer_idx, block in enumerate(self.blocks):
-                x = x + block(x, cross_modality=modality, mask_modality=modality, mask=mask)
-            return x
-        else:
-            x_cross_a, x_cross_t, x_cross_v = torch.clone(x), torch.clone(x), torch.clone(x)
-            for layer_idx, block in enumerate(self.blocks):
-                x_cross_a = x_cross_a + block(x_cross_a, cross_modality='a', mask_modality=modality, mask=mask)
-                x_cross_t = x_cross_t + block(x_cross_t, cross_modality='t', mask_modality=modality, mask=mask)
-                x_cross_v = x_cross_v + block(x_cross_v, cross_modality='v', mask_modality=modality, mask=mask)
-            return torch.cat([x_cross_a, x_cross_t, x_cross_v], dim=-1)
+                x_res,xs=block(x, cross_modality=modality, mask_modality=modality, mask=mask,xs=xs)
+                x = x + x_res
+            return x,xs

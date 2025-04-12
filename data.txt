@@ -1,0 +1,330 @@
+iemocap4
+Average test_acc0: 0.5945964598075058, test_fscore0: 0.5711420734752711, test_corr0: 0.6302692164645303
+Average test_acc1: 0.85206579868298, test_fscore1: 0.850995703513771, test_corr1: 0.8588120228856981
+Average test_acc2: 0.6125009096024085, test_fscore2: 0.607866310206328, test_corr2: 0.5984293407069218
+Average test_acc3: 0.8695585309964965, test_fscore3: 0.8684866930159943, test_corr3: 0.8765222791825753
+Average test_acc4: 0.7375058879974988, test_fscore4: 0.7336804836093046, test_corr4: 0.7446977314719978
+Average test_acc5: 0.8828068240844015, test_fscore5: 0.8822034788195401, test_corr5: 0.8850038917955896
+Average test_acc6: 0.8921263650461826, test_fscore6: 0.8918218680792783, test_corr6: 0.8964881526629078
+Overall average test_acc: 0.777308682316782, Overall average test_fscore: 0.7723138015313553, Overall average test_corr: 0.7843175193100315
+mosei new
+The best(acc) epoch of test_condition (a):  --test_mae 0.928719699382782 --test_corr 0.4246955880409225 --test_fscores 0.6818188548437681 --test_acc 0.6978536048431481.
+The best(acc) epoch of test_condition (t):  --test_mae 0.5598310828208923 --test_corr 0.8150951284921181 --test_fscores 0.8635672383946077 --test_acc 0.864336818932306.
+The best(acc) epoch of test_condition (v):  --test_mae 0.9206501245498657 --test_corr 0.42366082512989345 --test_fscores 0.6735119849315068 --test_acc 0.6750137589433132.
+The best(acc) epoch of test_condition (at):  --test_mae 0.5519391894340515 --test_corr 0.8207382557901912 --test_fscores 0.8660932627946076 --test_acc 0.8668134287286736.
+The best(acc) epoch of test_condition (av):  --test_mae 0.8777385950088501 --test_corr 0.48509160728792433 --test_fscores 0.7197756606542728 --test_acc 0.724545954870666.
+The best(acc) epoch of test_condition (tv):  --test_mae 0.5483818054199219 --test_corr 0.82578905579001 --test_fscores 0.8712818344262787 --test_acc 0.8714914694551459.
+The best(acc) epoch of test_condition (atv):  --test_mae 0.5487442016601562 --test_corr 0.8259426060913785 --test_fscores 0.8722023148378469 --test_acc 0.8728673637864612.
+Folder avg: test_condition (atv) --test_mae 0.837817771094186 --test_corr 0.6601447238032055 --test_fscores 0.7926073072689841 --test_acc 0.7961317713656734
+
+our new
+The best(acc) epoch of test_condition (a):  --test_mae 0.928719699382782 --test_corr 0.4246955880409225 --test_fscores 0.6818188548437681 --test_acc 0.6978536048431481.
+The best(acc) epoch of test_condition (t):  --test_mae 0.5598310828208923 --test_corr 0.8150951284921181 --test_fscores 0.8635672383946077 --test_acc 0.864336818932306.
+The best(acc) epoch of test_condition (v):  --test_mae 0.9206501245498657 --test_corr 0.42366082512989345 --test_fscores 0.6735119849315068 --test_acc 0.6750137589433132.
+The best(acc) epoch of test_condition (at):  --test_mae 0.5519391894340515 --test_corr 0.8207382557901912 --test_fscores 0.8660932627946076 --test_acc 0.8668134287286736.
+The best(acc) epoch of test_condition (av):  --test_mae 0.8777385950088501 --test_corr 0.48509160728792433 --test_fscores 0.7197756606542728 --test_acc 0.724545954870666.
+The best(acc) epoch of test_condition (tv):  --test_mae 0.5483818054199219 --test_corr 0.82578905579001 --test_fscores 0.8712818344262787 --test_acc 0.8714914694551459.
+The best(acc) epoch of test_condition (atv):  --test_mae 0.5487442016601562 --test_corr 0.8259426060913785 --test_fscores 0.8722023148378469 --test_acc 0.8728673637864612.
+Folder avg: test_condition (atv) --test_mae 0.837817771094186 --test_corr 0.6601447238032055 --test_fscores 0.7926073072689841 --test_acc 0.7961317713656734
+
+通过调整损失概率加强了a的表征
+Average test_acc0: 0.6528723733193924, test_fscore0: 0.6371735253560786, test_corr0: 0.6604715985654875
+Average test_acc1: 0.8358394733277678, test_fscore1: 0.83581432176421, test_corr1: 0.8440103298725031
+Average test_acc2: 0.6134295482577292, test_fscore2: 0.5983001712519915, test_corr2: 0.5849278244532892
+Average test_acc3: 0.8637990777167985, test_fscore3: 0.8625643334510722, test_corr3: 0.874915273812855
+Average test_acc4: 0.7517700639369534, test_fscore4: 0.7488812993114092, test_corr4: 0.7521052213867077
+Average test_acc5: 0.8524815624309433, test_fscore5: 0.8515834478737417, test_corr5: 0.8552204823425242
+Average test_acc6: 0.8829668477654018, test_fscore6: 0.8820003347150743, test_corr6: 0.8917991428634224
+Overall average test_acc: 0.7790227066792837, Overall average test_fscore: 0.7737596333890826, Overall average test_corr: 0.7804928390423984
+iemocap4
+        audio_mask = np.random.choice([0, 1], size=(1,), p=[0.45, 0.55])
+        text_mask = np.random.choice([0, 1], size=(1,), p=[0.55, 0.45])
+        visual_mask = np.random.choice([0, 1], size=(1,), p=[0.55, 0.45])
+Average test_acc0: 0.6344274311558808, test_fscore0: 0.6189615359333217, test_corr0: 0.6658890915328566
+Average test_acc1: 0.8518420693477646, test_fscore1: 0.8516334233933396, test_corr1: 0.8542371964614986
+Average test_acc2: 0.6431833880630102, test_fscore2: 0.6363678440894434, test_corr2: 0.6165266517525763
+Average test_acc3: 0.8711887337750485, test_fscore3: 0.8705244843971794, test_corr3: 0.8792051059159285
+Average test_acc4: 0.7500140161760245, test_fscore4: 0.7473741608728283, test_corr4: 0.7595320175371298
+Average test_acc5: 0.8838020959540385, test_fscore5: 0.8828849144559807, test_corr5: 0.8825193865716738
+Average test_acc6: 0.889544707005345, test_fscore6: 0.8892967382463995, test_corr6: 0.894034361550343
+Overall average test_acc: 0.7891432059253017, Overall average test_fscore: 0.7852918716269274, Overall average test_corr: 0.7931348301888581
+
+
+Average test_acc0: 0.6347960225893663, test_fscore0: 0.6196083235951534, test_corr0: 0.6657453318891688
+Average test_acc1: 0.8520480555873226, test_fscore1: 0.8518543632780503, test_corr1: 0.8541277232039743
+Average test_acc2: 0.641483323945286, test_fscore2: 0.6340683541174481, test_corr2: 0.6139343998003136
+Average test_acc3: 0.8710035737832807, test_fscore3: 0.8703229402247942, test_corr3: 0.8791290682536432
+Average test_acc4: 0.751373415113467, test_fscore4: 0.7486532842768697, test_corr4: 0.7604820181758584
+Average test_acc5: 0.8850185272712652, test_fscore5: 0.8841281182345121, test_corr5: 0.8839451765259284
+Average test_acc6: 0.8894982770871274, test_fscore6: 0.8892422272847249, test_corr6: 0.8940463973898691
+Overall average test_acc: 0.7893173136253022, Overall average test_fscore: 0.7854110872873646, Overall average test_corr: 0.7930585878912507
+
+iemocap4
+        audio_mask = np.random.choice([0, 1], size=(1,), p=[0.44, 0.56])
+        text_mask = np.random.choice([0, 1], size=(1,), p=[0.55, 0.45])
+        visual_mask = np.random.choice([0, 1], size=(1,), p=[0.55, 0.45])
+Average test_acc0: 0.633202362347046, test_fscore0: 0.6177674681737931, test_corr0: 0.6647544571948837
+Average test_acc1: 0.8524621238302009, test_fscore1: 0.8521360238929194, test_corr1: 0.8545764619955829
+Average test_acc2: 0.6421500433026557, test_fscore2: 0.6354789500226907, test_corr2: 0.6177365160192595
+Average test_acc3: 0.8710675988732934, test_fscore3: 0.8702736964854993, test_corr3: 0.8791268271186572
+Average test_acc4: 0.7485249548876425, test_fscore4: 0.7455428563524761, test_corr4: 0.7589496785600149
+Average test_acc5: 0.8851720647425821, test_fscore5: 0.8842808956647182, test_corr5: 0.8843222155779411
+Average test_acc6: 0.888956366286644, test_fscore6: 0.8886820179335556, test_corr6: 0.8937930458150329
+Overall average test_acc: 0.7887907877528664, Overall average test_fscore: 0.7848802726465218, Overall average test_corr: 0.7933227431830533
+
+    print(f"Average a test_acc0: {test_acc0 / args.num_folder}, test_fscore0: {test_fscores0 / args.num_folder}, test_corr0: {test_corr0 / args.num_folder}")
+    print(f"Average t test_acc1: {test_acc1 / args.num_folder}, test_fscore1: {test_fscores1 / args.num_folder}, test_corr1: {test_corr1 / args.num_folder}")
+    print(f"Average v test_acc2: {test_acc2 / args.num_folder}, test_fscore2: {test_fscores2 / args.num_folder}, test_corr2: {test_corr2 / args.num_folder}")
+    print(f"Average at test_acc3: {test_acc3 / args.num_folder}, test_fscore3: {test_fscores3 / args.num_folder}, test_corr3: {test_corr3 / args.num_folder}")
+    print(f"Average av test_acc4: {test_acc4 / args.num_folder}, test_fscore4: {test_fscores4 / args.num_folder}, test_corr4: {test_corr4 / args.num_folder}")
+    print(f"Average tv  test_acc5: {test_acc5 / args.num_folder}, test_fscore5: {test_fscores5 / args.num_folder}, test_corr5: {test_corr5 / args.num_folder}")
+    print(f"Average atv test_acc6: {test_acc6 / args.num_folder}, test_fscore6: {test_fscores6 / args.num_folder}, test_corr6: {test_corr6 / args.num_folder}")
+
+
+iemocap4
+Average test_acc0: 0.5945964598075058, test_fscore0: 0.5711420734752711, test_corr0: 0.6302692164645303
+Average test_acc1: 0.85206579868298, test_fscore1: 0.850995703513771, test_corr1: 0.8588120228856981
+Average test_acc2: 0.6125009096024085, test_fscore2: 0.607866310206328, test_corr2: 0.5984293407069218
+Average test_acc3: 0.8695585309964965, test_fscore3: 0.8684866930159943, test_corr3: 0.8765222791825753
+Average test_acc4: 0.7375058879974988, test_fscore4: 0.7336804836093046, test_corr4: 0.7446977314719978
+Average test_acc5: 0.8828068240844015, test_fscore5: 0.8822034788195401, test_corr5: 0.8850038917955896
+Average test_acc6: 0.8921263650461826, test_fscore6: 0.8918218680792783, test_corr6: 0.8964881526629078
+Overall average test_acc: 0.777308682316782, Overall average test_fscore: 0.7723138015313553, Overall average test_corr: 0.7843175193100315
+# 不进行随机缺失处理
+Average test_acc0: 0.48837591527492663, test_fscore0: 0.4045499219741866, test_corr0: 0.5355916852666501
+Average test_acc1: 0.7889745574254811, test_fscore1: 0.7905836898323121, test_corr1: 0.7886013408119718
+Average test_acc2: 0.5380707458618603, test_fscore2: 0.535564919512237, test_corr2: 0.5214420856592197
+Average test_acc3: 0.832285776359523, test_fscore3: 0.8318478664882363, test_corr3: 0.847110703888071
+Average test_acc4: 0.7017953019359439, test_fscore4: 0.6966582235099781, test_corr4: 0.7120790422266643
+Average test_acc5: 0.86363563237766, test_fscore5: 0.8621684341915739, test_corr5: 0.8555489816268087
+Average test_acc6: 0.913480064785897, test_fscore6: 0.9117224868969988, test_corr6: 0.919782469192495
+Overall average test_acc: 0.7323739991458988, Overall average test_fscore: 0.7190136489150746, Overall average test_corr: 0.7400223298102687
+
+第一次动态调试0.002
+Average a test_acc0: 0.6778145662328285, test_fscore0: 0.6724655423957288, test_corr0: 0.6946789502830524
+Average t test_acc1: 0.8651333235863576, test_fscore1: 0.8650047950068993, test_corr1: 0.8685729266559388
+Average v test_acc2: 0.5506377621200892, test_fscore2: 0.554639983225394, test_corr2: 0.5652804140046948
+Average at test_acc3: 0.8859463231732952, test_fscore3: 0.8858898479813794, test_corr3: 0.8911352375926699
+Average av test_acc4: 0.7103958911407744, test_fscore4: 0.7057111735328383, test_corr4: 0.7337343878724321
+Average tv  test_acc5: 0.8742447067819402, test_fscore5: 0.8728129853391653, test_corr5: 0.8840623628605047
+Average atv test_acc6: 0.8909022227347088, test_fscore6: 0.8899083614521419, test_corr6: 0.9010106298294043
+Overall average test_acc: 0.7792963993957135, Overall average test_fscore: 0.7780618127047924, Overall average test_corr: 0.7912107012998136
+动态概率调整 77.7->
+Average a test_acc0: 0.6643289615217076, test_fscore0: 0.6474167653826826, test_corr0: 0.6950859902078982
+Average t test_acc1: 0.8369972150266862, test_fscore1: 0.8362973696546904, test_corr1: 0.847613917311485
+Average v test_acc2: 0.5972585991712258, test_fscore2: 0.5729704571427823, test_corr2: 0.5679753787641142
+Average at test_acc3: 0.8747401373925049, test_fscore3: 0.8736299928955367, test_corr3: 0.8880719352966222
+Average av test_acc4: 0.7521303533368202, test_fscore4: 0.7471424665301761, test_corr4: 0.7630052480021465
+Average tv  test_acc5: 0.891174036931543, test_fscore5: 0.890663403661631, test_corr5: 0.8940692531242271
+Average atv test_acc6: 0.9058949165042343, test_fscore6: 0.9053716589058972, test_corr6: 0.9140699129986762
+Overall average test_acc: 0.7889320314121032, Overall average test_fscore: 0.7819274448819138, Overall average test_corr: 0.7956988051007385
+---
+lora 动态调整
+r=2 5400000
+Average a test_acc0: 0.5895710996105936, test_fscore0: 0.5686838085410326, test_corr0: 0.6037941968456014
+Average t test_acc1: 0.7367591008331742, test_fscore1: 0.732874080834748, test_corr1: 0.7434300656403774
+Average v test_acc2: 0.48541429098042155, test_fscore2: 0.4407238725224719, test_corr2: 0.46191284419540646
+Average at test_acc3: 0.7851636840313949, test_fscore3: 0.7818843295343019, test_corr3: 0.7947392142909225
+Average av test_acc4: 0.650752099345553, test_fscore4: 0.6336743267629744, test_corr4: 0.6484777872134194
+Average tv  test_acc5: 0.7732067788437922, test_fscore5: 0.7715330757020766, test_corr5: 0.7775393905962821
+Average atv test_acc6: 0.81613505784325, test_fscore6: 0.8146195287739513, test_corr6: 0.8219088345149581
+Overall average test_acc: 0.6910003016411684, Overall average test_fscore: 0.6777132889530795, Overall average test_corr: 0.693114619042424
+r=4 6128621
+Average a test_acc0: 0.602853680952508, test_fscore0: 0.5859632526261195, test_corr0: 0.6263623163613927
+Average t test_acc1: 0.7377351154559063, test_fscore1: 0.7374653610966553, test_corr1: 0.7412206477357802
+Average v test_acc2: 0.5408459178441747, test_fscore2: 0.5220665391276149, test_corr2: 0.5033966119724542
+Average at test_acc3: 0.7866897442288547, test_fscore3: 0.7858000567553465, test_corr3: 0.7911341528050704
+Average av test_acc4: 0.6918510148249676, test_fscore4: 0.6869313158555542, test_corr4: 0.6895510636218729
+Average tv  test_acc5: 0.7819132009729486, test_fscore5: 0.7812557857845253, test_corr5: 0.7804945492429436
+Average atv test_acc6: 0.8156863592210462, test_fscore6: 0.8148877282574609, test_corr6: 0.8175038508481401
+Overall average test_acc: 0.7082250047857723, Overall average test_fscore: 0.7020528627861823, Overall average test_corr: 0.
+r=6 6492887
+Average a test_acc0: 0.5753866848019454, test_fscore0: 0.5489660699415215, test_corr0: 0.5971435375471333
+Average t test_acc1: 0.7420801538649343, test_fscore1: 0.738776089040026, test_corr1: 0.7510503491782416
+Average v test_acc2: 0.5439560273366917, test_fscore2: 0.5151349090266131, test_corr2: 0.5024569072776386
+Average at test_acc3: 0.7879933437384871, test_fscore3: 0.7866128068823599, test_corr3: 0.7984710503693105
+Average av test_acc4: 0.6802613498421601, test_fscore4: 0.6763748356703914, test_corr4: 0.6707059283893615
+Average tv  test_acc5: 0.7701404477043565, test_fscore5: 0.7674774560157428, test_corr5: 0.767642381146785
+Average atv test_acc6: 0.8161050772374511, test_fscore6: 0.8153246349118246, test_corr6: 0.8187010030373258
+Overall average test_acc: 0.7022747263608609, Overall average test_fscore: 0.6926666859269257, Overall average test_corr: 0.7008815938493994
+r=4,8  6854257
+Average a test_acc0: 0.6303459303237549, test_fscore0: 0.618009786021204, test_corr0: 0.6469981384801002
+Average t test_acc1: 0.7527576296314, test_fscore1: 0.7504287153102548, test_corr1: 0.7604839252974698
+Average v test_acc2: 0.5416068722401051, test_fscore2: 0.5055235880328962, test_corr2: 0.49487878149348746
+Average at test_acc3: 0.7954704872860223, test_fscore3: 0.7935203499136712, test_corr3: 0.8020024684741088
+Average av test_acc4: 0.704329140833788, test_fscore4: 0.7010177782005639, test_corr4: 0.6894263014062962
+Average tv  test_acc5: 0.7733953934293416, test_fscore5: 0.7713133864427295, test_corr5: 0.7736675604921353
+Average atv test_acc6: 0.8170007918787847, test_fscore6: 0.8159206379999482, test_corr6: 0.8190061395228472
+Overall average test_acc: 0.7164151779461709, Overall average test_fscore: 0.7079620345601811, Overall average test_corr: 0.712351902166635
+r=4,10 6917075
+
+
+
+去除了缺失率调整
+Average a test_acc0: 0.557826240305163, test_fscore0: 0.5145714165726033, test_corr0: 0.5876730062922307
+Average t test_acc1: 0.7461366562693487, test_fscore1: 0.7419676723161249, test_corr1: 0.7502304768390279
+Average v test_acc2: 0.5488069033570807, test_fscore2: 0.5301979402844955, test_corr2: 0.5123638260008818
+Average at test_acc3: 0.7871092224170736, test_fscore3: 0.7835805399673335, test_corr3: 0.7935255004992474
+Average av test_acc4: 0.6816678192861482, test_fscore4: 0.6763445381177007, test_corr4: 0.6741012471919731
+Average tv  test_acc5: 0.7719879743888395, test_fscore5: 0.7706959722501872, test_corr5: 0.7704327586713747
+Average atv test_acc6: 0.81504976036993, test_fscore6: 0.8134769652570215, test_corr6: 0.8169006863485991
+Overall average test_acc: 0.7012263680562262, Overall average test_fscore: 0.6901192921093523, Overall average test_corr: 0.7007467859776192
+
+r=16
+Folder avg: test_condition (atv) --test_acc 0.7413376309427882 --test_ua 0.7356344168848857
+Average a test_acc0: 0.6041355683332464, test_fscore0: 0.5832944466761006, test_corr0: 0.6180390881814753
+Average t test_acc1: 0.7437985517799529, test_fscore1: 0.744150542774574, test_corr1: 0.7514038164231623
+Average v test_acc2: 0.5046283989090478, test_fscore2: 0.47647747511511546, test_corr2: 0.48356909232152373
+Average at test_acc3: 0.7966245848625505, test_fscore3: 0.7949239120520246, test_corr3: 0.8064552891752136
+Average av test_acc4: 0.6760356912580711, test_fscore4: 0.6683807947320939, test_corr4: 0.6756156321412079
+Average tv  test_acc5: 0.7762665029975186, test_fscore5: 0.7763643642660577, test_corr5: 0.7750960484833005
+Average atv test_acc6: 0.8137103781705901, test_fscore6: 0.8127310022795529, test_corr6: 0.8162996696208861
+Overall average test_acc: 0.7021713823301396, Overall average test_fscore: 0.6937603625565026, Overall average test_corr: 0.7037826623352528
+
+
+
+Folder avg: test_condition (atv) --test_mae 0.549114465713501 --test_corr 0.8303857390183079 --test_fscores 0.8737024536939287 --test_acc0.8736929003852504
+Folder avg: test_condition (atv) --test_mae 0.5482746362686157 --test_corr 0.8281937869835759 --test_fscores 0.8699052857786279 --test_acc0.8695652173913043
+====== Saving =======
+/home/wyy/data/sjs/saved/model/main_result/CMUMOSEI/2025-04-03_16_59_40_CMUMOSEI_hidden-256_bs-32_features-wav2vec-large-c-UTT;deberta-large-4-UTT;manet_UTT_mae-0.548_corr-0.828_f1-0.8699_acc-0.8696_test-condition-atv.pth
+Model loaded from /home/wyy/data/sjs/saved/model/main_result/CMUMOSEI/2025-04-03_16_59_40_CMUMOSEI_hidden-256_bs-32_features-wav2vec-large-c-UTT;deberta-large-4-UTT;manet_UTT_mae-0.548_corr-0.828_f1-0.8699_acc-0.8696_test-condition-atv.pth
+The best(acc) epoch of test_condition (a):  --test_mae 0.6682834029197693 --test_corr 0.7380033890937431 --test_fscores 0.7883240357150676 --test_acc 0.7850853054485416.
+The best(acc) epoch of test_condition (t):  --test_mae 0.5873960256576538 --test_corr 0.8041446812695687 --test_fscores 0.843736585942445 --test_acc 0.8425976884975234.
+The best(acc) epoch of test_condition (v):  --test_mae 0.5933302640914917 --test_corr 0.7988830456836177 --test_fscores 0.8409476557966625 --test_acc 0.8395707209686296.
+The best(acc) epoch of test_condition (at):  --test_mae 0.6152125597000122 --test_corr 0.7777497012812529 --test_fscores 0.8336187556035968 --test_acc 0.8318657127132636.
+The best(acc) epoch of test_condition (av):  --test_mae 0.613823652267456 --test_corr 0.7812701082757387 --test_fscores 0.8311446477490539 --test_acc 0.8293891029168959.
+The best(acc) epoch of test_condition (tv):  --test_mae 0.6088860630989075 --test_corr 0.7836195991588103 --test_fscores 0.8344000464298011 --test_acc 0.8329664281783159.
+The best(acc) epoch of test_condition (atv):  --test_mae 0.6024613976478577 --test_corr 0.7897803332950396 --test_fscores 0.8378377126409582 --test_acc 0.8362685745734728.
+Folder avg: test_condition (atv) --test_mae 0.7082395383289882 --test_corr 0.7819215511511102 --test_fscores 0.8300013485539407 --test_acc 0.8282490761852347
+
+this
+0.0 
+0.1 Folder avg: test_condition (atv) --test_mae 0.5628013610839844 --test_corr 0.8232406209131705 --test_fscores 0.8696506802551632 --test_acc0.8690148596587782
+0.2 Folder avg: test_condition (atv) --test_mae 0.6004568338394165 --test_corr 0.7996519642634282 --test_fscores 0.8571068956501539 --test_acc0.8585580627407815
+0.3 Folder avg: test_condition (atv) --test_mae 0.6169093251228333 --test_corr 0.7821397936800328 --test_fscores 0.8447508375014711 --test_acc0.8434232250963126
+0.4 Folder avg: test_condition (atv) --test_mae 0.6418154835700989 --test_corr 0.7516828971646377 --test_fscores 0.8396083665737937 --test_acc0.8387451843698404
+0.5 Folder avg: test_condition (atv) --test_mae 0.7076959609985352 --test_corr 0.7043586025270933 --test_fscores 0.8102531764541884 --test_acc0.8120528343423226
+0.6 Folder avg: test_condition (atv) --test_mae 0.6757746934890747 --test_corr 0.711854687873238 --test_fscores 0.8059841899927762 --test_acc0.8059988992845349
+0.7 Folder avg: test_condition (atv) --test_mae 0.7511823177337646 --test_corr 0.6580053970754598 --test_fscores 0.7927508890705587 --test_acc0.7936158503026968
+----
+
+
+1 Folder avg: test_condition (atv) --test_mae 0.6561200959341866 --test_corr 0.8248836058261578 --test_fscores 0.8630347345600453 --test_acc 0.8632361034672539
+0.1 Folder avg: test_condition (atv) --test_mae 0.7072880268096924 --test_corr 0.7674951503708599 --test_fscores 0.8340292615731351 --test_acc 0.8343816337762402
+0.2 Folder avg: test_condition (atv) --test_mae 0.7360581244741168 --test_corr 0.7405387466890955 --test_fscores 0.8178442622396928 --test_acc 0.8189323059988992
+0.3 Folder avg: test_condition (atv) --test_mae 0.7076959609985352 --test_corr 0.7043586025270933 --test_fscores 0.8102531764541884 --test_acc0.8120528343423226
+0.4 Folder avg: test_condition (atv) --test_mae 0.7957925626209804 --test_corr 0.6885023756001587 --test_fscores 0.7938226502443778 --test_acc 0.7987263149618681
+0.5 Folder avg: test_condition (atv) --test_mae 0.9131630829402378 --test_corr 0.5844060403052487 --test_fscores 0.7463671876780429 --test_acc 0.748132714836072
+0.6 Folder avg: test_condition (atv) --test_mae 0.9435758505548749 --test_corr 0.5284962411629409 --test_fscores 0.7232424836943664 --test_acc 0.7313074927274157
+nohup python -u MoMKE/train_MoMKE.py --dataset=CMUMOSEI --audio-feature=wav2vec-large-c-UTT --text-feature=deberta-large-4-UTT --video-feature=manet_UTT --seed=66 --batch-size=32 --epoch=200 --lr=0.0001 --hidden=256 --depth=4 --num_heads=2 --drop_rate=0.5 --attn_drop_rate=0.0 --test_condition=atv --stage_epoch=50 --gpu=0 &
+
+
+
+r=4+8 Folder avg: test_condition (atv) --test_mae 0.8384144817079816 --test_corr 0.6579608681263375 --test_fscores 0.7935324752387629 --test_acc 0.8000235867599654
+
+The best(acc) epoch of test_condition (a):  --test_mae 0.9270027875900269 --test_corr 0.42690171830016155 --test_fscores 0.7038148572322169 --test_acc 0.709411117226197.
+The best(acc) epoch of test_condition (t):  --test_mae 0.5640418529510498 --test_corr 0.8127727480233723 --test_fscores 0.8636390481291701 --test_acc 0.864336818932306.
+The best(acc) epoch of test_condition (v):  --test_mae 0.9149224162101746 --test_corr 0.41361884760535145 --test_fscores 0.6749257183710115 --test_acc 0.6981287837094111.
+The best(acc) epoch of test_condition (at):  --test_mae 0.5576483607292175 --test_corr 0.8178207517285696 --test_fscores 0.8633648281590627 --test_acc 0.8637864611997799.
+The best(acc) epoch of test_condition (av):  --test_mae 0.8706790804862976 --test_corr 0.49278209992547134 --test_fscores 0.7167120635041068 --test_acc 0.7297743533296642.
+The best(acc) epoch of test_condition (tv):  --test_mae 0.555619478225708 --test_corr 0.8193524948754636 --test_fscores 0.8667452150905693 --test_acc 0.8676389653274629.
+The best(acc) epoch of test_condition (atv):  --test_mae 0.5519846081733704 --test_corr 0.8224774164259724 --test_fscores 0.8655255961852021 --test_acc 0.8670886075949367.
+
+7936 7944 7946 7954 7962  7968  7991 8001 8035
+8543 8573 8593 8640 8632  8709  8714 8721 8731
+r=1
+The best(acc) epoch of test_condition (a):  --test_mae 0.9242857694625854 --test_corr 0.432295491977746 --test_fscores 0.6962418836443109 --test_acc 0.7074848651623555.
+The best(acc) epoch of test_condition (t):  --test_mae 0.5554612874984741 --test_corr 0.820796268073329 --test_fscores 0.8684411361037404 --test_acc 0.8687396807925152.
+The best(acc) epoch of test_condition (v):  --test_mae 0.9286679029464722 --test_corr 0.3909741186927754 --test_fscores 0.6873450687835565 --test_acc 0.6978536048431481.
+The best(acc) epoch of test_condition (at):  --test_mae 0.5479282140731812 --test_corr 0.8244921439247209 --test_fscores 0.8685252908972426 --test_acc 0.8692900385250413.
+The best(acc) epoch of test_condition (av):  --test_mae 0.8914128541946411 --test_corr 0.4610045806627132 --test_fscores 0.7126382138995043 --test_acc 0.720693450742983.
+The best(acc) epoch of test_condition (tv):  --test_mae 0.5483113527297974 --test_corr 0.8248321963549116 --test_fscores 0.8657047876670555 --test_acc 0.8659878921298845.
+The best(acc) epoch of test_condition (atv):  --test_mae 0.5500842928886414 --test_corr 0.8242915869462693 --test_fscores 0.8638072906245953 --test_acc 0.8640616400660429.
+Folder avg: test_condition (atv) --test_mae 0.8386339204651969 --test_corr 0.6540980552332093 --test_fscores 0.7946719530885723 --test_acc 0.7991587388945672
+0.7946719530885723
+r=2
+Model loaded from /home/wyy/data/sjs/saved/model/main_result/CMUMOSEI/2025-04-07_18_44_11_CMUMOSEI_hidden-256_bs-32_features-wav2vec-large-c-UTT;deberta-large-4-UTT;manet_UTT_mae-0.586_corr-0.811_f1-0.8698_acc-0.8698_test-condition-atv.pth
+The best(acc) epoch of test_condition (a):  --test_mae 0.9148920774459839 --test_corr 0.4515239271839806 --test_fscores 0.7048874588526586 --test_acc 0.7160154100165107.
+The best(acc) epoch of test_condition (t):  --test_mae 0.5652733445167542 --test_corr 0.8161041578841897 --test_fscores 0.8625825804058572 --test_acc 0.8618602091359384.
+The best(acc) epoch of test_condition (v):  --test_mae 0.917809784412384 --test_corr 0.3928484905130942 --test_fscores 0.6947345644815056 --test_acc 0.7008805723720418.
+The best(acc) epoch of test_condition (at):  --test_mae 0.5570651292800903 --test_corr 0.819735471449546 --test_fscores 0.861947896841304 --test_acc 0.8613098514034122.
+The best(acc) epoch of test_condition (av):  --test_mae 0.8644008636474609 --test_corr 0.4807364498567311 --test_fscores 0.7212368859304112 --test_acc 0.7272977435332967.
+The best(acc) epoch of test_condition (tv):  --test_mae 0.5632774233818054 --test_corr 0.8172128169313279 --test_fscores 0.863163427502904 --test_acc 0.8629609246009906.
+The best(acc) epoch of test_condition (atv):  --test_mae 0.5614829063415527 --test_corr 0.8186145699179922 --test_fscores 0.859779265826152 --test_acc 0.8593835993395708.
+Folder avg: test_condition (atv) --test_mae 0.8370133723531451 --test_corr 0.656682269105266 --test_fscores 0.7954760114058275 --test_acc 0.798529758628823
+ 0.7954760114058275
+r=3
+The best(acc) epoch of test_condition (a):  --test_mae 0.9229406714439392 --test_corr 0.4325211077157346 --test_fscores 0.705900516930787 --test_acc 0.7138139790864062.
+The best(acc) epoch of test_condition (t):  --test_mae 0.575280487537384 --test_corr 0.8144494164817739 --test_fscores 0.8555011667444187 --test_acc 0.8547055586130985.
+The best(acc) epoch of test_condition (v):  --test_mae 0.9152299761772156 --test_corr 0.4151649112760097 --test_fscores 0.6845935304343864 --test_acc 0.6915244909190974.
+The best(acc) epoch of test_condition (at):  --test_mae 0.5587851405143738 --test_corr 0.8223984770996504 --test_fscores 0.8617699632276765 --test_acc 0.8610346725371492.
+The best(acc) epoch of test_condition (av):  --test_mae 0.8638256788253784 --test_corr 0.4925369284748022 --test_fscores 0.7231620751034028 --test_acc 0.7317006053935058.
+The best(acc) epoch of test_condition (tv):  --test_mae 0.5597153902053833 --test_corr 0.8232877484128593 --test_fscores 0.8618587571661923 --test_acc 0.8615850302696753.
+The best(acc) epoch of test_condition (atv):  --test_mae 0.5493972897529602 --test_corr 0.8257992438764302 --test_fscores 0.8629911658010004 --test_acc 0.8632361034672538.
+Folder avg: test_condition (atv) --test_mae 0.8383021865572248 --test_corr 0.6608796904767515 --test_fscores 0.7936824536296949 --test_acc 0.7968000628980266
+7968000628980266
+r=4
+The best(acc) epoch of test_condition (a):  --test_mae 0.9139741659164429 --test_corr 0.4168101065914908 --test_fscores 0.6889100766478001 --test_acc 0.7047330764997248.
+The best(acc) epoch of test_condition (t):  --test_mae 0.5656248927116394 --test_corr 0.8183955608320325 --test_fscores 0.8653220513612048 --test_acc 0.8659878921298845.
+The best(acc) epoch of test_condition (v):  --test_mae 0.9141628742218018 --test_corr 0.41750926684142975 --test_fscores 0.6844100955072964 --test_acc 0.6951018161805174.
+The best(acc) epoch of test_condition (at):  --test_mae 0.5585410594940186 --test_corr 0.823915627157045 --test_fscores 0.8658775705135237 --test_acc 0.8668134287286736.
+The best(acc) epoch of test_condition (av):  --test_mae 0.8600556254386902 --test_corr 0.4905181207167191 --test_fscores 0.7188523977567415 --test_acc 0.7289488167308751.
+The best(acc) epoch of test_condition (tv):  --test_mae 0.5510271191596985 --test_corr 0.8269963706274943 --test_fscores 0.8676244278845039 --test_acc 0.8679141441937259.
+The best(acc) epoch of test_condition (atv):  --test_mae 0.5491389036178589 --test_corr 0.8284309620389241 --test_fscores 0.8701165070496469 --test_acc 0.8709411117226197.
+Folder avg: test_condition (atv) --test_mae 0.832356972353799 --test_corr 0.6603680021150193 --test_fscores 0.7944447323886739 --test_acc 0.8000628980265745
+0.8000628980265745
+r=5
+The best(acc) epoch of test_condition (a):  --test_mae 0.9265749454498291 --test_corr 0.4260724445007662 --test_fscores 0.6850668879513453 --test_acc 0.7019812878370941.
+The best(acc) epoch of test_condition (t):  --test_mae 0.5573727488517761 --test_corr 0.8193604525567864 --test_fscores 0.8692389236855232 --test_acc 0.8698403962575674.
+The best(acc) epoch of test_condition (v):  --test_mae 0.91569584608078 --test_corr 0.4158745184277574 --test_fscores 0.6958682855578213 --test_acc 0.7113373692900385.
+The best(acc) epoch of test_condition (at):  --test_mae 0.5523112416267395 --test_corr 0.8236534029402806 --test_fscores 0.8714703466994682 --test_acc 0.8725921849201981.
+The best(acc) epoch of test_condition (av):  --test_mae 0.8807721734046936 --test_corr 0.4736442373212821 --test_fscores 0.7101822759960638 --test_acc 0.7237204182718767.
+The best(acc) epoch of test_condition (tv):  --test_mae 0.550552248954773 --test_corr 0.8256005442417179 --test_fscores 0.8719368748150217 --test_acc 0.8725921849201981.
+The best(acc) epoch of test_condition (atv):  --test_mae 0.5515289902687073 --test_corr 0.8251808368477622 --test_fscores 0.8701603276217049 --test_acc 0.8714914694551459.
+Folder avg: test_condition (atv) --test_mae 0.8373404485838754 --test_corr 0.6584837766909075 --test_fscores 0.796274846046707 --test_acc 0.8033650444217313
+
+r=8
+The best(acc) epoch of test_condition (a):  --test_mae 0.9265652298927307 --test_corr 0.41959823809107655 --test_fscores 0.6922203896462553 --test_acc 0.7083104017611448.
+The best(acc) epoch of test_condition (t):  --test_mae 0.5650163888931274 --test_corr 0.8210272139636194 --test_fscores 0.8654376922081263 --test_acc 0.8659878921298845.
+The best(acc) epoch of test_condition (v):  --test_mae 0.9212520718574524 --test_corr 0.42593102279434114 --test_fscores 0.6895948883201823 --test_acc 0.7039075399009356.
+The best(acc) epoch of test_condition (at):  --test_mae 0.5509876012802124 --test_corr 0.8251297143608385 --test_fscores 0.8706985332894696 --test_acc 0.8712162905888827.
+The best(acc) epoch of test_condition (av):  --test_mae 0.8792744278907776 --test_corr 0.48640408241420185 --test_fscores 0.7129791464656076 --test_acc 0.7278481012658228.
+The best(acc) epoch of test_condition (tv):  --test_mae 0.5472409129142761 --test_corr 0.8310945622542167 --test_fscores 0.8730877269812501 --test_acc 0.8742432581177766.
+The best(acc) epoch of test_condition (atv):  --test_mae 0.5433326959609985 --test_corr 0.8309060729458507 --test_fscores 0.8721216458601128 --test_acc 0.8731425426527243.
+Folder avg: test_condition (atv) --test_mae 0.837176365511758 --test_corr 0.6628701295463065 --test_fscores 0.796591431824429 --test_acc 0.8035222894881674
+
+
+The best(acc) epoch of test_condition (a):  --test_mae 1.4522994756698608 --test_corr 0.16975139543661313 --test_fscores 0.5871659259211656 --test_acc 0.5929878048780488.
+The best(acc) epoch of test_condition (t):  --test_mae 0.8362376689910889 --test_corr 0.7798404114696273 --test_fscores 0.8486361280301621 --test_acc 0.8490853658536586.
+The best(acc) epoch of test_condition (v):  --test_mae 1.454970359802246 --test_corr 0.2172719199770994 --test_fscores 0.5526185004635068 --test_acc 0.5716463414634146.
+The best(acc) epoch of test_condition (at):  --test_mae 0.8161846995353699 --test_corr 0.7821919046980913 --test_fscores 0.8448697934296402 --test_acc 0.8475609756097561.
+The best(acc) epoch of test_condition (av):  --test_mae 1.3983595371246338 --test_corr 0.25769595813468554 --test_fscores 0.615226625201296 --test_acc 0.614329268292683.
+The best(acc) epoch of test_condition (tv):  --test_mae 0.8670126795768738 --test_corr 0.7655859998483738 --test_fscores 0.8372770960090453 --test_acc 0.836890243902439.
+The best(acc) epoch of test_condition (atv):  --test_mae 0.826539933681488 --test_corr 0.7692706152965411 --test_fscores 0.8462188620812281 --test_acc 0.8475609756097561.
+Folder avg: test_condition (atv) --test_mae 1.3005576900073461 --test_corr 0.5345154578372902 --test_fscores 0.7331447044480063 --test_acc 0.7371515679442509
+
+Average a test_acc0: 0.6674870685051684, test_fscore0: 0.6565819352384966, test_corr0: 0.6810854518857667
+Average t test_acc1: 0.7415594821897685, test_fscore1: 0.7427313752653297, test_corr1: 0.7508090079024383
+Average v test_acc2: 0.5534737098709848, test_fscore2: 0.5390514772917199, test_corr2: 0.5252444992559314
+Average at test_acc3: 0.7995575543061, test_fscore3: 0.797654784233304, test_corr3: 0.8128604029167998
+Average av test_acc4: 0.7193714833636871, test_fscore4: 0.7121408667754056, test_corr4: 0.7205897341525557
+Average tv  test_acc5: 0.769810645018463, test_fscore5: 0.7687501296715967, test_corr5: 0.7770832188660108
+Average atv test_acc6: 0.8075935605696074, test_fscore6: 0.8049047405460854, test_corr6: 0.819619861362672
+Overall average test_acc: 0.7226933576891114, Overall average test_fscore: 0.717402187003134, Overall average test_corr: 0.7267560251917393
+Average a test_acc0: 0.6511309480301836, test_fscore0: 0.6361506566709045, test_corr0: 0.6701642866239729
+Average t test_acc1: 0.7450528970772206, test_fscore1: 0.7416502628950721, test_corr1: 0.7471013059271188
+Average v test_acc2: 0.5661003442568691, test_fscore2: 0.5495438757888055, test_corr2: 0.5308940954480226
+Average at test_acc3: 0.7937117945131643, test_fscore3: 0.7902230138008226, test_corr3: 0.8006104791630795
+Average av test_acc4: 0.7158713909616644, test_fscore4: 0.7125011407277286, test_corr4: 0.7157230665287088
+Average tv  test_acc5: 0.7718101630387046, test_fscore5: 0.7694656192064374, test_corr5: 0.7660696567983937
+Average atv test_acc6: 0.8094702034706142, test_fscore6: 0.8075312930512955, test_corr6: 0.8102599494108395
+Overall average test_acc: 0.7218782487640599, Overall average test_fscore: 0.7152951231630094, Overall average test_corr: 0.7201175485571624
+
+The best(acc) epoch of test_condition (a):  --test_mae 0.9265748858451843 --test_corr 0.4260724439811654 --test_fscores 0.6850668879513453 --test_acc 0.7019812878370941.
+The best(acc) epoch of test_condition (t):  --test_mae 0.5573727488517761 --test_corr 0.819360451266508 --test_fscores 0.8692389236855232 --test_acc 0.8698403962575674.
+The best(acc) epoch of test_condition (v):  --test_mae 0.91569584608078 --test_corr 0.41587451877424325 --test_fscores 0.6958682855578213 --test_acc 0.7113373692900385.
+The best(acc) epoch of test_condition (at):  --test_mae 0.5523112416267395 --test_corr 0.8236534010161269 --test_fscores 0.8714703466994682 --test_acc 0.8725921849201981.
+The best(acc) epoch of test_condition (av):  --test_mae 0.8807721734046936 --test_corr 0.47364423572196224 --test_fscores 0.7101822759960638 --test_acc 0.7237204182718767.
+The best(acc) epoch of test_condition (tv):  --test_mae 0.550552248954773 --test_corr 0.8256005445038739 --test_fscores 0.8719368748150217 --test_acc 0.8725921849201981.
+The best(acc) epoch of test_condition (atv):  --test_mae 0.5515289902687073 --test_corr 0.8251808356019974 --test_fscores 0.8701603276217049 --test_acc 0.8714914694551459.
+Folder avg: test_condition (atv) --test_mae 0.8373404315539769 --test_corr 0.6584837758379825 --test_fscores 0.796274846046707 --test_acc 0.8033650444217313

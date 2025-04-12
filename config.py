@@ -18,10 +18,10 @@ def get_host_ip():
 ############ For LINUX ##############
 # path
 DATA_DIR = {
-	'CMUMOSI': '/media/liang/12T/xu/MoMKE/dataset/CMUMOSI',   # for nlpr
-	'CMUMOSEI': '/media/liang/12T/xu/MoMKE/dataset/CMUMOSEI',# for nlpr
-	'IEMOCAPSix': '/media/liang/12T/xu/MoMKE/dataset/IEMOCAP', # for nlpr
-	'IEMOCAPFour': '/media/liang/12T/xu/MoMKE/dataset/IEMOCAP', # for nlpr
+	'CMUMOSI': '/home/wyy/data/sjs/CMUMOSI',   # for nlpr
+	'CMUMOSEI': '/home/wyy/data/sjs/CMUMOSEI',# for nlpr
+	'IEMOCAPSix': '/home/wyy/data/sjs/IEMOCAP', # for nlpr
+	'IEMOCAPFour': '/home/wyy/data/sjs/IEMOCAP', # for nlpr
 }
 PATH_TO_RAW_AUDIO = {
 	'CMUMOSI': os.path.join(DATA_DIR['CMUMOSI'], 'subaudio'),
@@ -60,12 +60,12 @@ PATH_TO_OPENSMILE = '/share/home/lianzheng/tools/opensmile-2.3.0/'
 PATH_TO_FFMPEG = '/share/home/lianzheng/tools/ffmpeg-4.4.1-i686-static/ffmpeg'
 
 # dir
-SAVED_ROOT = os.path.join('/media/liang/12T/xu/MoMKE/saved/')
+SAVED_ROOT = os.path.join('/home/wyy/data/sjs/saved/')
 DATA_DIR = os.path.join(SAVED_ROOT, 'data')
 MODEL_DIR = os.path.join(SAVED_ROOT, 'model')
 LOG_DIR = os.path.join(SAVED_ROOT, 'log')
 NPZ_DIR = os.path.join(SAVED_ROOT, 'npz')
-PRE_TRAINED_DIR = os.path.join('/media/liang/12T/xu/Share_Transformer/pre_trained/')
+PRE_TRAINED_DIR = os.path.join('/home/wyy/sjs/data/Share_Transformer/pre_trained/')
 
 
 
