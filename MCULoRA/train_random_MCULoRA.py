@@ -67,6 +67,7 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
         vidnames += data[-1]
         seqlen = audio_host.size(0)
         batch = audio_host.size(1)
+        # 随机缺失
         if cur_two_modalities < num_two_modalities_max:
             available_modalities = 2
             cur_two_modalities += 1

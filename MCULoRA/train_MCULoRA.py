@@ -41,6 +41,8 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
     else:
         model.eval()
     # print(f'Total batches in dataloader: {len(dataloader)}')
+    grad_norm_list = []
+    # 遍历数据集，不停迭代
     for data_idx, data in enumerate(dataloader):
         vidnames = []
         # print(len(data),'sjs')
@@ -62,7 +64,7 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
         batch = audio_host.size(1)
 
         ## using cmp-net masking manner [at least one view exists]
-        ## host mask
+        ## host mask 获得掩码
         matrix = generate_mask(seqlen, batch, args.test_condition, first_stage,train,probabilities) # [seqlen*batch, view_num]
         audio_host_mask = np.reshape(matrix[0], (batch, seqlen, 1))
         text_host_mask = np.reshape(matrix[1], (batch, seqlen, 1))
@@ -116,7 +118,7 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
         if not first_stage and  train:
             forget = random.random() < 0
         index='0'
-        # print(input_features_mask[0][0][0])
+        # 根据掩码获取当前的模态组合索引
         if input_features_mask[0][0][0].cpu().tolist() == [1,1,1]:
             index='0'# atv
         elif input_features_mask[0][0][0].cpu().tolist() == [1,1,0]:
@@ -140,6 +142,7 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
         js_all_a = Alignment(x_a, xs_a['0'])+Alignment(x_a, xs_a['1'])+Alignment(x_a, xs_a['2'])+Alignment(x_a, xs_a['4'])# 特性共性之间的差距越大越好
         js_all_t = Alignment(x_t, xs_t['0'])+Alignment(x_t, xs_t['1'])+Alignment(x_t, xs_t['3'])+Alignment(x_t, xs_t['5'])
         js_all_v = Alignment(x_v, xs_v['0'])+Alignment(x_v, xs_v['2'])+Alignment(x_v, xs_v['3'])+Alignment(x_v, xs_v['6'])
+        # print(js_all_a,js_all_t,js_all_v)
         # kl散度越大说明特性信息学习越好 越小说明特性信息学习不好
         if index=='0'or index=='1'or index=='2'or index=='4':
             js_all_a=js_all_a
@@ -213,7 +216,6 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
                 loss_a = reg_loss(lp_a, labels_, umask)
                 loss_t = reg_loss(lp_t, labels_, umask)
                 loss_v = reg_loss(lp_v, labels_, umask)
-    
                 
                 # 调整比例可以获得更好的性能
                 loss = reg_loss(lp_, labels_, umask)
@@ -233,10 +235,30 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
             loss_t.backward()
             loss_v.backward()
             optimizer.step()
+        # if train and not first_stage:
+        #     loss.backward()
+        #     for name, param in model.named_parameters():
+        #         if param.grad is not None:
+        #             if "proj1.linear.weight" in name:
+        #                 print(f"{name} 梯度范数: {param.grad.norm().item()}")
+        #                 print(f"{name} 梯度向量: {param.grad}")
+                        
+        #     optimizer.step()
+        
+        # sjs记录一下梯度方向的大小
         if train and not first_stage:
-            loss.backward()
+            loss.backward()# 梯度反向传播，每次数据迭代都进行
+            for name, param in model.named_parameters():
+                    if param.grad is not None:
+                        if "proj1.linear.weight" in name:
+                            grad_norm_list.append(param.grad.norm().item())
             optimizer.step()
-
+    # sjs记录一下梯度方向
+    if len(grad_norm_list) > 0:
+        grad_norm_avg = np.mean(grad_norm_list)
+        with open("gradient_log_iemo_v.txt", "a") as f:
+            f.write(f"本轮grad_norm_list的平均值: {grad_norm_avg}\n")
+    
     assert preds!=[], f'Error: no dataset in dataloader'
     preds  = np.concatenate(preds)
     preds_a = np.concatenate(preds_a)
@@ -295,7 +317,7 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
 
 
 
-
+# 主函数
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
@@ -456,7 +478,7 @@ if __name__ == '__main__':
             args.test_condition="av"
             _, _, test_acc2, _, _, _, _, _, _ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                             optimizer=None, train=False, first_stage=first_stage, mark='test',probabilities=probabilities_adjust)
-            args.test_condition="av"
+            args.test_condition="tv"
             _, _, test_acc3, _, _, _, _, _, _ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                             optimizer=None, train=False, first_stage=first_stage, mark='test',probabilities=probabilities_adjust)
             args.test_condition="a"
@@ -468,6 +490,7 @@ if __name__ == '__main__':
             args.test_condition="v"
             _, _, test_acc6, _, _, _, _, _, _ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                             optimizer=None, train=False, first_stage=first_stage, mark='test',probabilities=probabilities_adjust)
+            # 训练时的准确率变化
             vis_acc_test0.append(test_acc)
             vis_acc_test1.append(test_acc1)
             vis_acc_test2.append(test_acc2)
@@ -569,13 +592,14 @@ if __name__ == '__main__':
 
         # import matplotlib.pyplot as plt
         # # Save vis_acc arrays to files for later use
-        # np.save(f'vis_acc_test0_folder{ii}.npy', vis_acc_test0)
-        # np.save(f'vis_acc_test1_folder{ii}.npy', vis_acc_test1)
-        # np.save(f'vis_acc_test2_folder{ii}.npy', vis_acc_test2)
-        # np.save(f'vis_acc_test3_folder{ii}.npy', vis_acc_test3)
-        # np.save(f'vis_acc_test4_folder{ii}.npy', vis_acc_test4)
-        # np.save(f'vis_acc_test5_folder{ii}.npy', vis_acc_test5)
-        # np.save(f'vis_acc_test6_folder{ii}.npy', vis_acc_test6)
+        np.save(f'momkevis_acc_test0_folder{ii}.npy', vis_acc_test0)
+        np.save(f'momkevis_acc_test1_folder{ii}.npy', vis_acc_test1)
+        np.save(f'momkevis_acc_test2_folder{ii}.npy', vis_acc_test2)
+        np.save(f'momkevis_acc_test3_folder{ii}.npy', vis_acc_test3)
+        np.save(f'momkevis_acc_test4_folder{ii}.npy', vis_acc_test4)
+        np.save(f'momkevis_acc_test5_folder{ii}.npy', vis_acc_test5)
+        np.save(f'momkevis_acc_test6_folder{ii}.npy', vis_acc_test6)
+
         # # Plotting the test accuracies for different conditions
         # plt.figure(figsize=(10, 6))
         # plt.plot(vis_acc_test0, label='atv')
@@ -677,6 +701,8 @@ if __name__ == '__main__':
     test_corr4 = 0
     test_corr5 = 0
     test_corr6 = 0
+
+    # 在所有缺失情况该模型的效果 每个folder的效果不同
     for ii in range(args.num_folder):
         train_loader = train_loaders[ii]
         test_loader = test_loaders[ii]

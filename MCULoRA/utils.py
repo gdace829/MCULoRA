@@ -134,14 +134,19 @@ def build_model(args, adim, tdim, vdim):
 def generate_mask(seqlen, batch, test_condition, first_stage,train,probabilities):
     """Randomly generate incomplete data information, simulate partial view data with complete view data
     """
-    if first_stage or train:
-        audio_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[0], probabilities[0]])
-        text_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[1], probabilities[1]])
-        visual_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[2], probabilities[2]])
-    else:
-        audio_mask = np.array([1 if 'a' in test_condition else 0])
-        text_mask = np.array([1 if 't' in test_condition else 0])
-        visual_mask = np.array([1 if 'v' in test_condition else 0])
+    # if first_stage or train:
+    #     audio_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[0], probabilities[0]])
+    #     text_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[1], probabilities[1]])
+    #     visual_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[2], probabilities[2]])
+    # else:
+    #     audio_mask = np.array([1 if 'a' in test_condition else 0])
+    #     text_mask = np.array([1 if 't' in test_condition else 0])
+    #     visual_mask = np.array([1 if 'v' in test_condition else 0])
+    
+
+    audio_mask = np.array([1 if 'a' in test_condition else 0])
+    text_mask = np.array([1 if 't' in test_condition else 0])
+    visual_mask = np.array([1 if 'v' in test_condition else 0])
         # audio_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[0], probabilities[0]])
         # text_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[1], probabilities[1]])
         # visual_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[2], probabilities[2]])

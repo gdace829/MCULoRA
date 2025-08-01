@@ -2,7 +2,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from modules.Attention_softmoe import *
+from modules.Attention_group import *
 from modules.Lora import MCULoRALinear
 
 class MCULoRA(nn.Module):
@@ -68,6 +68,18 @@ class MCULoRA(nn.Module):
         trainable_scale_per_task=trainable_scale_per_task,
         shared_mode=shared_mode
         )
+        # self.a_in_projadd = MCULoRALinear(
+        # in_features=self.adim,
+        # out_features=out_features,
+        # r=r,
+        # lora_shared_scale=lora_shared_scale,
+        # lora_task_scale=lora_task_scale,
+        # lora_dropout=lora_dropout,
+        # tasks=tasks,
+        # trainable_scale_shared=trainable_scale_shared,
+        # trainable_scale_per_task=trainable_scale_per_task,
+        # shared_mode=shared_mode
+        # )
 
         self.dropout_a = nn.Dropout(args.drop_rate)
         self.dropout_t = nn.Dropout(args.drop_rate)
@@ -128,7 +140,7 @@ class MCULoRA(nn.Module):
         # print(inputfeats[:,:,:])
         # print(input_features_mask[:,:,1])
         weight_save = []
-        # sequence modeling
+        # sequence modeling,获得序列化表征
         audio, text, video = inputfeats[:, :, :self.adim], inputfeats[:, :, self.adim:self.adim + self.tdim], \
         inputfeats[:, :, self.adim + self.tdim:]
         seq_len, B, C = audio.shape
@@ -156,6 +168,7 @@ class MCULoRA(nn.Module):
 
         # --> [batch, 3*seqlen, dim]
         x_a,xs_a = self.block(proj_a, True, attn_mask, 'a',xs=lora_as)
+        # 只对共性信息进行自注意力，解藕信息不进行自注意力
         x_t,xs_t = self.block(proj_t, True, attn_mask, 't',xs=lora_ts)
         x_v,xs_v = self.block(proj_v, True, attn_mask, 'v',xs=lora_vs)
 
@@ -175,6 +188,7 @@ class MCULoRA(nn.Module):
             t = xs_t[key]
             v = xs_v[key]
             xs_all[key] = torch.cat([a, t, v], dim=-1)
+        # 这里是联合梯度
         x_all,xs_all=self.proj1(x_joint,xs_all)
         # res=x_all+xs_all[index]
         u = F.relu(x_all)

@@ -18,10 +18,10 @@ def get_host_ip():
 ############ For LINUX ##############
 # path
 DATA_DIR = {
-	'CMUMOSI': '/home/wyy/data/sjs/CMUMOSI',   # for nlpr
-	'CMUMOSEI': '/home/wyy/data/sjs/CMUMOSEI',# for nlpr
-	'IEMOCAPSix': '/home/wyy/data/sjs/IEMOCAP', # for nlpr
-	'IEMOCAPFour': '/home/wyy/data/sjs/IEMOCAP', # for nlpr
+	'CMUMOSI': '/home/wyy/sjs/data/CMUMOSI',   # for nlpr
+	'CMUMOSEI': '/home/wyy/sjs/data/CMUMOSEI',# for nlpr
+	'IEMOCAPSix': '/home/wyy/sjs/data/IEMOCAP', # for nlpr
+	'IEMOCAPFour': '/home/wyy/sjs/data/IEMOCAP', # for nlpr
 }
 PATH_TO_RAW_AUDIO = {
 	'CMUMOSI': os.path.join(DATA_DIR['CMUMOSI'], 'subaudio'),
@@ -60,7 +60,7 @@ PATH_TO_OPENSMILE = '/share/home/lianzheng/tools/opensmile-2.3.0/'
 PATH_TO_FFMPEG = '/share/home/lianzheng/tools/ffmpeg-4.4.1-i686-static/ffmpeg'
 
 # dir
-SAVED_ROOT = os.path.join('/home/wyy/data/sjs/saved/')
+SAVED_ROOT = os.path.join('/home/wyy/sjs/data/saved/')
 DATA_DIR = os.path.join(SAVED_ROOT, 'data')
 MODEL_DIR = os.path.join(SAVED_ROOT, 'model')
 LOG_DIR = os.path.join(SAVED_ROOT, 'log')

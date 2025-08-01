@@ -67,7 +67,7 @@ class Mlp(nn.Module):
         x,xs = self.fc1(x,xs)
         x = self.act(x)
         x = self.drop(x)
-        x,xs = self.fc2(x,xs)
+        x,xs = self.fc2(x,xs)# 这个两个表征分开走
         x = self.drop(x)
         return x,xs
 
@@ -108,6 +108,7 @@ class Attention_group(nn.Module):
     def forward(self, x, cross_modality='atv', mask_modality=None,xs=None, mask=None):
         # x: [B, s, C]
         B, s, C = x.shape
+        # 仅仅单模态特性信息的自注意力
         if cross_modality == 'a':
             x_a_mlp,xs = self.Transformer_a(x, mask_modality,xs, mask)
             return x_a_mlp,xs
@@ -161,7 +162,7 @@ class Attention(nn.Module):
             attn = torch.where(torch.isnan(attn), torch.full_like(attn, 0), attn)
 
         x_out = (attn @ v).transpose(1, 2).reshape(B, seq_len, C)
-        x_lora,xs=self.mlp(x_out,xs)
+        x_lora,xs=self.mlp(x_out,xs)# lora信息加入
         x_out = x_out + x_lora
         
         return x_out,xs
@@ -179,7 +180,7 @@ class Block(nn.Module):
     ):
         super().__init__()
         self.drop = drop
-
+        # 根据模态组合任务，选择不同的block
         self.blocks = nn.ModuleList(
             [
                 Attention_group(dim,
@@ -192,7 +193,8 @@ class Block(nn.Module):
         )
 
     def forward(self, x, first_stage, mask=None, modality=None,xs=None):
-            for layer_idx, block in enumerate(self.blocks):
+        # 根据模态组合任务，选择不同的block
+        for layer_idx, block in enumerate(self.blocks):
                 x_res,xs=block(x, cross_modality=modality, mask_modality=modality, mask=mask,xs=xs)
                 x = x + x_res
-            return x,xs
+        return x,xs

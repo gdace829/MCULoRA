@@ -57,7 +57,6 @@ class MCULoRALinear(LoRALayer):
 
         self.linear = torch.nn.Linear(
             in_features, out_features)
-        # r = {'0': 2, '1': 2, '2': 2, '3': 2, '4': 2, '5': 2, '6': 2, '7': 2}
         self.tasks = tasks
         self.shared_mode = shared_mode
         self.lora_shared_scale=lora_shared_scale
@@ -69,6 +68,7 @@ class MCULoRALinear(LoRALayer):
                 str(task): nn.Parameter(self.linear.weight.new_zeros((r[task], in_features)))
                 for task in tasks
             })
+            # 根据tasks的数量创建lora B矩阵的数
             self.lora_tasks_B = nn.ParameterDict({
                 str(task): nn.Parameter(self.linear.weight.new_zeros((out_features, r[task])))
                 for task in tasks
@@ -109,22 +109,23 @@ class MCULoRALinear(LoRALayer):
         raise NotImplementedError
 
     def forward(self, x: torch.Tensor, x_tasks: Dict[int, torch.Tensor] = None,index:str=None):
-        pretrained = self.linear(x)
+        pretrained = self.linear(x)# 获得原始的输出
         if self.r['0'] == 0:
             return pretrained, None
         x = self.lora_dropout(x)
-            # 共享lora
+        # 共享lora
         lora = (x @ self.lora_shared_A.transpose(0, 1)
                     @ self.lora_shared_B.transpose(0, 1)) * self.lora_shared_scale
-            # 特定任务lora
+        # 特定任务lora
+        self.tasks = ['0','1','2','3','4','5','6','7']
         lora_tasks = {
-            idx: pretrained + ((x if x_tasks is None else x_tasks[idx]) @ self.lora_tasks_A[idx].transpose(
+            idx: ((x if x_tasks is None else x_tasks[idx]) @ self.lora_tasks_A[idx].transpose(
                 0, 1) @ self.lora_tasks_B[idx].transpose(0, 1) * self.lora_task_scale[idx])
             for idx in self.tasks
             } if self.tasks is not None else None
         
         # print(lora_tasks.keys())
-        return pretrained+lora, lora_tasks
+        return pretrained+lora,lora_tasks# 单模态共享表征, lora_tasks# 单模态解藕表征
 
 
 
