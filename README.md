@@ -25,7 +25,7 @@ Recognition**]
 
 ### Dataset
 
-To ensure consistency with previous work, we followed the feature preprocessing module in [MoMKE](https://github.com/zeroQiaoba/GCNet).
+To ensure consistency with previous work, we followed the feature preprocessing module in [MoMKE](https://github.com/wxxv/MoMKE).
 
 For your convenience, we list the feature links below they provide.
 
