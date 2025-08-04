@@ -676,7 +676,7 @@ if __name__ == '__main__':
             test_fscore_all=0
             # 使用训练好的模型测试不同缺失情况
             args.test_condition = 'a'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_,_,_,_,_,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None, train=False, first_stage=first_stage, mark='test')
             test_mae_all+=test_mae
             test_corr_all+=test_corr
@@ -685,7 +685,7 @@ if __name__ == '__main__':
             test_mae_all+=test_mae
             print(f"The best(acc) epoch of test_condition ({args.test_condition}):  --test_mae {test_mae} --test_corr {test_corr} --test_fscores {test_fscore} --test_acc {test_acc}.")
             args.test_condition = 't'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test= train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_,_,_,_,_,_= train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None, train=False, first_stage=first_stage, mark='test')
             test_mae_all+=test_mae
             test_corr_all+=test_corr
@@ -693,7 +693,7 @@ if __name__ == '__main__':
             test_fscore_all+=test_fscore
             print(f"The best(acc) epoch of test_condition ({args.test_condition}):  --test_mae {test_mae} --test_corr {test_corr} --test_fscores {test_fscore} --test_acc {test_acc}.")
             args.test_condition = 'v'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_,_,_,_,_,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None, train=False, first_stage=first_stage, mark='test')
             test_mae_all+=test_mae
             test_corr_all+=test_corr
@@ -701,7 +701,7 @@ if __name__ == '__main__':
             test_fscore_all+=test_fscore
             print(f"The best(acc) epoch of test_condition ({args.test_condition}):  --test_mae {test_mae} --test_corr {test_corr} --test_fscores {test_fscore} --test_acc {test_acc}.")
             args.test_condition = 'at'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_,_,_,_,_,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None, train=False, first_stage=first_stage, mark='test')
             test_mae_all+=test_mae
             test_corr_all+=test_corr
@@ -709,7 +709,7 @@ if __name__ == '__main__':
             test_fscore_all+=test_fscore
             print(f"The best(acc) epoch of test_condition ({args.test_condition}):  --test_mae {test_mae} --test_corr {test_corr} --test_fscores {test_fscore} --test_acc {test_acc}.")
             args.test_condition = 'av'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_,_,_,_,_,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None, train=False, first_stage=first_stage, mark='test')
             test_mae_all+=test_mae
             test_corr_all+=test_corr
@@ -717,7 +717,7 @@ if __name__ == '__main__':
             test_fscore_all+=test_fscore
             print(f"The best(acc) epoch of test_condition ({args.test_condition}):  --test_mae {test_mae} --test_corr {test_corr} --test_fscores {test_fscore} --test_acc {test_acc}.")
             args.test_condition = 'tv'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test= train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_,_,_,_,_,_= train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None, train=False, first_stage=first_stage, mark='test')
             test_mae_all+=test_mae
             test_corr_all+=test_corr
@@ -725,7 +725,7 @@ if __name__ == '__main__':
             test_fscore_all+=test_fscore
             print(f"The best(acc) epoch of test_condition ({args.test_condition}):  --test_mae {test_mae} --test_corr {test_corr} --test_fscores {test_fscore} --test_acc {test_acc}.")
             args.test_condition = 'atv'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_,_,_,_,_,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None, train=False, first_stage=first_stage, mark='test')
             test_mae_all+=test_mae
             test_corr_all+=test_corr

@@ -31,71 +31,69 @@ class MCULoRA(nn.Module):
         trainable_scale_per_task = False
         shared_mode = 'matrix'
 
-    # 创建 MTLoRALinear 实例
+        # Create MTLoRALinear instances
         self.a_in_proj = MCULoRALinear(
-        in_features=self.adim,
-        out_features=out_features,
-        r=r,
-        lora_shared_scale=lora_shared_scale,
-        lora_task_scale=lora_task_scale,
-        lora_dropout=lora_dropout,
-        tasks=tasks,
-        trainable_scale_shared=trainable_scale_shared,
-        trainable_scale_per_task=trainable_scale_per_task,
-        shared_mode=shared_mode
+            in_features=self.adim,
+            out_features=out_features,
+            r=r,
+            lora_shared_scale=lora_shared_scale,
+            lora_task_scale=lora_task_scale,
+            lora_dropout=lora_dropout,
+            tasks=tasks,
+            trainable_scale_shared=trainable_scale_shared,
+            trainable_scale_per_task=trainable_scale_per_task,
+            shared_mode=shared_mode
         )
         self.t_in_proj = MCULoRALinear(
-        in_features=self.tdim,
-        out_features=out_features,
-        r=r,
-        lora_shared_scale=lora_shared_scale,
-        lora_task_scale=lora_task_scale,
-        lora_dropout=lora_dropout,
-        tasks=tasks,
-        trainable_scale_shared=trainable_scale_shared,
-        trainable_scale_per_task=trainable_scale_per_task,
-        shared_mode=shared_mode
+            in_features=self.tdim,
+            out_features=out_features,
+            r=r,
+            lora_shared_scale=lora_shared_scale,
+            lora_task_scale=lora_task_scale,
+            lora_dropout=lora_dropout,
+            tasks=tasks,
+            trainable_scale_shared=trainable_scale_shared,
+            trainable_scale_per_task=trainable_scale_per_task,
+            shared_mode=shared_mode
         )
         self.v_in_proj = MCULoRALinear(
-        in_features=self.vdim,
-        out_features=out_features,
-        r=r,
-        lora_shared_scale=lora_shared_scale,
-        lora_task_scale=lora_task_scale,
-        lora_dropout=lora_dropout,
-        tasks=tasks,
-        trainable_scale_shared=trainable_scale_shared,
-        trainable_scale_per_task=trainable_scale_per_task,
-        shared_mode=shared_mode
+            in_features=self.vdim,
+            out_features=out_features,
+            r=r,
+            lora_shared_scale=lora_shared_scale,
+            lora_task_scale=lora_task_scale,
+            lora_dropout=lora_dropout,
+            tasks=tasks,
+            trainable_scale_shared=trainable_scale_shared,
+            trainable_scale_per_task=trainable_scale_per_task,
+            shared_mode=shared_mode
         )
        
         self.dropout_a = nn.Dropout(args.drop_rate)
         self.dropout_t = nn.Dropout(args.drop_rate)
         self.dropout_v = nn.Dropout(args.drop_rate)
 
-
         self.block = Block(
-                    dim=D_e,
-                    num_heads=num_heads,
-                    mlp_ratio=mlp_ratio,
-                    drop=drop_rate,
-                    attn_drop=attn_drop_rate,
-                    depth=4,
-                )
+            dim=D_e,
+            num_heads=num_heads,
+            mlp_ratio=mlp_ratio,
+            drop=drop_rate,
+            attn_drop=attn_drop_rate,
+            depth=4,
+        )
         # self.proj1 = nn.Linear(D, D)
 
-
         self.proj1 = MCULoRALinear(
-        in_features=D,
-        out_features=D,
-        r=r,
-        lora_shared_scale=lora_shared_scale,
-        lora_task_scale=lora_task_scale,
-        lora_dropout=lora_dropout,
-        tasks=tasks,
-        trainable_scale_shared=trainable_scale_shared,
-        trainable_scale_per_task=trainable_scale_per_task,
-        shared_mode=shared_mode
+            in_features=D,
+            out_features=D,
+            r=r,
+            lora_shared_scale=lora_shared_scale,
+            lora_task_scale=lora_task_scale,
+            lora_dropout=lora_dropout,
+            tasks=tasks,
+            trainable_scale_shared=trainable_scale_shared,
+            trainable_scale_per_task=trainable_scale_per_task,
+            shared_mode=shared_mode
         )
         self.nlp_head_a = nn.Linear(D_e, n_classes)
         self.nlp_head_t = nn.Linear(D_e, n_classes)
@@ -116,7 +114,7 @@ class MCULoRA(nn.Module):
         self.router_out = nn.Linear(3 * D_e, 1)
         self.router_out_lora = nn.Linear(3 * D_e, 1)
         
-        # 跨任务注意力机制
+        # Cross-task attention mechanism
         self.cross_task_attention = nn.MultiheadAttention(
             embed_dim=D_e,
             num_heads=num_heads,
@@ -124,7 +122,7 @@ class MCULoRA(nn.Module):
             batch_first=True
         )
         
-        # 跨模态注意力机制
+        # Cross-modality attention mechanisms
         self.cross_modality_attention_at = nn.MultiheadAttention(  # audio-text
             embed_dim=D_e,
             num_heads=num_heads,
@@ -146,37 +144,37 @@ class MCULoRA(nn.Module):
     
     def apply_cross_task_attention(self, xs_dict):
         """
-        对xs_dict中每个key的特征进行跨任务注意力机制
-        xs_dict: 字典，包含不同任务的特征 {'0': tensor, '1': tensor, ...}
+        Apply cross-task attention to the features of each key in xs_dict.
+        xs_dict: dict, contains features for different tasks {'0': tensor, '1': tensor, ...}
         """
         if xs_dict is None or len(xs_dict) == 0:
             return xs_dict
             
-        # 获取所有任务的特征
+        # Get features for all tasks
         task_keys = list(xs_dict.keys())
         task_features = []
         
         for key in task_keys:
             task_features.append(xs_dict[key])
         
-        # 将所有特征堆叠成 [num_tasks, batch, seq_len, dim]
+        # Stack all features into [num_tasks, batch, seq_len, dim]
         stacked_features = torch.stack(task_features, dim=0)  # [num_tasks, batch, seq_len, dim]
         num_tasks, batch_size, seq_len, dim = stacked_features.shape
         
-        # 重塑为 [num_tasks, batch*seq_len, dim] 用于注意力计算
+        # Reshape to [num_tasks, batch*seq_len, dim] for attention computation
         reshaped_features = stacked_features.view(num_tasks, batch_size * seq_len, dim)
         
-        # 应用跨任务注意力
+        # Apply cross-task attention
         attended_features, _ = self.cross_task_attention(
             query=reshaped_features,
             key=reshaped_features,
             value=reshaped_features
         )
         
-        # 重塑回原始形状
+        # Reshape back to original shape
         attended_features = attended_features.view(num_tasks, batch_size, seq_len, dim)
         
-        # 更新字典
+        # Update dictionary
         updated_xs_dict = {}
         for i, key in enumerate(task_keys):
             updated_xs_dict[key] = attended_features[i]
@@ -185,27 +183,27 @@ class MCULoRA(nn.Module):
     
     def apply_cross_modality_attention(self, xs_a, xs_t, xs_v):
         """
-        对xs_a、xs_t、xs_v进行跨模态相互注意力
-        实现不同模态之间的相互注意力机制
+        Apply cross-modality mutual attention to xs_a, xs_t, xs_v.
+        Implements mutual attention mechanisms between different modalities.
         """
         if xs_a is None or xs_t is None or xs_v is None:
             return xs_a, xs_t, xs_v
             
-        # 获取所有任务的特征
+        # Get all task keys
         task_keys = list(xs_a.keys())
         
-        # 初始化输出字典
+        # Initialize output dictionaries
         updated_xs_a = {}
         updated_xs_t = {}
         updated_xs_v = {}
         
         for key in task_keys:
-            # 获取当前任务的三个模态特征
+            # Get the three modality features for the current task
             a_feat = xs_a[key]  # [batch, seq_len, dim]
             t_feat = xs_t[key]  # [batch, seq_len, dim]
             v_feat = xs_v[key]  # [batch, seq_len, dim]
             
-            # 1. Audio-Text 跨模态注意力
+            # 1. Audio-Text cross-modality attention
             # Query: text, Key&Value: audio
             at_attended_t, _ = self.cross_modality_attention_at(
                 query=t_feat,
@@ -220,7 +218,7 @@ class MCULoRA(nn.Module):
                 value=t_feat
             )
             
-            # 2. Audio-Visual 跨模态注意力
+            # 2. Audio-Visual cross-modality attention
             # Query: visual, Key&Value: audio
             av_attended_v, _ = self.cross_modality_attention_av(
                 query=v_feat,
@@ -235,7 +233,7 @@ class MCULoRA(nn.Module):
                 value=v_feat
             )
             
-            # 3. Text-Visual 跨模态注意力
+            # 3. Text-Visual cross-modality attention
             # Query: visual, Key&Value: text
             tv_attended_v, _ = self.cross_modality_attention_tv(
                 query=v_feat,
@@ -250,17 +248,17 @@ class MCULoRA(nn.Module):
                 value=v_feat
             )
             
-            # 融合所有跨模态注意力结果
-            # 音频特征融合：原始 + 从文本获取的信息 + 从视觉获取的信息
+            # Fuse all cross-modality attention results
+            # Audio feature fusion: original + information from text + information from visual
             updated_a = a_feat + ta_attended_a + va_attended_a
             
-            # 文本特征融合：原始 + 从音频获取的信息 + 从视觉获取的信息
+            # Text feature fusion: original + information from audio + information from visual
             updated_t = t_feat + at_attended_t + vt_attended_t
             
-            # 视觉特征融合：原始 + 从音频获取的信息 + 从文本获取的信息
+            # Visual feature fusion: original + information from audio + information from text
             updated_v = v_feat + av_attended_v + tv_attended_v
             
-            # 保存更新后的特征
+            # Save updated features
             updated_xs_a[key] = updated_a
             updated_xs_t[key] = updated_t
             updated_xs_v[key] = updated_v
@@ -278,7 +276,7 @@ class MCULoRA(nn.Module):
         # print(inputfeats[:,:,:])
         # print(input_features_mask[:,:,1])
         weight_save = []
-        # sequence modeling,获得序列化表征
+        # Sequence modeling, obtain serialized representations
         audio, text, video = inputfeats[:, :, :self.adim], inputfeats[:, :, self.adim:self.adim + self.tdim], \
         inputfeats[:, :, self.adim + self.tdim:]
         seq_len, B, C = audio.shape
@@ -306,7 +304,7 @@ class MCULoRA(nn.Module):
         x_t,xs_t = self.block(proj_t, True, attn_mask, 't',xs=lora_ts)
         x_v,xs_v = self.block(proj_v, True, attn_mask, 'v',xs=lora_vs)
         
-        # 对xs_a、xs_t、xs_v进行跨模态相互注意力
+        # Apply cross-modality mutual attention to xs_a, xs_t, xs_v
         xs_a, xs_t, xs_v = self.apply_cross_modality_attention(xs_a, xs_t, xs_v)
         
 
@@ -325,7 +323,7 @@ class MCULoRA(nn.Module):
             t = xs_t[key]
             v = xs_v[key]
             xs_all[key] = torch.cat([a, t, v], dim=-1)
-        # 这里是联合梯度
+        # This is joint gradient
         x_all,xs_all=self.proj1(x_joint,xs_all)
         # res=x_all+xs_all[index]
         u = F.relu(x_all)
