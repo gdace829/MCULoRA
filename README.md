@@ -1,26 +1,16 @@
 # MoMKE
 
 Correspondence to: 
-  - Wenxin Xu (wxxv@stu.xidian.edu.cn)
-  - Hexin Jiang (hxjiang@stu.xidian.edu.cn)
-  - Xuefeng Liang (xliang@xidian.edu.cn)
+  - Jinsong Shu
+
+
 
 ## Paper
 
-<img src="./figures/MoMKE.png" />
+<img src="./figures/MCULoRA.png" />
 
-[**Leveraging Knowledge of Modality Experts for Incomplete Multimodal Learning**](https://dl.acm.org/doi/10.1145/3664647.3681683)<br>
-Wenxin Xu, Hexin Jiang, Xuefeng Liang<br>
-ACM Multimedia, 2024, **🔥Best Paper Nomination!** and further be honored with **🔥Honourable Mention Award!**
-
-```tex
-@inproceedings{xu2024leveraging,
-  title={Leveraging Knowledge of Modality Experts for Incomplete Multimodal Learning},
-  author={Xu, Wenxin and Jiang, Hexin and others},
-  booktitle={ACM Multimedia 2024},
-  year={2024}
-}
-```
+[**A Robust Incomplete Multimodal Low-Rank Adaptation Approach for Emotion
+Recognition**]
 
 ## Usage
 
@@ -35,7 +25,7 @@ ACM Multimedia, 2024, **🔥Best Paper Nomination!** and further be honored with
 
 ### Dataset
 
-To ensure consistency with previous work, we followed the feature preprocessing module in [GCNet](https://github.com/zeroQiaoba/GCNet).
+To ensure consistency with previous work, we followed the feature preprocessing module in [MoMKE](https://github.com/zeroQiaoba/GCNet).
 
 For your convenience, we list the feature links below they provide.
 
@@ -45,17 +35,13 @@ For your convenience, we list the feature links below they provide.
 |  CMU-MOSI |          Sentiment Analysis        | [link](https://drive.google.com/file/d/1aJxArYfZsA-uLC0sOwIkjl_0ZWxiyPxj/view?usp=share_link)|
 |  CMU-MOSEI|          Sentiment Analysis       | [link](https://drive.google.com/file/d/1L6oDbtpFW2C4MwL5TQsEflY1WHjtv7L5/view?usp=share_link)|
 
-### Run MoMKE
+### Run MCULoRA
 
 ~~~~shell
 cd MoMKE
-sh run_MoMKE_cmumosi.sh
+sh run_MCULoRA_cmumosei.sh
 
-sh run_MoMKE_cmumosei.sh
+sh run_MCULoRA_cmumosi.sh
 
-sh run_MoMKE_iemocap4.sh
+sh run_MCULoRA_iemocap4.sh
 ~~~~
-
-## Acknowledgement
-
-This work was supported by the research funding of GuangZhou DaYou Network Technology Co., Ltd.
