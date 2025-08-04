@@ -26,7 +26,7 @@ def Alignment(p, q):
     js_score = 0.5 * (kl_p_m + kl_q_m)
     return js_score
 
-def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=None, train=False, first_stage=True, mark='train',probabilities=[0.5,0.5,0.5]):
+def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=None, train=False, first_stage=True, mark='train',probabilities=[0.5,0.5,0.5],appearance_probabilities=[0.5,0.5,0.5,0.5,0.5,0.5,0.5]):
     weight = []
     preds, preds_a, preds_t, preds_v, masks, labels = [], [], [], [], [], []
     losses, losses1, losses2, losses3 = [], [], [], []
@@ -65,7 +65,7 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
 
         ## using cmp-net masking manner [at least one view exists]
         ## host mask 获得掩码
-        matrix = generate_mask(seqlen, batch, args.test_condition, first_stage,train,probabilities) # [seqlen*batch, view_num]
+        matrix = generate_mask(seqlen, batch, args.test_condition, first_stage,train,probabilities,appearance_probabilities) # [seqlen*batch, view_num]
         audio_host_mask = np.reshape(matrix[0], (batch, seqlen, 1))
         text_host_mask = np.reshape(matrix[1], (batch, seqlen, 1))
         visual_host_mask = np.reshape(matrix[2], (batch, seqlen, 1))
@@ -73,7 +73,7 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
         text_host_mask = torch.LongTensor(text_host_mask.transpose(1, 0, 2))
         visual_host_mask = torch.LongTensor(visual_host_mask.transpose(1, 0, 2))
         # guest mask
-        matrix = generate_mask(seqlen, batch, args.test_condition, first_stage,train,probabilities) # [seqlen*batch, view_num]
+        matrix = generate_mask(seqlen, batch, args.test_condition, first_stage,train,probabilities,appearance_probabilities) # [seqlen*batch, view_num]
         audio_guest_mask = np.reshape(matrix[0], (batch, seqlen, 1))
         text_guest_mask = np.reshape(matrix[1], (batch, seqlen, 1))
         visual_guest_mask = np.reshape(matrix[2], (batch, seqlen, 1))
@@ -138,48 +138,8 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
 
         ## forward
         hidden, out, out_a, out_t, out_v, weight_save,x_a,x_t,x_v,xs_a,xs_t,xs_v= model(masked_input_features[0], input_features_mask[0], umask, first_stage,index)
-        # 有t的时候特性信息和共性信息差距比较大
-        js_all_a = Alignment(x_a, xs_a['0'])+Alignment(x_a, xs_a['1'])+Alignment(x_a, xs_a['2'])+Alignment(x_a, xs_a['4'])# 特性共性之间的差距越大越好
-        js_all_t = Alignment(x_t, xs_t['0'])+Alignment(x_t, xs_t['1'])+Alignment(x_t, xs_t['3'])+Alignment(x_t, xs_t['5'])
-        js_all_v = Alignment(x_v, xs_v['0'])+Alignment(x_v, xs_v['2'])+Alignment(x_v, xs_v['3'])+Alignment(x_v, xs_v['6'])
-        # print(js_all_a,js_all_t,js_all_v)
-        # kl散度越大说明特性信息学习越好 越小说明特性信息学习不好
-        if index=='0'or index=='1'or index=='2'or index=='4':
-            js_all_a=js_all_a
-        else:
-            js_all_a=torch.tensor(0)
-        if index=='0'or index=='1'or index=='2'or index=='5':
-            js_all_t=js_all_t
-        else:
-            js_all_t=torch.tensor(0)
-        if index=='0'or index=='2'or index=='3'or index=='6':
-            js_all_v=js_all_v
-        else:
-            js_all_v=torch.tensor(0)
-        if  not train:# 在测试集动态调整
-            js_0=(Alignment(x_a, xs_a['0'])+Alignment(x_t, xs_t['0'])+Alignment(x_v, xs_v['0']))/3
-            js_1=(Alignment(x_a, xs_a['1'])+Alignment(x_t, xs_t['1']))/2
-            js_2=(Alignment(x_a, xs_a['2'])+Alignment(x_v, xs_v['2']))/2
-            js_3=(Alignment(x_t, xs_t['3'])+Alignment(x_v, xs_v['3']))/2
-            js_4=(Alignment(x_a, xs_a['4']))
-            js_5=(Alignment(x_t, xs_t['5']))
-            js_6=(Alignment(x_v, xs_v['6']))
-            sim_0.append(js_0.cpu().detach().numpy())
-            sim_1.append(js_1.cpu().detach().numpy())
-            sim_2.append(js_2.cpu().detach().numpy())
-            sim_3.append(js_3.cpu().detach().numpy())
-            sim_4.append(js_4.cpu().detach().numpy())
-            sim_5.append(js_5.cpu().detach().numpy())
-            sim_6.append(js_6.cpu().detach().numpy())
+     
            
-        # print("a相似度",js_all_a,"t相似度",js_all_t,"v相似度",js_all_v)
-        
-        # sim_at.append(sim_at1.cpu().detach().numpy())
-        # sim_av.append(sim_av1.cpu().detach().numpy())
-        # sim_tv.append(sim_tv1.cpu().detach().numpy())
-        # sim_alla.append(sim_alla1.cpu().detach().numpy())
-        # sim_allt.append(sim_allt1.cpu().detach().numpy())
-        # sim_allv.append(sim_allv1.cpu().detach().numpy())
         ## save analysis result
         weight.append(weight_save)
         in_mask = torch.clone(input_features_mask[0].permute(1, 0, 2))
@@ -194,29 +154,10 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
 
 
         labels_ = label.view(-1) # [batch*seq_len]
-        # print(labels_.shape,umask.shape,lp_.shape)
-        # Introduce a 30% probability of label being 0
-        # if not first_stage and train:
-        #     mask = torch.rand(labels_.shape).to(device)
-        #     mask = mask < 0.6
-        #     labels_[mask] = 0
+    
         if dataset in ['IEMOCAPFour', 'IEMOCAPSix']:
-            if first_stage:
-                loss_a = cls_loss(lp_a, labels_, umask)
-                loss_t = cls_loss(lp_t, labels_, umask)
-                loss_v = cls_loss(lp_v, labels_, umask)
-            else:
                 loss = cls_loss(lp_, labels_, umask)
         if dataset in ['CMUMOSI', 'CMUMOSEI']:
-            if first_stage:
-                loss_a = reg_loss(lp_a, labels_, umask)
-                loss_t = reg_loss(lp_t, labels_, umask)
-                loss_v = reg_loss(lp_v, labels_, umask)
-            else:
-                loss_a = reg_loss(lp_a, labels_, umask)
-                loss_t = reg_loss(lp_t, labels_, umask)
-                loss_v = reg_loss(lp_v, labels_, umask)
-                
                 # 调整比例可以获得更好的性能
                 loss = reg_loss(lp_, labels_, umask)
 
@@ -230,34 +171,82 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
         # print(f'---------------{mark} loss: {loss}-------------------')
         preds_test_condition.append(out.view(-1, out.size(2)).data.cpu().numpy())
 
-        if train and first_stage:
-            loss_a.backward()
-            loss_t.backward()
-            loss_v.backward()
-            optimizer.step()
-        # if train and not first_stage:
-        #     loss.backward()
-        #     for name, param in model.named_parameters():
-        #         if param.grad is not None:
-        #             if "proj1.linear.weight" in name:
-        #                 print(f"{name} 梯度范数: {param.grad.norm().item()}")
-        #                 print(f"{name} 梯度向量: {param.grad}")
-                        
-        #     optimizer.step()
-        
         # sjs记录一下梯度方向的大小
         if train and not first_stage:
+            # INSERT_YOUR_CODE
+            # 融合特征对比损失：将xs_a, xs_t, xs_v中相同key的表征拉近，不同key拉远
+            # 只在训练且非first_stage时进行
+            contrastive_loss = 0.0
+            temperature = 0.07  # 可调超参数
+
+            # 获取所有key
+            keys = list(xs_a.keys())
+            # 统计当前batch的模态组合
+            # index: '0'-atv, '1'-at, '2'-av, '3'-tv, '4'-a, '5'-t, '6'-v
+            # 只对当前模态组合涉及的key做拉近
+            # 例如 index='0'，则key='atv'，index='3'，则key='tv'
+            # 其余key之间做拉远
+
+            # 当前batch的key
+            current_key = None
+            if index == '0':
+                current_key = 'atv'
+            elif index == '1':
+                current_key = 'at'
+            elif index == '2':
+                current_key = 'av'
+            elif index == '3':
+                current_key = 'tv'
+            elif index == '4':
+                current_key = 'a'
+            elif index == '5':
+                current_key = 't'
+            elif index == '6':
+                current_key = 'v'
+
+            if current_key is not None and current_key in xs_a and current_key in xs_t and current_key in xs_v:
+         
+                feat_a = xs_a[current_key]  # [B, D]
+                feat_t = xs_t[current_key]
+                feat_v = xs_v[current_key]
+                # 归一化
+                feat_a = F.normalize(feat_a, dim=-1)
+                feat_t = F.normalize(feat_t, dim=-1)
+                feat_v = F.normalize(feat_v, dim=-1)
+  
+                pos_sim_at = (feat_a * feat_t).sum(dim=-1) / temperature
+                pos_sim_av = (feat_a * feat_v).sum(dim=-1) / temperature
+                pos_sim_tv = (feat_t * feat_v).sum(dim=-1) / temperature
+              
+                pos_loss = - (pos_sim_at.mean() + pos_sim_av.mean() + pos_sim_tv.mean()) / 3.0
+                contrastive_loss += pos_loss
+
+                # 拉远：不同key的a/t/v表征
+                for other_key in keys:
+                    if other_key == current_key:
+                        continue
+                    # 只在other_key存在时才计算
+                    if other_key in xs_a and other_key in xs_t and other_key in xs_v:
+                        # 取出other_key下的a/t/v特征
+                        other_a = xs_a[other_key]
+                        other_t = xs_t[other_key]
+                        other_v = xs_v[other_key]
+                        # 归一化
+                        other_a = F.normalize(other_a, dim=-1)
+                        other_t = F.normalize(other_t, dim=-1)
+                        other_v = F.normalize(other_v, dim=-1)
+                      
+                        neg_sim_aa = F.cosine_similarity(feat_a, other_a, dim=-1) / temperature
+                        neg_sim_tt = F.cosine_similarity(feat_t, other_t, dim=-1) / temperature
+                        neg_sim_vv = F.cosine_similarity(feat_v, other_v, dim=-1) / temperature
+                        # 拉远损失，越小越好，取正号
+                        neg_loss = (neg_sim_aa.mean() + neg_sim_tt.mean() + neg_sim_vv.mean()) / 3.0
+                        contrastive_loss += neg_loss
+
+            # 将对比损失加到总loss中，权重可调
+            loss = loss + 0.001 * contrastive_loss
             loss.backward()# 梯度反向传播，每次数据迭代都进行
-            for name, param in model.named_parameters():
-                    if param.grad is not None:
-                        if "proj1.linear.weight" in name:
-                            grad_norm_list.append(param.grad.norm().item())
             optimizer.step()
-    # sjs记录一下梯度方向
-    if len(grad_norm_list) > 0:
-        grad_norm_avg = np.mean(grad_norm_list)
-        with open("gradient_log_iemo_v.txt", "a") as f:
-            f.write(f"本轮grad_norm_list的平均值: {grad_norm_avg}\n")
     
     assert preds!=[], f'Error: no dataset in dataloader'
     preds  = np.concatenate(preds)
@@ -266,27 +255,7 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
     preds_v = np.concatenate(preds_v)
     labels = np.concatenate(labels)
     masks  = np.concatenate(masks)
-    if not train:
-        sim0 = np.mean(np.array(sim_0), axis=0)
-        sim1 = np.mean(np.array(sim_1), axis=0)
-        sim2 = np.mean(np.array(sim_2), axis=0)
-        sim3 = np.mean(np.array(sim_3), axis=0)
-        sim4 = np.mean(np.array(sim_4), axis=0)
-        sim5 = np.mean(np.array(sim_5), axis=0)
-        sim6 = np.mean(np.array(sim_6), axis=0)
-        sim_all=[sim0,sim1,sim2,sim3,sim4,sim5,sim6]
-        # print(f'sim0: {sim0}; sim1: {sim1}; sim2: {sim2}; sim3: {sim3}; sim4: {sim4}; sim5: {sim5}; sim6: {sim6}')
-    else:
-        sim0, sim1, sim2, sim3, sim4, sim5, sim6 = 0, 0, 0, 0, 0, 0, 0
-        sim_all=[sim0,sim1,sim2,sim3,sim4,sim5,sim6]
-    # sim_at = np.mean(np.array(sim_at), axis=0)
-    # sim_av = np.mean(np.array(sim_av), axis=0)
-    # sim_tv = np.mean(np.array(sim_tv), axis=0)
-    # sim_allv1 = np.mean(np.array(sim_allv), axis=0)
-    # sim_allt1 = np.mean(np.array(sim_allt), axis=0)
-    # sim_alla1 = np.mean(np.array(sim_alla), axis=0) 现有的单纯为了缺失情况加强单模态，会影响整体多模态识别准确识别每个模态组合的情况
-    # print(f'sim_at: {sim_at}; sim_av: {sim_av}; sim_tv: {sim_tv} ')
-    # all
+   
     if dataset in ['IEMOCAPFour', 'IEMOCAPSix']:
         preds = np.argmax(preds, 1)
         preds_a = np.argmax(preds_a, 1)
@@ -301,7 +270,7 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
         avg_acc_a = accuracy_score(labels, preds_a, sample_weight=masks)
         avg_acc_t = accuracy_score(labels, preds_t, sample_weight=masks)
         avg_acc_v = accuracy_score(labels, preds_v, sample_weight=masks)
-        return mae, ua, avg_accuracy, avg_fscore, [avg_acc_a, avg_acc_t, avg_acc_v], vidnames, avg_loss, weight, sim_all
+        return mae, ua, avg_accuracy, avg_fscore, [avg_acc_a, avg_acc_t, avg_acc_v], vidnames, avg_loss, weight,x_a,x_t,x_v,xs_a,xs_t,xs_v
 
     elif dataset in ['CMUMOSI', 'CMUMOSEI']:
         non_zeros = np.array([i for i, e in enumerate(labels) if e != 0]) # remove 0, and remove mask
@@ -313,7 +282,7 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
         avg_acc_a = accuracy_score((labels[non_zeros] > 0), (preds_a[non_zeros] > 0))
         avg_acc_t = accuracy_score((labels[non_zeros] > 0), (preds_t[non_zeros] > 0))
         avg_acc_v = accuracy_score((labels[non_zeros] > 0), (preds_v[non_zeros] > 0))
-        return mae, corr, avg_accuracy, avg_fscore, [avg_acc_a, avg_acc_t, avg_acc_v], vidnames, avg_loss, weight, sim_all
+        return mae, corr, avg_accuracy, avg_fscore, [avg_acc_a, avg_acc_t, avg_acc_v], vidnames, avg_loss, weight,x_a,x_t,x_v,xs_a,xs_t,xs_v
 
 
 
@@ -415,7 +384,8 @@ if __name__ == '__main__':
     folder_f1 = []
     folder_model = []
     bestmodels = []
-    for ii in range(args.num_folder):
+    for ii in range(1):
+        ii=0
         print (f'>>>>> Cross-validation: training on the {ii+1} folder >>>>>')
         train_loader = train_loaders[ii]
         test_loader = test_loaders[ii]
@@ -463,77 +433,104 @@ if __name__ == '__main__':
         vis_acc_test4=[]
         vis_acc_test5=[]
         vis_acc_test6=[]
-        
+        lastacc=[]
+        # 记录偏好分数的列表
+        preference_scores_history = {
+            'atv': [], 'at': [], 'av': [], 'tv': [], 
+            'a': [], 't': [], 'v': []
+        }
+        # 记录出现概率的列表
+        appearance_probabilities_history = {
+            'atv': [], 'at': [], 'av': [], 'tv': [], 
+            'a': [], 't': [], 'v': []
+        }
+        appearance_probabilities = [0.5,0.5,0.5,0.5,0.5,0.5,0.5]
         for epoch in range(args.epochs):
             first_stage = False if epoch < args.stage_epoch else False
             ## training and testing (!!! if IEMOCAP, the ua is equal to corr !!!)
             args.test_condition="atv"
-            train_mae, train_corr, train_acc, train_fscore, train_acc_atv, train_names, train_loss, weight_train,_ = train_or_eval_model(args, model, reg_loss, cls_loss, train_loader, \
-                                                                            optimizer=optimizer, train=True, first_stage=first_stage, mark='train',probabilities=probabilities_adjust)
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test, sim_all = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
-                                                                            optimizer=None, train=False, first_stage=first_stage, mark='test',probabilities=probabilities_adjust)
+            train_mae, train_corr, train_acc, train_fscore, train_acc_atv, train_names, train_loss, weight_train,x_a,x_t,x_v,xs_a,xs_t,xs_v= train_or_eval_model(args, model, reg_loss, cls_loss, train_loader, \
+                                                                            optimizer=optimizer, train=True, first_stage=first_stage, mark='train',probabilities=probabilities_adjust,appearance_probabilities=appearance_probabilities)
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,x_a,x_t,x_v,xs_a,xs_t,xs_v = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+                                                                            optimizer=None, train=False, first_stage=first_stage, mark='test',probabilities=probabilities_adjust,appearance_probabilities=appearance_probabilities)
             args.test_condition="at"
-            _, _, test_acc1, _, _, _, _, _, _ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
-                                                                            optimizer=None, train=False, first_stage=first_stage, mark='test',probabilities=probabilities_adjust)
+            _, _, test_acc1, _, _, _, _, _,_,_,_,_,_,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+                                                                            optimizer=None, train=False, first_stage=first_stage, mark='test',probabilities=probabilities_adjust,appearance_probabilities=appearance_probabilities)
             args.test_condition="av"
-            _, _, test_acc2, _, _, _, _, _, _ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
-                                                                            optimizer=None, train=False, first_stage=first_stage, mark='test',probabilities=probabilities_adjust)
+            _, _, test_acc2, _, _, _, _, _,_,_,_,_,_,_= train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+                                                                            optimizer=None, train=False, first_stage=first_stage, mark='test',probabilities=probabilities_adjust,appearance_probabilities=appearance_probabilities)
             args.test_condition="tv"
-            _, _, test_acc3, _, _, _, _, _, _ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
-                                                                            optimizer=None, train=False, first_stage=first_stage, mark='test',probabilities=probabilities_adjust)
+            _, _, test_acc3, _, _, _, _, _,_,_,_,_,_,_= train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+                                                                            optimizer=None, train=False, first_stage=first_stage, mark='test',probabilities=probabilities_adjust,appearance_probabilities=appearance_probabilities)
             args.test_condition="a"
-            _, _, test_acc4, _, _, _, _, _, _ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
-                                                                            optimizer=None, train=False, first_stage=first_stage, mark='test',probabilities=probabilities_adjust)
+            _, _, test_acc4, _, _, _, _, _,_,_,_,_,_,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+                                                                            optimizer=None, train=False, first_stage=first_stage, mark='test',probabilities=probabilities_adjust,appearance_probabilities=appearance_probabilities)
             args.test_condition="t"
-            _, _, test_acc5, _, _, _, _, _, _ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
-                                                                            optimizer=None, train=False, first_stage=first_stage, mark='test',probabilities=probabilities_adjust)
+            _, _, test_acc5, _, _, _, _, _,_,_,_,_,_,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+                                                                                optimizer=None, train=False, first_stage=first_stage, mark='test',probabilities=probabilities_adjust,appearance_probabilities=appearance_probabilities)
             args.test_condition="v"
-            _, _, test_acc6, _, _, _, _, _, _ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
-                                                                            optimizer=None, train=False, first_stage=first_stage, mark='test',probabilities=probabilities_adjust)
-            # 训练时的准确率变化
-            vis_acc_test0.append(test_acc)
-            vis_acc_test1.append(test_acc1)
-            vis_acc_test2.append(test_acc2)
-            vis_acc_test3.append(test_acc3)
-            vis_acc_test4.append(test_acc4)
-            vis_acc_test5.append(test_acc5)
-            vis_acc_test6.append(test_acc6)
-            args.test_condition="atv"
-            if epoch==0:
-                last_epoch_sim_0=sim_all[0]
-                last_epoch_sim_1=sim_all[1]
-                last_epoch_sim_2=sim_all[2]
-                last_epoch_sim_3=sim_all[3]
-                last_epoch_sim_4=sim_all[4]
-                last_epoch_sim_5=sim_all[5]
-                last_epoch_sim_6=sim_all[6]
-            else:
-                change_0 = np.abs(np.mean(sim_all[0]) - np.mean(last_epoch_sim_0))
-                change_1 = np.abs(np.mean(sim_all[1]) - np.mean(last_epoch_sim_1))
-                change_2 = np.abs(np.mean(sim_all[2]) - np.mean(last_epoch_sim_2))
-                change_3 = np.abs(np.mean(sim_all[3]) - np.mean(last_epoch_sim_3))
-                change_4 = np.abs(np.mean(sim_all[4]) - np.mean(last_epoch_sim_4))
-                change_5 = np.abs(np.mean(sim_all[5]) - np.mean(last_epoch_sim_5))
-                change_6 = np.abs(np.mean(sim_all[6]) - np.mean(last_epoch_sim_6))
-
-                changes = [change_0, change_1, change_2, change_3, change_4, change_5, change_6]
-                # max_index = np.argmax(changes)
-                # min_index = np.argmin(changes)
-                # change_str = " ".join([f"change_{i}: {change}" for i, change in enumerate(changes)])
-                sorted_indices = sorted(range(len(changes)), key=lambda i: changes[i])
-                for idx,v in enumerate(sorted_indices):
-                    # 不同数据集超参数不同 mosei
-                    probabilities_adjust[0]+=probabilities_adjust_map[v][0]*probabilities_adjust_scale[idx]*0.003
-                    probabilities_adjust[1]+=probabilities_adjust_map[v][1]*probabilities_adjust_scale[idx]*0.003
-                    probabilities_adjust[2]+=probabilities_adjust_map[v][2]*probabilities_adjust_scale[idx]*0.003
-                    probabilities_adjust = np.clip(probabilities_adjust, 0.4, 0.6)
-                    # probabilities_adjust[0]+=probabilities_adjust_map[v][0]*probabilities_adjust_scale[idx]*0.00025
-                    # probabilities_adjust[1]+=probabilities_adjust_map[v][1]*probabilities_adjust_scale[idx]*0.00025
-                    # probabilities_adjust[2]+=probabilities_adjust_map[v][2]*probabilities_adjust_scale[idx]*0.00025
-                    # probabilities_adjust = np.clip(probabilities_adjust, 0.445, 0.555)
+            _, _, test_acc6, _, _, _, _, _,_,_,_,_,_,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+                                                                            optimizer=None, train=False, first_stage=first_stage, mark='test',probabilities=probabilities_adjust,appearance_probabilities=appearance_probabilities)
+            curacc=[test_acc,test_acc1,test_acc2,test_acc3,test_acc4,test_acc5,test_acc6]
+           
+            # 计算与lastacc的差值及其百分比
+            if len(lastacc) > 0:
+                # 计算差值
+                acc_diff = [curacc[i] - lastacc[i] for i in range(len(curacc))]
+                # 计算百分比变化
+                acc_percent = [(curacc[i] - lastacc[i]) / lastacc[i] * 100 if lastacc[i] != 0 else 0 for i in range(len(curacc))]
+                
+                # 计算偏好分数
+                total_diff = sum(acc_diff)
+                preference_scores = []
+                for i in range(len(acc_diff)):
+                    # 计算除了自己以外其他所有差值的总和
+                    others_sum = total_diff - acc_diff[i]
+                    # 偏好分数 = 其他差值总和 / 所有差值总和
+                    preference_score = others_sum / total_diff if total_diff != 0 else 0
+                    # 限制偏好分数上限为1.5
+                    preference_score = min(preference_score, 1.5)
+                    preference_scores.append(preference_score)
                     
-                    # print(idx,v)
-            # print(probabilities_adjust)
+                    
+                
+                print(f"Epoch {epoch}: atv={test_acc:.4f}, at={test_acc1:.4f}, av={test_acc2:.4f}, tv={test_acc3:.4f}, a={test_acc4:.4f}, t={test_acc5:.4f}, v={test_acc6:.4f}")
+                # print(f"差值: atv={acc_diff[0]:.4f}, at={acc_diff[1]:.4f}, av={acc_diff[2]:.4f}, tv={acc_diff[3]:.4f}, a={acc_diff[4]:.4f}, t={acc_diff[5]:.4f}, v={acc_diff[6]:.4f}")
+                # print(f"百分比变化: atv={acc_percent[0]:.2f}%, at={acc_percent[1]:.2f}%, av={acc_percent[2]:.2f}%, tv={acc_percent[3]:.2f}%, a={acc_percent[4]:.2f}%, t={acc_percent[5]:.2f}%, v={acc_percent[6]:.2f}%")
+                # print(f"偏好分数: atv={preference_scores[0]:.4f}, at={preference_scores[1]:.4f}, av={preference_scores[2]:.4f}, tv={preference_scores[3]:.4f}, a={preference_scores[4]:.4f}, t={preference_scores[5]:.4f}, v={preference_scores[6]:.4f}")
+                
+                # 计算下一回合的出现概率
+                q_base = 0.8
+                alpha = 1.0
+                appearance_probabilities = []
+                for i, pref_score in enumerate(preference_scores):
+                    # 概率 = q_base * (1 + α * tan(x-1))
+                    prob = q_base * (1 + alpha * np.tan(pref_score - 1))
+                    appearance_probabilities.append(prob)
+                # 更新appearance_probabilities为计算出的概率，用于下一回合
+                appearance_probabilities = appearance_probabilities.copy()
+                
+                # 记录偏好分数和出现概率
+                modality_names = ['atv', 'at', 'av', 'tv', 'a', 't', 'v']
+                for i, name in enumerate(modality_names):
+                    preference_scores_history[name].append(preference_scores[i])
+                    appearance_probabilities_history[name].append(appearance_probabilities[i])
+            else:
+                lastacc=curacc
+                print(f"Epoch {epoch}: atv={test_acc:.4f}, at={test_acc1:.4f}, av={test_acc2:.4f}, tv={test_acc3:.4f}, a={test_acc4:.4f}, t={test_acc5:.4f}, v={test_acc6:.4f}")
+            
+            # 更新lastacc为当前的curacc
+            lastacc = curacc.copy()
+            # 训练时的准确率变化
+            # vis_acc_test0.append(test_acc)
+            # vis_acc_test1.append(test_acc1)
+            # vis_acc_test2.append(test_acc2)
+            # vis_acc_test3.append(test_acc3)
+            # vis_acc_test4.append(test_acc4)
+            # vis_acc_test5.append(test_acc5)
+            # vis_acc_test6.append(test_acc6)
+            args.test_condition="atv"
+           
            
 
             ## save
@@ -544,12 +541,6 @@ if __name__ == '__main__':
                 test_corrs.append(test_corr)
                 # models.append(model)
                 
-                
-            # test_accs.append(test_acc)
-            # test_fscores.append(test_fscore)
-            # test_maes.append(test_mae)
-            # test_corrs.append(test_corr)
-            # models.append(model)
             train_acc_as.append(train_acc_atv[0])
             train_acc_ts.append(train_acc_atv[1])
             train_acc_vs.append(train_acc_atv[2])
@@ -565,62 +556,33 @@ if __name__ == '__main__':
                 print(f'epoch:{epoch}; train_mae_{args.test_condition}:{train_mae:.3f}; train_corr_{args.test_condition}:{train_corr:.3f}; train_fscore_{args.test_condition}:{train_fscore:2.2%}; train_acc_{args.test_condition}:{train_acc:2.2%}; train_loss_{args.test_condition}:{train_loss}')
                 print(f'epoch:{epoch}; test_mae_{args.test_condition}:{test_mae:.3f}; test_corr_{args.test_condition}:{test_corr:.3f}; test_fscore_{args.test_condition}:{test_fscore:2.3%}; test_acc_{args.test_condition}:{test_acc:2.3%}; test_loss_{args.test_condition}:{test_loss}')
             print('-'*10)
-            ## update the parameter for the 2nd stage
-            # if epoch == args.stage_epoch-1:
-            #     model = models[-1]
+      
 
-            #     model_idx_a = int(torch.argmax(torch.Tensor(train_acc_as)))
-            #     print(f'best_epoch_a: {model_idx_a}')
-            #     model_a = models[model_idx_a]
-            #     transformer_a_para_dict = {k: v for k, v in model_a.state_dict().items() if 'Transformer' in k}
-            #     model.state_dict().update(transformer_a_para_dict)
+  
+     
+        # 保存偏好分数历史记录
+        # np.save(f'momkevis_preference_scores_atv_folder{ii}.npy', np.array(preference_scores_history['atv']))
+        # np.save(f'momkevis_preference_scores_at_folder{ii}.npy', np.array(preference_scores_history['at']))
+        # np.save(f'momkevis_preference_scores_av_folder{ii}.npy', np.array(preference_scores_history['av']))
+        # np.save(f'momkevis_preference_scores_tv_folder{ii}.npy', np.array(preference_scores_history['tv']))
+        # np.save(f'momkevis_preference_scores_a_folder{ii}.npy', np.array(preference_scores_history['a']))
+        # np.save(f'momkevis_preference_scores_t_folder{ii}.npy', np.array(preference_scores_history['t']))
+        # np.save(f'momkevis_preference_scores_v_folder{ii}.npy', np.array(preference_scores_history['v']))
+        
+        # # 保存出现概率历史记录
+        # np.save(f'momkevis_appearance_probabilities_atv_folder{ii}.npy', np.array(appearance_probabilities_history['atv']))
+        # np.save(f'momkevis_appearance_probabilities_at_folder{ii}.npy', np.array(appearance_probabilities_history['at']))
+        # np.save(f'momkevis_appearance_probabilities_av_folder{ii}.npy', np.array(appearance_probabilities_history['av']))
+        # np.save(f'momkevis_appearance_probabilities_tv_folder{ii}.npy', np.array(appearance_probabilities_history['tv']))
+        # np.save(f'momkevis_appearance_probabilities_a_folder{ii}.npy', np.array(appearance_probabilities_history['a']))
+        # np.save(f'momkevis_appearance_probabilities_t_folder{ii}.npy', np.array(appearance_probabilities_history['t']))
+        # np.save(f'momkevis_appearance_probabilities_v_folder{ii}.npy', np.array(appearance_probabilities_history['v']))
 
-            #     model_idx_t = int(torch.argmax(torch.Tensor(train_acc_ts)))
-            #     print(f'best_epoch_t: {model_idx_t}')
-            #     model_t = models[model_idx_t]
-            #     transformer_t_para_dict = {k: v for k, v in model_t.state_dict().items() if 'Transformer' in k}
-            #     model.state_dict().update(transformer_t_para_dict)
-
-            #     model_idx_v = int(torch.argmax(torch.Tensor(train_acc_vs)))
-            #     print(f'best_epoch_v: {model_idx_v}')
-            #     model_v = models[model_idx_v]
-            #     transformer_v_para_dict = {k: v for k, v in model_v.state_dict().items() if 'Transformer' in k}
-            #     model.state_dict().update(transformer_v_para_dict)
-
-            #     end_first_stage_time = time.time()
-            #     print("------- Starting the second stage! -------")
-
-        # import matplotlib.pyplot as plt
-        # # Save vis_acc arrays to files for later use
-        np.save(f'momkevis_acc_test0_folder{ii}.npy', vis_acc_test0)
-        np.save(f'momkevis_acc_test1_folder{ii}.npy', vis_acc_test1)
-        np.save(f'momkevis_acc_test2_folder{ii}.npy', vis_acc_test2)
-        np.save(f'momkevis_acc_test3_folder{ii}.npy', vis_acc_test3)
-        np.save(f'momkevis_acc_test4_folder{ii}.npy', vis_acc_test4)
-        np.save(f'momkevis_acc_test5_folder{ii}.npy', vis_acc_test5)
-        np.save(f'momkevis_acc_test6_folder{ii}.npy', vis_acc_test6)
-
-        # # Plotting the test accuracies for different conditions
-        # plt.figure(figsize=(10, 6))
-        # plt.plot(vis_acc_test0, label='atv')
-        # plt.plot(vis_acc_test1, label='at')
-        # plt.plot(vis_acc_test2, label='av')
-        # plt.plot(vis_acc_test3, label='tv')
-        # plt.plot(vis_acc_test4, label='a')
-        # plt.plot(vis_acc_test5, label='t')
-        # plt.plot(vis_acc_test6, label='v')
-        # plt.xlabel('Epochs')
-        # plt.ylabel('Test Accuracy')
-        # plt.title(f'Test Accuracy for Different Conditions Over Epochs (Folder {ii})')
-        # plt.legend()
-        # plt.grid(True)
-        # plt.savefig(f'test_accuracy_conditions_folder{ii}.png')  # Save the plot as an image
-        # plt.show()
+    
 
         end_second_stage_time = time.time()
         print("-"*80)
-        # print(f"Time of first stage: {end_first_stage_time - start_first_stage_time}s")
-        # print(f"Time of second stage: {end_second_stage_time - end_first_stage_time}s")
+      
         print(f"Time of training: {end_second_stage_time - start_first_stage_time}s")
         print("-" * 80)
 
@@ -714,7 +676,7 @@ if __name__ == '__main__':
             test_fscore_all=0
             # 使用训练好的模型测试不同缺失情况
             args.test_condition = 'a'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None, train=False, first_stage=first_stage, mark='test')
             test_mae_all+=test_mae
             test_corr_all+=test_corr
@@ -723,7 +685,7 @@ if __name__ == '__main__':
             test_mae_all+=test_mae
             print(f"The best(acc) epoch of test_condition ({args.test_condition}):  --test_mae {test_mae} --test_corr {test_corr} --test_fscores {test_fscore} --test_acc {test_acc}.")
             args.test_condition = 't'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test= train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None, train=False, first_stage=first_stage, mark='test')
             test_mae_all+=test_mae
             test_corr_all+=test_corr
@@ -731,7 +693,7 @@ if __name__ == '__main__':
             test_fscore_all+=test_fscore
             print(f"The best(acc) epoch of test_condition ({args.test_condition}):  --test_mae {test_mae} --test_corr {test_corr} --test_fscores {test_fscore} --test_acc {test_acc}.")
             args.test_condition = 'v'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None, train=False, first_stage=first_stage, mark='test')
             test_mae_all+=test_mae
             test_corr_all+=test_corr
@@ -739,7 +701,7 @@ if __name__ == '__main__':
             test_fscore_all+=test_fscore
             print(f"The best(acc) epoch of test_condition ({args.test_condition}):  --test_mae {test_mae} --test_corr {test_corr} --test_fscores {test_fscore} --test_acc {test_acc}.")
             args.test_condition = 'at'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None, train=False, first_stage=first_stage, mark='test')
             test_mae_all+=test_mae
             test_corr_all+=test_corr
@@ -747,7 +709,7 @@ if __name__ == '__main__':
             test_fscore_all+=test_fscore
             print(f"The best(acc) epoch of test_condition ({args.test_condition}):  --test_mae {test_mae} --test_corr {test_corr} --test_fscores {test_fscore} --test_acc {test_acc}.")
             args.test_condition = 'av'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None, train=False, first_stage=first_stage, mark='test')
             test_mae_all+=test_mae
             test_corr_all+=test_corr
@@ -755,7 +717,7 @@ if __name__ == '__main__':
             test_fscore_all+=test_fscore
             print(f"The best(acc) epoch of test_condition ({args.test_condition}):  --test_mae {test_mae} --test_corr {test_corr} --test_fscores {test_fscore} --test_acc {test_acc}.")
             args.test_condition = 'tv'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_= train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test= train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None, train=False, first_stage=first_stage, mark='test')
             test_mae_all+=test_mae
             test_corr_all+=test_corr
@@ -763,7 +725,7 @@ if __name__ == '__main__':
             test_fscore_all+=test_fscore
             print(f"The best(acc) epoch of test_condition ({args.test_condition}):  --test_mae {test_mae} --test_corr {test_corr} --test_fscores {test_fscore} --test_acc {test_acc}.")
             args.test_condition = 'atv'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None, train=False, first_stage=first_stage, mark='test')
             test_mae_all+=test_mae
             test_corr_all+=test_corr
@@ -777,7 +739,7 @@ if __name__ == '__main__':
             test_corr_all=0
             # 使用训练好的模型测试不同缺失情况
             args.test_condition = 'a'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,x_a,x_t,x_v,xs_a,xs_t,xs_v= train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None, train=False, first_stage=first_stage, mark='test')
             test_acc_all+=test_acc
             test_corr_all+=test_corr
@@ -786,7 +748,7 @@ if __name__ == '__main__':
             test_corr0+=test_corr
             print(f"The best(acc) epoch of test_condition ({args.test_condition}):  --test_acc {test_acc} --test_ua {test_corr}.")
             args.test_condition = 't'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,x_a,x_t,x_v,xs_a,xs_t,xs_v = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None, train=False, first_stage=first_stage, mark='test')
             test_acc_all+=test_acc
             test_corr_all+=test_corr
@@ -795,7 +757,7 @@ if __name__ == '__main__':
             test_corr1+=test_corr
             print(f"The best(acc) epoch of test_condition ({args.test_condition}):  --test_acc {test_acc} --test_ua {test_corr}.")
             args.test_condition = 'v'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,x_a,x_t,x_v,xs_a,xs_t,xs_v = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None, train=False, first_stage=first_stage, mark='test')
             test_acc_all+=test_acc
             test_corr_all+=test_corr
@@ -804,7 +766,7 @@ if __name__ == '__main__':
             test_corr2+=test_corr
             print(f"The best(acc) epoch of test_condition ({args.test_condition}):  --test_acc {test_acc} --test_ua {test_corr}.")
             args.test_condition = 'at'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,x_a,x_t,x_v,xs_a,xs_t,xs_v = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None, train=False, first_stage=first_stage, mark='test')
             test_acc_all+=test_acc
             test_corr_all+=test_corr
@@ -813,7 +775,7 @@ if __name__ == '__main__':
             test_corr3+=test_corr
             print(f"The best(acc) epoch of test_condition ({args.test_condition}):  --test_acc {test_acc} --test_ua {test_corr}.")
             args.test_condition = 'av'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,x_a,x_t,x_v,xs_a,xs_t,xs_v = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None,
                                                                                     train=False, first_stage=first_stage, mark='test')
             test_acc_all+=test_acc
@@ -823,7 +785,7 @@ if __name__ == '__main__':
             test_corr4+=test_corr
             print(f"The best(acc) epoch of test_condition ({args.test_condition}):  --test_acc {test_acc} --test_ua {test_corr}.")
             args.test_condition = 'tv'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,x_a,x_t,x_v,xs_a,xs_t,xs_v = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None,
                                                                                     train=False, first_stage=first_stage, mark='test')
             test_acc_all+=test_acc
@@ -833,7 +795,7 @@ if __name__ == '__main__':
             test_corr5+=test_corr
             print(f"The best(acc) epoch of test_condition ({args.test_condition}):  --test_acc {test_acc} --test_ua {test_corr}.")
             args.test_condition = 'atv'
-            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,_ = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
+            test_mae, test_corr, test_acc, test_fscore, test_acc_atv, test_names, test_loss, weight_test,x_a,x_t,x_v,xs_a,xs_t,xs_v = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, \
                                                                                     optimizer=None,
                                                                                     train=False, first_stage=first_stage, mark='test')
             test_acc_all+=test_acc

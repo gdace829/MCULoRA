@@ -131,25 +131,37 @@ def build_model(args, adim, tdim, vdim):
 #
 #     matrix = [audio_mask, text_mask, visual_mask]
 #     return matrix
-def generate_mask(seqlen, batch, test_condition, first_stage,train,probabilities):
+def generate_mask(seqlen, batch, test_condition, first_stage, train, probabilities, appearance_probabilities):
     """Randomly generate incomplete data information, simulate partial view data with complete view data
     """
-    # if first_stage or train:
-    #     audio_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[0], probabilities[0]])
-    #     text_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[1], probabilities[1]])
-    #     visual_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[2], probabilities[2]])
-    # else:
-    #     audio_mask = np.array([1 if 'a' in test_condition else 0])
-    #     text_mask = np.array([1 if 't' in test_condition else 0])
-    #     visual_mask = np.array([1 if 'v' in test_condition else 0])
     
-
-    audio_mask = np.array([1 if 'a' in test_condition else 0])
-    text_mask = np.array([1 if 't' in test_condition else 0])
-    visual_mask = np.array([1 if 'v' in test_condition else 0])
-        # audio_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[0], probabilities[0]])
-        # text_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[1], probabilities[1]])
-        # visual_mask = np.random.choice([0, 1], size=(1,), p=[1-probabilities[2], probabilities[2]])
+    if first_stage or train:
+        # 根据appearance_probabilities选择模态组合
+        modality_combinations = ['atv', 'at', 'av', 'tv', 'a', 't', 'v']
+        
+        # 确保概率为非负值并归一化
+        normalized_probs = np.array(appearance_probabilities)
+        # 将所有负值设为0
+        normalized_probs = np.maximum(normalized_probs, 0)
+        # 如果所有值都为0，则使用均匀分布
+        if np.sum(normalized_probs) == 0:
+            normalized_probs = np.ones(len(modality_combinations)) / len(modality_combinations)
+        else:
+            normalized_probs = normalized_probs / np.sum(normalized_probs)
+        
+        # 根据概率选择模态组合
+        selected_combination = np.random.choice(modality_combinations, p=normalized_probs)
+        
+        # 根据选择的组合设置掩码
+        audio_mask = np.array([1 if 'a' in selected_combination else 0])
+        text_mask = np.array([1 if 't' in selected_combination else 0])
+        visual_mask = np.array([1 if 'v' in selected_combination else 0])
+    else:
+        # 测试时使用指定的test_condition
+        audio_mask = np.array([1 if 'a' in test_condition else 0])
+        text_mask = np.array([1 if 't' in test_condition else 0])
+        visual_mask = np.array([1 if 'v' in test_condition else 0])
+    
     audio_mask = audio_mask.repeat(seqlen * batch)
     text_mask = text_mask.repeat(seqlen * batch)
     visual_mask = visual_mask.repeat(seqlen * batch)
